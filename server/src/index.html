@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File to JSON Converter</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th,
+    td {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>File to JSON Converter</h1>
+  <form id="uploadForm">
+    <input type="file" name="file" accept=".csv, .xlsx">
+    <button type="button" onclick="uploadAndConvert()">Upload and Convert</button>
+  </form>
+
+  <!-- Display the JSON data as a table -->
+  <h2>Converted JSON</h2>
+  <table id="jsonTable">
+    <!-- Table headers will be added dynamically using JavaScript -->
+    <thead>
+      <tr>
+        <!-- Headers will be added here -->
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Rows will be added here -->
+    </tbody>
+  </table>
+
+  <script>
+    // Function to create table headers dynamically
+    function createTableHeaders(headers) {
+      const headerRow = document.getElementById('jsonTable').getElementsByTagName('thead')[0].insertRow();
+
+      headers.forEach(header => {
+        const th = document.createElement('th');
+        th.appendChild(document.createTextNode(header));
+        headerRow.appendChild(th);
+      });
+    }
+
+    // Function to populate the table with JSON data
+    function populateTable(data) {
+      const tbody = document.getElementById('jsonTable').getElementsByTagName('tbody')[0];
+
+      data.forEach(row => {
+        const tr = tbody.insertRow();
+
+        Object.values(row).forEach(value => {
+          const td = tr.insertCell();
+          td.appendChild(document.createTextNode(value));
+        });
+      });
+    }
+
+    // Function to handle file upload and display JSON data
+    function uploadAndConvert() {
+      const formData = new FormData(document.getElementById('uploadForm'));
+      const fileInput = document.querySelector('input[name="file"]');
+      const file = fileInput.files[0];
+
+      if (!file) {
+        console.error('No file selected.');
+        return;
+      }
+
+      const extension = file.name.split('.').pop().toLowerCase();
+
+      const endpoint = '/upload';
+
+      fetch(endpoint, {
+        method: 'POST',
+        body: formData,
+      })
+        .then(response => {
+          const contentType = response.headers.get('content-type');
+          if (contentType && contentType.includes('application/json')) {
+            return response.json();
+          } else {
+            return response.text(); // Treat non-JSON responses as text
+          }
+        })
+        .then(data => {
+          if (typeof data === 'object') {
+            // For JSON responses (CSV and properly formatted JSON)
+            createTableHeaders(Object.keys(data[0]));
+            populateTable(data);
+          } else {
+            // For non-JSON responses (potentially Excel)
+            console.log('Non-JSON response:', data);
+            // Handle or display the non-JSON data as needed
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    }
+  </script>
+</body>
+
+</html>
