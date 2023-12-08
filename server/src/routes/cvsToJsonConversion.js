@@ -6,10 +6,8 @@ const _ = require('lodash');
 
 async function convertCsvToJson(csvBuffer) {
   try {
-    // Convert CSV to JSON
     const jsonArray = await csvtojson().fromString(csvBuffer);
 
-    // Transform column headers to camelCase using lodash
     const transformedJsonArray = jsonArray.map(row => {
       const transformedRow = {};
       for (const key in row) {
