@@ -4,7 +4,8 @@
   "description": "CRM project for wine and spirits companies in Canada",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/server.js"
   },
   "repository": {
     "type": "git",
@@ -31,6 +32,6 @@
     "session": "^0.1.0",
     "stream": "^0.0.2",
     "uniqid": "^5.4.0",
-    "xlsx": "^0.18.5"
-  }
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.19.3/xlsx-0.19.3.tgz"
+      }
 }
