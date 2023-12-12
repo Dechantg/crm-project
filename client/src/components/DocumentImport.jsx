@@ -5,7 +5,6 @@ import React, { useState } from 'react';
 
 
 const DocumentImport = () => {
-  const nodeServer = process.env.NODE_API_SERVER
   const [file, setFile] = useState(null);
 
   const handleFileChange = (e) => {
@@ -17,10 +16,10 @@ const DocumentImport = () => {
     formData.append('file', file);
 
     try {
-      const response = await fetch(`/upload`, {
+      const response = await fetch('/api/upload', {
         method: 'POST',
         body: formData,
-        credentials: 'include',
+        // credentials: 'include',
       });
 
       const data = await response.json();
