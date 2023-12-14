@@ -5,8 +5,8 @@ const multer = require('multer');
 const morgan = require('morgan');
 const path = require('path');
 const session = require('express-session');
-const convertCsvToJson = require('./routes/cvsToJsonConversion')
-const convertExcelToJson = require('./routes/excelToJsonConvertion');
+const convertCsvToJson = require('./helpers/cvsToJsonConversion')
+const convertExcelToJson = require('./helpers/excelToJsonConvertion');
 const cors = require('cors');
 
 
@@ -15,14 +15,22 @@ const cors = require('cors');
 const app = express();
 
 
+
 app.use(cors({origin: `http://localhost:3000`}));
 
+
+const uploadSheetsRoute = require('./routes/uploadSheets')
+const uploadImageRoute = require('./routes/uploadImage')
+const uploadPDF = require('./routes/uploadPDF')
 
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 
+app.use('/upload/sheet', uploadSheetsRoute);
+app.use('/upload/image', uploadImageRoute);
+app.use('/upload/pdf', uploadPDF)
 
 
 const port = process.env.PORT;
@@ -32,38 +40,13 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
 
-app.post('/upload', upload.single('file'), async (req, res) => {
-  try {
-    const fileBuffer = req.file.buffer;
-    const fileExtension = req.file.originalname.split('.').pop().toLowerCase();
-
-    console.log('req.file:', req.file);
-
-
-    let jsonData;
-
-    if (fileExtension === 'csv') {
-      // Handle CSV files using the original string format
-      const csvData = fileBuffer.toString('utf8');
-      jsonData = await convertCsvToJson(csvData);
-    } else if (fileExtension === 'xlsx' || fileExtension === 'xls') {
-      // Handle Excel files using the buffer directly
-      jsonData = await convertExcelToJson(fileBuffer);
-    } else {
-      console.log('Unsupported file format');
-      res.status(400).send('Unsupported file format');
-      return;
-    }
-
-    // console.log("Here is the object post processing", jsonData)
-
-    res.json(jsonData);
-  } catch (error) {
-    console.error('Error handling file upload:', error);
-    res.status(500).send('Internal Server Error');
-  }
+app.get('/image', (req, res) => {
+  res.sendFile(__dirname + '/image.html');
 });
 
+app.get('/pdf', (req, res) => {
+  res.sendFile(__dirname + '/pdf.html');
+});
 
 
 app.listen(port, host, () => {

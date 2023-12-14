@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const DocumentImport = () => {
+const PdfImport = () => {
   const [file, setFile] = useState(null);
   const [jsonData, setJsonData] = useState(null);
 
@@ -13,10 +13,9 @@ const DocumentImport = () => {
     formData.append('file', file);
 
     try {
-      const response = await fetch('/api/upload/sheet', {
+      const response = await fetch('/api/upload/pdf', {
         method: 'POST',
         body: formData,
-        // credentials: 'include',
       });
 
       const data = await response.json();
@@ -33,34 +32,18 @@ const DocumentImport = () => {
 
   return (
     <div>
-      <input type="file" onChange={handleFileChange} />
+      <h2>Upload a PDF</h2>
+      <input type="file" accept=".pdf" onChange={handleFileChange} />
       <button onClick={handleUpload}>Upload</button>
 
       {jsonData && (
         <div>
-          <h2>Converted JSON</h2>
-          <table>
-            <thead>
-              <tr>
-                {Object.keys(jsonData[0]).map((header) => (
-                  <th key={header}>{header}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {jsonData.map((row, index) => (
-                <tr key={index}>
-                  {Object.values(row).map((value, index) => (
-                    <td key={index}>{value}</td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <h2>Server Response</h2>
+          <pre>{JSON.stringify(jsonData, null, 2)}</pre>
         </div>
       )}
     </div>
   );
 };
 
-export default DocumentImport;
+export default PdfImport;
