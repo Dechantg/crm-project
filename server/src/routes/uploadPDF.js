@@ -3,10 +3,10 @@
 
 const express = require('express');
 const configureMulterFile = require('../helpers/mutlerFile');
-const generateThumbnail = require('../helpers/thumbnail');
 const fs = require('fs').promises;
 const generateUniqueFilename = require('../helpers/fileNameGenerator')
 const path = require('path');
+const convertPdfBufferToImage = require('../helpers/pdfthumbnail');
 
 
 const router = express.Router();
@@ -26,17 +26,25 @@ router.post('/', multerFile.single('file'), async (req, res) => {
 
     console.log("looking fore the file buffer length", req.file.buffer.length)
 
-    // const thumbnailBuffer = await generateThumbnail(fileBuffer, 100, 100);
 
     const originalFileName = generateUniqueFilename(req.file.originalname);
     const originalFilePath = path.join(pdfUploadPath, originalFileName);
     await fs.writeFile(originalFilePath, fileBuffer);
 
-    // const thumbnailFileName = generateUniqueFilename(`thumbnail_${originalFileName}`);
-    // const thumbnailFilePath = path.join(imageUploadThumbPath, thumbnailFileName);
-    // await fs.writeFile(thumbnailFilePath, thumbnailBuffer);
+    const thumbnailFileName = `${originalFileName}.thumbnail`;
 
-    res.json({ message: 'Image uploaded successfully.', imageDescription });
+    const serverRoot = path.join(__dirname, '../../../');
+    const relativeOriginalPath = path.relative(serverRoot, originalFilePath);
+   
+
+    const thumbNail = await convertPdfBufferToImage(fileBuffer, thumbnailFileName, 100, 100);
+
+    console.log("here is the relative path test for oringal pdf", relativeOriginalPath)
+
+    console.log("relative path test from inside my pdf route for thumbnail", thumbNail);
+
+    res.json({ message: 'Image uploaded successfully.', imageDescription, thumbNail });
+
   } catch (error) {
     console.error('Error handling file upload:', error);
     res.status(500).send('Internal Server Error');

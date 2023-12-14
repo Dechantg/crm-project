@@ -35,6 +35,14 @@ router.post('/', multerFile.single('file'), async (req, res) => {
     const thumbnailFilePath = path.join(imageUploadThumbPath, thumbnailFileName);
     await fs.writeFile(thumbnailFilePath, thumbnailBuffer);
 
+    const serverRoot = path.join(__dirname, '../../../');
+    const relativeOriginalPath = path.relative(serverRoot, originalFilePath);
+    const relativeThumbnailPath = path.relative(serverRoot, thumbnailFilePath);
+
+    console.log("here is the thumbPath", relativeThumbnailPath);
+    console.log("here is the originalPath", relativeOriginalPath);
+
+
     res.json({ message: 'Image uploaded successfully.', imageDescription });
   } catch (error) {
     console.error('Error handling file upload:', error);
