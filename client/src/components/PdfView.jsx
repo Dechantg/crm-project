@@ -5,7 +5,7 @@ import '@react-pdf-viewer/core/lib/styles/index.css';
 const PdfViewerComponent = () => {
   const [pdfData, setPdfData] = useState(null);
 
-  const pdfId = '3bae587e-211c-42aa-bb35-d767a9e10057';
+  const pdfId = 'e121349d-ff02-44bd-880b-34b655d162c9';
 
   useEffect(() => {
     const fetchData = async () => {
