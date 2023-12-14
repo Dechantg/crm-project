@@ -22,6 +22,7 @@ app.use(cors({origin: `http://localhost:3000`}));
 const uploadSheetsRoute = require('./routes/uploadSheets')
 const uploadImageRoute = require('./routes/uploadImage')
 const uploadPDF = require('./routes/uploadPDF')
+const getPdF = require('./routes/getpdf')
 
 
 const storage = multer.memoryStorage();
@@ -31,6 +32,7 @@ const upload = multer({ storage: storage });
 app.use('/upload/sheet', uploadSheetsRoute);
 app.use('/upload/image', uploadImageRoute);
 app.use('/upload/pdf', uploadPDF)
+app.use('/download/pdf', getPdF)
 
 
 const port = process.env.PORT;

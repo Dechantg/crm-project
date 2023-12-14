@@ -5,9 +5,10 @@ import { Route, Routes, useLocation, Navigate, useNavigate } from 'react-router-
 
 import DocumentImport from './components/DocumentImport';
 import ImageImport from './components/ImageImport';
-import PdfImport from './components/PDFImport'
-import Index from './components/Index'
+import PdfImport from './components/PDFImport';
+import Index from './components/Index';
 import Header from './components/Header';
+import PdfView from './components/PdfView'
 
 const App = () => {
   return (
@@ -19,6 +20,8 @@ const App = () => {
         <Route path="/document" element={<DocumentImport />} />
         <Route path="/image" element={<ImageImport />} />
         <Route path="/pdf" element={<PdfImport />} />
+        <Route path="/getpdf" element={<PdfView />} />
+
       </Routes>
     </div>
   );

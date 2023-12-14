@@ -7,6 +7,9 @@ const routes = [
   { path: '/document', label: 'CSV and Excel Upload' },
   { path: '/image', label: 'Image Upload' },
   { path: '/pdf', label: 'PDF Upload' },
+  { path: '/getpdf', label: 'PDF Download' },
+
+
 
 ];
 
