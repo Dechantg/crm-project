@@ -29,11 +29,14 @@ async function convertPdfBufferToImage(fileBuffer, outputFileNameWithoutExtensio
     const serverRoot = path.join(__dirname, '../../../');
     const relativeThumbnailPath = path.relative(serverRoot, correctFilePath);
 
-    return relativeThumbnailPath;
+    const filenameWithExtension = path.basename(relativeThumbnailPath);
+
+    return filenameWithExtension;
   } catch (error) {
     console.error("Error converting PDF buffer to image:", error);
     throw error;
   }
 }
+
 
 module.exports = convertPdfBufferToImage;

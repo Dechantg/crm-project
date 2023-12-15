@@ -7,14 +7,20 @@ const pdfSourcePath = path.join(__dirname, '../../database/pdf');
 
 router.get('/:id', async (req, res) => {
   try {
+
+    console.log("is the route being triggered?")
+
     const fileId = req.params.id;
-    const filePath = path.join(pdfSourcePath, `${fileId}.pdf`);
+
+    console.log("what about the fileId being valid?", fileId)
+    
+    const filePath = path.join(pdfSourcePath, `${fileId}`);
 
     if (fs.existsSync(filePath)) {
       const pdfBuffer = fs.readFileSync(filePath);
       console.log("pdf buffer", pdfBuffer)
       res.setHeader('Content-Type', 'application/pdf');
-      res.setHeader('Content-Disposition', `inline; filename=${fileId}.pdf`);
+      res.setHeader('Content-Disposition', `inline; filename=${fileId}`);
       res.send(pdfBuffer);
       
     } else {

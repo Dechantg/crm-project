@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { Worker, Viewer } from '@react-pdf-viewer/core';
 import '@react-pdf-viewer/core/lib/styles/index.css';
+import Modal from 'react-modal';
 
-const PdfViewerComponent = () => {
+
+Modal.setAppElement('#root'); // Set the root element for the modal
+
+const PdfView = ({ uuidFileName, onClose }) => {
   const [pdfData, setPdfData] = useState(null);
-
-  const pdfId = 'e121349d-ff02-44bd-880b-34b655d162c9';
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`/api/download/pdf/${pdfId}`);
+        console.log("from inside the view here is the filename", uuidFileName)
+        const response = await fetch(`/api/download/pdf/${uuidFileName}`);
         const blob = await response.blob();
         const dataUrl = URL.createObjectURL(blob);
         setPdfData(dataUrl);
@@ -20,15 +23,22 @@ const PdfViewerComponent = () => {
     };
 
     fetchData();
-  }, []);
+  }, [uuidFileName]);
 
   return (
-    <div style={{ width: '100%', height: '500px' }}>
-      <Worker workerUrl={`https://unpkg.com/pdfjs-dist@2.16.105/build/pdf.worker.min.js`}>
-        {pdfData && <Viewer fileUrl={pdfData} />}
-      </Worker>
-    </div>
+    <Modal
+      isOpen={!!pdfData}
+      onRequestClose={onClose}
+      contentLabel="PDF Viewer Modal"
+    >
+      <div style={{ width: '100%', height: '500px' }}>
+        <Worker workerUrl={`https://unpkg.com/pdfjs-dist@2.16.105/build/pdf.worker.min.js`}>
+          {pdfData && <Viewer fileUrl={pdfData} />}
+        </Worker>
+      </div>
+      <button onClick={onClose}>Close</button>
+    </Modal>
   );
 };
 
-export default PdfViewerComponent;
+export default PdfView;

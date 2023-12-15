@@ -14,7 +14,7 @@ const addPdf = async (userId, fileName, uuidFileName, thumbNail, fileDescription
 
     const newPdf = data.rows[0];
     
-    // console.log("new ueser data from inside the query: ", newUser)
+    console.log("new pdf data from inside the query: ", newPdf)
     return { success: true, pdf: newPdf, message: 'Image entry created successfully' };
   } catch (error) {
     console.error(`Error creating user: ${error.message}`);
