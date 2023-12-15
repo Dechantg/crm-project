@@ -12,7 +12,7 @@ const addImage = async (userId, fileName, uuidFileName, thumbNail, fileDescripti
 
     const newImage = data.rows[0];
     
-    // console.log("new ueser data from inside the query: ", newUser)
+    console.log("new image data from inside the query: ", newImage)
     return { success: true, image: newImage, message: 'Image entry created successfully' };
   } catch (error) {
     console.error(`Error creating user: ${error.message}`);

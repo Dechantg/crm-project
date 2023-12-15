@@ -45,9 +45,9 @@ router.post('/', multerFile.single('file'), async (req, res) => {
     console.log("oringal pdf name test", originalFileName);
 
 
-    console.log("thubmbnail name test", thumbnailFileName);
+    console.log("thubmbnail name test", thumbNail);
 
-    const addedPdfQueryResult = await addPdfQuery(userId, originalFileName, generatedFileName, thumbnailFileName, fileDescription)
+    const addedPdfQueryResult = await addPdfQuery(userId, originalFileName, generatedFileName, thumbNail, fileDescription)
 
     res.json({ message: 'Image uploaded successfully.', fileDescription, thumbNail });
 
