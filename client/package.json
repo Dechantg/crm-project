@@ -45,6 +45,7 @@
   },
   "devDependencies": {
     "@react-pdf-viewer/core": "^3.12.0",
-    "react-pdf-viewer": "^0.1.0"
+    "react-pdf-viewer": "^0.1.0",
+    "sass": "^1.69.5"
   }
 }

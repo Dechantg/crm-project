@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PdfView from './PdfView';
+import '../views/Document.scss'
+
 
 const PdfImport = () => {
   const [file, setFile] = useState(null);
@@ -22,7 +24,7 @@ const PdfImport = () => {
     };
 
     fetchData();
-  }, []); // Fetch images when the component mounts
+  }, []);
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -107,7 +109,7 @@ const PdfImport = () => {
             onClick={() => handleThumbnailClick(result.uuid_file_name)}
           />
           <div>
-            <p>File Name: {result.file_name}</p>
+          <p className="link" onClick={() => handleThumbnailClick(result.uuid_file_name)}>File Name: {result.file_name}</p>
             <p>Description: {result.file_description}</p>
           </div>
         </div>

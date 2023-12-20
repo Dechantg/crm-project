@@ -14,7 +14,7 @@ const App = () => {
   return (
     <div className="App">
       <Header />
-      <h1>React File Upload Example</h1>
+      <h1>File Upload Test Paths</h1>
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/document" element={<DocumentImport />} />

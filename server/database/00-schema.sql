@@ -1,6 +1,8 @@
 DROP TABLE IF EXISTS crm_images CASCADE;
 DROP TABLE IF EXISTS crm_pdf CASCADE;
 DROP TABLE IF EXISTS crm_document CASCADE;
+DROP TABLE IF EXISTS crm_licence_list CASCADE;
+
 
 
 CREATE TABLE crm_roles (
@@ -55,6 +57,23 @@ CREATE TABLE crm_document (
   uuid_file_name VARCHAR(60),
   file_description TEXT
 );
+
+CREATE TABLE crm_licence_list (
+  id SERIAL PRIMARY KEY,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  user_id VARCHAR(25),
+  licence_number VARCHAR(10),
+  licence_type VARCHAR(50),
+  licence_sub_category_id VARCHAR(50),
+  establishment VARCHAR(100),
+  establishment_address_street VARCHAR(250),
+  establishment_address_city VARCHAR(100),
+  establishment_address_postal_code VARCHAR(10),
+  licensee VARCHAR(100),
+  third_party_operator VARCHAR(100),
+  active BOOLEAN
+);
+
 
 
 UPDATE crm_pdf
