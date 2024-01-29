@@ -23,6 +23,47 @@ const App = () => {
         <Route path="/getpdf" element={<PdfView />} />
 
       </Routes>
+    
+    <div>
+    <h1> Producer Upload Tests</h1>
+    <Routes>
+
+    </Routes>
+    </div>
+    <div>
+    <h1> Client Upload Tests</h1>
+    <Routes>
+
+    </Routes>
+    </div>
+
+    <div>
+    <h1> Venue Upload Tests</h1>
+    <Routes>
+
+    </Routes>
+    </div>
+
+
+    <div>
+    <h1> Product Upload Tests</h1>
+    <Routes>
+
+    </Routes>
+    </div>
+    <div>
+    <h1> Client Upload Tests</h1>
+    <Routes>
+      
+    </Routes>
+    </div>
+    <div>
+    <h1> Sales Call Tests</h1>
+    <Routes>
+      
+    </Routes>
+    </div>
+
     </div>
   );
 };
