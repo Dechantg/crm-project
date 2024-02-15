@@ -58,24 +58,86 @@ CREATE TABLE crm_document (
   file_description TEXT
 );
 
+CREATE TABLE crm_contact_list (
+  id SERIAL PRIMARY KEY,
+  contact_classification VARCHAR(25),
+);
+
+CREATE TABLE crm_contact_name (
+  id SERIAL PRIMARY KEY,
+  contact_id VARCHAR(25),
+  first_name VARCHAR(25),
+  last_name VARCHAR(25),
+  honorific VARCHAR(10),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+CREATE TABLE crm_phone (
+  id SERIAL PRIMARY KEY,
+  contact_id VARCHAR(25),
+  phone_number_type VARCHAR(15),
+  phone_number VARCHAR(15),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE crm_address (
+  id SERIAL PRIMARY KEY,
+  contact_id VARCHAR(25),
+  address_classification VARCHAR(25),
+  street_address_one VARCHAR(250),
+  street_address_two VARCHAR(250),
+  address_city VARCHAR(100),
+  address_province VARCHAR(100),
+  address_country VARCHAR(50),
+  address_postal_code VARCHAR(25),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
 CREATE TABLE crm_licence_list (
   id SERIAL PRIMARY KEY,
+  contact_id VARCHAR(25),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   user_id VARCHAR(25),
   licence_number VARCHAR(10),
   licence_type VARCHAR(50),
   licence_sub_category_id VARCHAR(50),
   establishment VARCHAR(100),
-  establishment_address_street VARCHAR(250),
-  establishment_address_city VARCHAR(100),
-  establishment_address_postal_code VARCHAR(10),
   licensee VARCHAR(100),
   third_party_operator VARCHAR(100),
   active BOOLEAN
 );
 
+CREATE TABLE crm_social_media (
+  id SERIAL PRIMARY KEY,
+  contact_id VARCHAR(25),
+  social_media_type VARCHAR(25),
+  social_media_account VARCHAR(25)
+);
 
 
-UPDATE crm_pdf
-SET thumbnail = 'df7106ab-ea2b-41e2-a1aa-36b33c497c9d.pdf.thumbnail.jpg'
-WHERE id = 1;
+CREATE TABLE crm_client_list (
+
+);
+
+CREATE TABLE crm_contact (
+
+
+);
+
+CREATE TABLE crm_products (
+  id SERIAL PRIMARY KEY,
+  producer_id VARCHAR(50),
+  producer_name VARCHAR(200),
+  alcohol_percent DECIMAL(5,2),
+  volume_litres DECIMAL(5,3),
+  case_format SMALLINT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+);
+
+CREATE TABLE crm_products_bc (
+
+);
+
