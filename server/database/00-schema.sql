@@ -58,9 +58,10 @@ CREATE TABLE crm_document (
   file_description TEXT
 );
 
-CREATE TABLE crm_contact_list (
+CREATE TABLE crm_contacts (
   id SERIAL PRIMARY KEY,
   contact_classification VARCHAR(25),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE crm_contact_name (
@@ -94,8 +95,16 @@ CREATE TABLE crm_address (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE crm_email (
+  id SERIAL PRIMARY KEY,
+  contact_id VARCHAR(25),
+  email_type VARCHAR(15),
+  email VARCHAR(250),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
-CREATE TABLE crm_licence_list (
+
+CREATE TABLE crm_licencee_list (
   id SERIAL PRIMARY KEY,
   contact_id VARCHAR(25),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -113,31 +122,61 @@ CREATE TABLE crm_social_media (
   id SERIAL PRIMARY KEY,
   contact_id VARCHAR(25),
   social_media_type VARCHAR(25),
-  social_media_account VARCHAR(25)
+  social_media VARCHAR(25),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 
 CREATE TABLE crm_client_list (
-
+  id SERIAL PRIMARY KEY,
+  contact_id VARCHAR(25),
+  client_classification VARCHAR(25),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE crm_contact (
-
-
-);
 
 CREATE TABLE crm_products (
   id SERIAL PRIMARY KEY,
   producer_id VARCHAR(50),
-  producer_name VARCHAR(200),
+  product_name VARCHAR(100),
+  product_image_thumbnail VARCHAR(50),
+  product_image VARCHAR(50),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE crm_alch_products (
+  id SERIAL PRIMARY KEY,
+  product_id VARCHAR(25),
   alcohol_percent DECIMAL(5,2),
   volume_litres DECIMAL(5,3),
   case_format SMALLINT,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE crm_non_alch_products (
+  id SERIAL PRIMARY KEY,
+  product_id VARCHAR(25),
+  volume_litres DECIMAL(5,3),
+  case_format SMALLINT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE crm_products_bc_alcoholic (
+  id SERIAL PRIMARY KEY,
+  product_id VARCHAR(10),
+  sku VARCHAR(10),
+  status_code VARCHAR(5),
+  vqa BOOLEAN DEFAULT false,
+  active BOOLEAN,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE producer (
+  id SERIAL PRIMARY KEY,
+  contact_id VARCHAR(25),
+  producer_name VARCHAR(100),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 
 );
 
-CREATE TABLE crm_products_bc (
-
-);
 
