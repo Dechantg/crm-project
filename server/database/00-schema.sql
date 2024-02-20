@@ -171,10 +171,11 @@ CREATE TABLE crm_products_bc_alcoholic (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE producer (
+CREATE TABLE crm_producer (
   id SERIAL PRIMARY KEY,
   contact_id VARCHAR(25),
   producer_name VARCHAR(100),
+  producer_logo VARCHAR(25),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 
 );

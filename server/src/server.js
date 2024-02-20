@@ -28,7 +28,7 @@ const getImageByImage = require('./routes/getImageByImage')
 const getDocumentByDocument = require('./routes/getDocumentByDocument');
 const uploadLicenceeList = require('./routes/uploadLicenceeList');
 const getLicenceList = require('./routes/getLicenceList');
-const imageTest = require('./routes/imageHelperTest')
+const createProducer = require('./routes/createProducer')
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -45,7 +45,7 @@ app.use('/download/image', getImageByImage);
 app.use('/download/document', getDocumentByDocument);
 app.use('/upload/licenceelist', uploadLicenceeList);
 app.use('/getlicencelist', getLicenceList);
-app.use('/upload/imagetest', imageTest);
+app.use('/add/producer', createProducer);
 
 
 
@@ -72,6 +72,9 @@ app.get('/licencee', (req, res) => {
   res.sendFile(__dirname + '/uploadlicencee.html');
 });
 
+app.get('/new/producer', (req, res) => {
+  res.sendFile(__dirname + '/createproducer.html');
+});
 
 app.listen(port, host, () => {
   console.log(`Server is running on port ${port} and host ${host}`);

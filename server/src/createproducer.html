@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Upload</title>
+  <style>
+    form {
+      max-width: 400px;
+      margin: auto 0;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    input {
+      width: 100%;
+      box-sizing: border-box;
+      margin-bottom: 16px;
+    }
+
+    button {
+      display: block;
+      margin-top: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Create Producer</h2>
+
+  <form action="/add/producer" method="post" enctype="multipart/form-data">
+
+
+    <label for="name">Producer Name:</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="street1">Street Address 1:</label>
+    <input type="text" id="street1" name="street1" required>
+
+    <label for="street1">Street Address 2:</label>
+    <input type="text" id="street1" name="street2">
+
+    <label for="city">City:</label>
+    <input type="text" id="city" name="city" required>
+
+    <label for="province">Province/State:</label>
+    <input type="text" id="province" name="province" required>
+
+    <label for="country">Country:</label>
+    <input type="text" id="country" name="country" required>
+
+    <label for="postal">Postal Code:</label>
+    <input type="text" id="postal" name="postal" required>
+
+
+    <label for="description">Image Description:</label>
+    <input type="text" id="description" name="description">
+  
+    <label for="file">Choose a Brand Logo:</label>
+    <input type="file" id="file" name="file" accept="image/*">
+  
+    <button type="submit">Upload</button>
+  </form>
+
+</body>
+</html>
