@@ -28,6 +28,7 @@ const getImageByImage = require('./routes/getImageByImage')
 const getDocumentByDocument = require('./routes/getDocumentByDocument');
 const uploadLicenceeList = require('./routes/uploadLicenceeList');
 const getLicenceList = require('./routes/getLicenceList');
+const imageTest = require('./routes/imageHelperTest')
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -44,6 +45,7 @@ app.use('/download/image', getImageByImage);
 app.use('/download/document', getDocumentByDocument);
 app.use('/upload/licenceelist', uploadLicenceeList);
 app.use('/getlicencelist', getLicenceList);
+app.use('/upload/imagetest', imageTest);
 
 
 
@@ -56,6 +58,10 @@ app.get('/', (req, res) => {
 
 app.get('/image', (req, res) => {
   res.sendFile(__dirname + '/image.html');
+});
+
+app.get('/imagetest', (req, res) => {
+  res.sendFile(__dirname + '/imagetest.html');
 });
 
 app.get('/pdf', (req, res) => {

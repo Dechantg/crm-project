@@ -1,26 +1,18 @@
-const express = require('express');
-const configureMulterFile = require('./mutlerFile');
 const generateThumbnail = require('./thumbnail');
 const fs = require('fs').promises;
 const generateUniqueFilename = require('./fileNameGenerator');
 const path = require('path');
 const addImageQuery = require('../../database/queries/add_images');
 
-const router = express.Router();
-
-const multerFile = configureMulterFile();
 
 const imageUploadPath = path.join(__dirname, '../../database/images');
 const imageUploadThumbPath = path.join(__dirname, '../../database/images-thumb');
 const userId = 1;
 
-const handleImageUpload = async (req, res) => {
-  try {
-    const fileDescription = req.body.description;
-    const fileBuffer = req.file.buffer;
-    const originalFileName = req.file.originalname;
+const handleImageUpload = async (fileDescription, fileBuffer, originalFileName) => {
 
-    console.log("looking for the file buffer length", req.file.buffer.length);
+
+    console.log("looking for the file buffer length", fileBuffer.length);
 
     const thumbnailBuffer = await generateThumbnail(fileBuffer, 100, 100);
 
@@ -43,12 +35,9 @@ const handleImageUpload = async (req, res) => {
 
     console.log(addedImageQueryResult);
 
-    res.json({ message: 'Image uploaded successfully.', fileDescription });
-  } catch (error) {
-    console.error('Error handling file upload:', error);
-    res.status(500).send('Internal Server Error');
-  }
-};
+    return addedImageQueryResult
+   
 
+}
 
 module.exports = handleImageUpload;
