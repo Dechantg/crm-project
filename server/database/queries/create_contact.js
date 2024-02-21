@@ -14,10 +14,10 @@ const addContact = async (contactClass) => {
       [contactClass]
     );
 
-    const newContact = data.rows[0];
+    const newContact = data.rows[0].id;
     
     console.log("New contact created with id ", newContact)
-    return { success: true, contact: newContact, message: 'Contact entry created successfully' };
+    return newContact;
   } catch (error) {
     console.error(`Error creating user: ${error.message}`);
     throw { success: false, error: 'Internal Server Error' };

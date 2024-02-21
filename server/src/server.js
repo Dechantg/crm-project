@@ -11,6 +11,7 @@ const cors = require('cors');
 
 
 const app = express();
+app.set('view engine', 'ejs');
 
 
 
@@ -29,6 +30,8 @@ const getDocumentByDocument = require('./routes/getDocumentByDocument');
 const uploadLicenceeList = require('./routes/uploadLicenceeList');
 const getLicenceList = require('./routes/getLicenceList');
 const createProducer = require('./routes/createProducer')
+const getProducer = require('./routes/getProducers');
+const createProduct = require('./routes/createProduct')
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -46,6 +49,8 @@ app.use('/download/document', getDocumentByDocument);
 app.use('/upload/licenceelist', uploadLicenceeList);
 app.use('/getlicencelist', getLicenceList);
 app.use('/add/producer', createProducer);
+app.use('/get/producers', getProducer);
+app.use('/create/product', createProduct)
 
 
 
@@ -53,28 +58,30 @@ const port = process.env.PORT;
 const host = process.env.HOST;
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
+  res.render('index');
 });
 
 app.get('/image', (req, res) => {
-  res.sendFile(__dirname + '/image.html');
+  res.render('image');
 });
 
 app.get('/imagetest', (req, res) => {
-  res.sendFile(__dirname + '/imagetest.html');
+  res.render('imagetest');
 });
 
 app.get('/pdf', (req, res) => {
-  res.sendFile(__dirname + '/pdf.html');
+  res.render('pdf');
 });
 
 app.get('/licencee', (req, res) => {
-  res.sendFile(__dirname + '/uploadlicencee.html');
+  res.render('uploadlicencee');
 });
 
 app.get('/new/producer', (req, res) => {
-  res.sendFile(__dirname + '/createproducer.html');
+  res.render('createproducer');
 });
+
+
 
 app.listen(port, host, () => {
   console.log(`Server is running on port ${port} and host ${host}`);

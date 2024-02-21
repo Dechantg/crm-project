@@ -5,8 +5,10 @@ const express = require('express');
 const configureMulterFile = require('../helpers/mutlerFile');
 const fs = require('fs').promises;
 const path = require('path');
-const imageUpload = require('../helpers/uploadImageAndThumbnail')
-const createContact = require('../../database/queries/create_contact')
+const imageUpload = require('../helpers/uploadImageAndThumbnail');
+const createContact = require('../../database/queries/create_contact');
+const addAddress = require('../../database/queries/add_address');
+const addProducer = require('../../database/queries/add_producer');
 
 
 const router = express.Router();
@@ -25,6 +27,8 @@ router.post('/', multerFile.single('file'), async (req, res) => {
     const fileBuffer = req.file ? req.file.buffer : null;
     const originalFileName = req.file ? req.file.originalname : null;
     let imageId = null;
+    const producerName = req.body.name;
+
 
     // if logo included upload
     if (fileBuffer) {
@@ -38,31 +42,45 @@ router.post('/', multerFile.single('file'), async (req, res) => {
 
     console.log("Contact id test:", contactId)
 
-    const producerName = req.body.name;
-    const producerStreetOne = req.body.street1;
-    const producerStreetTwo = req.body.street2;
-    const producerCity = req.body.city;
-    const producerProvince = req.body.province;
-    const producerCountry = req.body.country;
-    const producerPostal = req.body.postal
+    const producerAddress = {
+      contactId,
+      addressClassification: "Producer",
+      streetOne : req.body.street1,
+      streetTwo : req.body.street2,
+      city : req.body.city,
+      province : req.body.province,
+      country : req.body.country,
+      postal : req.body.postal
+    };
 
+    const producer = {
+      contactId,
+      producerName,
+      imageId
+    }
 
+    const addedProducer = await addProducer(producer);
+    
+    const addedAddress = await addAddress(producerAddress);
 
+    console.log("here is the id from the new address submiuttion", addedAddress)
+
+    console.log("here is the added producer if return from query: ", addedProducer)
 
     const dataTest = {
       producerName,
-      producerStreetOne,
-      producerStreetTwo,
-      producerCity,
-      producerProvince,
-      producerCountry,
-      producerPostal,
+      streetOne : producerAddress.streetOne,
+      streetTwo : producerAddress.streetTwo,
+      cty : producerAddress.city,
+      province : producerAddress.province,
+      country : producerAddress.country,
+      postal : producerAddress.postal,
       fileDescription,
       imageId
     }
 
 
-    console.log("here are my various input fields, this should be the one with just image info: ", dataTest)
+    // console.log("here are my various input fields, this should be the one with just image info: ", dataTest)
 
 
     res.json({ message: 'Image uploaded successfully.', dataTest });

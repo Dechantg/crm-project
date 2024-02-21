@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Upload</title>
+  <style>
+    form {
+      max-width: 400px;
+      margin: auto 0;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    input, select {
+      width: 100%;
+      box-sizing: border-box;
+      margin-bottom: 16px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    button {
+      display: block;
+      margin-top: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Add Product</h2>
+
+  <form id="productForm" method="post" enctype="multipart/form-data">
+
+    <label for="producer">Producer Name:</label>
+    <select id="producer" name="producer" required>
+      <option value="">Select Producer</option>
+    
+      <% producers.forEach(producer => { %>
+        <option value="<%= producer.id %>"><%= producer.producer_name %></option>
+      <% }); %>
+    </select>
+
+    <label for="productName">Product Name:</label>
+    <input type="text" id="productName" name="productName" required>
+
+    <label for="alcoholicType">Alcoholic Type:</label>
+    <select id="alcoholicType" name="alcoholicType">
+      <option value="" selected disabled>Select Product Type</option>
+      <option value="Alcoholic">Alcoholic</option>
+      <option value="Non-Alcoholic">Non-Alcoholic</option>
+    </select>
+
+
+    <div class="hidden alcoholic-option">
+      <label for="alcoholPercent">Alcohol %:</label>
+      <input type="text" id="alcoholPercent" name="alcoholPercent" pattern="^(100(\.0{1,2})?|\d{1,2}(\.\d{1,2})?)$" title="Enter a valid percentage">
+    </div>
+    
+
+    <div class="hidden alcoholic-option">
+      <label for="volumeLitres">Volume / Litre </label>
+      <input type="number" id="volumeLitresalch" value="0" name="volumeLitresalch" step="0.001" required>
+    </div>
+
+    <div class="hidden alcoholic-option">
+      <label for="caseFormat">Case Format:</label>
+      <input type="text" id="caseFormat" name="caseFormat">
+    </div>
+    
+
+    <div class="hidden non-alcoholic-option">
+      <label for="nonAlcoholicOption1">Non-Alcoholic Option 1:</label>
+      <input type="text" id="nonAlcoholicOption1" name="nonAlcoholicOption1">
+    </div>
+
+    <div class="hidden non-alcoholic-option">
+      <label for="volumeLitresNonAlch">Volume / Litre </label>
+      <input type="number" id="volumeLitresnonalch" value = "0" name="volumeLitresnonalch" step="0.001" required>
+    </div>
+
+
+
+
+
+    <label for="file">Choose a Product Image:</label>
+    <input type="file" id="file" name="file" accept="image/*">
+
+    <label for="description">Image Description:</label>
+    <input type="text" id="description" name="description">
+
+
+    <button type="submit">Upload</button>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('productForm');
+        const alcoholicTypeSelect = document.getElementById('alcoholicType');
+        const alcoholicSections = document.querySelectorAll('.alcoholic-option');
+        const nonAlcoholicSections = document.querySelectorAll('.non-alcoholic-option');
+    
+        // Initial action setting
+        form.action = '/create/product/alch';
+    
+        alcoholicTypeSelect.addEventListener('change', function() {
+          if (this.value === 'Alcoholic') {
+            showElements(alcoholicSections);
+            hideElements(nonAlcoholicSections);
+            form.action = '/create/product/alch';
+          } else if (this.value === 'Non-Alcoholic') {
+            hideElements(alcoholicSections);
+            showElements(nonAlcoholicSections);
+            form.action = '/create/product/nonalch';
+          }
+        });
+    
+        function showElements(elements) {
+          elements.forEach(element => {
+            element.classList.remove('hidden');
+          });
+        }
+    
+        function hideElements(elements) {
+          elements.forEach(element => {
+            element.classList.add('hidden');
+          });
+
+          
+        }
+      });
+    </script>
+    
+    
+    
+    
+
+  </form>
+
+</body>
+</html>
