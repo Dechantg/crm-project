@@ -6,7 +6,7 @@ const configureMulterFile = require('../helpers/mutlerFile');
 const fs = require('fs').promises;
 const path = require('path');
 const imageUpload = require('../helpers/uploadImageAndThumbnail');
-const createContact = require('../../database/queries/create_contact');
+const createContact = require('../../database/queries/create_contact_record');
 const addAddress = require('../../database/queries/add_address');
 const addProducer = require('../../database/queries/add_producer');
 

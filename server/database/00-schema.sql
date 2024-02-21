@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS crm_images CASCADE;
 DROP TABLE IF EXISTS crm_pdf CASCADE;
 DROP TABLE IF EXISTS crm_document CASCADE;
 DROP TABLE IF EXISTS crm_licence_list CASCADE;
+DROP TABLE IF EXISTS crm_products CASCADE;
 
 
 
@@ -139,8 +140,10 @@ CREATE TABLE crm_products (
   id SERIAL PRIMARY KEY,
   producer_id VARCHAR(50),
   product_name VARCHAR(100),
-  product_image_thumbnail VARCHAR(50),
-  product_image VARCHAR(50),
+  product_image VARCHAR(25),
+  product_type VARCHAR(25),
+  volume_litres DECIMAL(5,3),
+  case_format SMALLINT,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -148,16 +151,13 @@ CREATE TABLE crm_alch_products (
   id SERIAL PRIMARY KEY,
   product_id VARCHAR(25),
   alcohol_percent DECIMAL(5,2),
-  volume_litres DECIMAL(5,3),
-  case_format SMALLINT,
+
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE crm_non_alch_products (
   id SERIAL PRIMARY KEY,
   product_id VARCHAR(25),
-  volume_litres DECIMAL(5,3),
-  case_format SMALLINT,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
