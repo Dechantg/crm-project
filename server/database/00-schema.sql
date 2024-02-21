@@ -3,6 +3,12 @@ DROP TABLE IF EXISTS crm_pdf CASCADE;
 DROP TABLE IF EXISTS crm_document CASCADE;
 DROP TABLE IF EXISTS crm_licence_list CASCADE;
 DROP TABLE IF EXISTS crm_products CASCADE;
+DROP TABLE IF EXISTS crm_alch_products CASCADE;
+DROP TABLE IF EXISTS crm_non_alch_products CASCADE;
+DROP TABLE IF EXISTS crm_alch_classes CASCADE;
+DROP TABLE IF EXISTS crm_non_alch_classes CASCADE;
+DROP TABLE IF EXISTS crm_contacts CASCADE;
+DROP TABLE IF EXISTS crm_contact_class CASCADE;
 
 
 
@@ -31,12 +37,7 @@ CREATE TABLE crm_users (
 );
 
 CREATE TABLE crm_images (
-  id SERIAL PRIMARY KEY,
-  user_id INTEGER REFERENCES crm_users(id) ON DELETE CASCADE,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  file_name TEXT,
-  uuid_file_name VARCHAR(60),
-  thumbnail VARCHAR(60),
+  id SERIAL PRIMARY KEY,crm_
   file_description TEXT
 );
 
@@ -62,6 +63,7 @@ CREATE TABLE crm_document (
 CREATE TABLE crm_contacts (
   id SERIAL PRIMARY KEY,
   contact_classification VARCHAR(25),
+  contact_class VARCHAR(10),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -151,13 +153,14 @@ CREATE TABLE crm_alch_products (
   id SERIAL PRIMARY KEY,
   product_id VARCHAR(25),
   alcohol_percent DECIMAL(5,2),
-
+  alch_class VARCHAR(10),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE crm_non_alch_products (
   id SERIAL PRIMARY KEY,
   product_id VARCHAR(25),
+  non_alch_class VARCHAR(10),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -180,4 +183,21 @@ CREATE TABLE crm_producer (
 
 );
 
+CREATE TABLE crm_alch_classes (
+  id SERIAL PRIMARY KEY,
+  alch_type VARCHAR(15),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
+CREATE TABLE crm_non_alch_classes (
+  id SERIAL PRIMARY KEY,
+  non_alch_type VARCHAR(15),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+CREATE TABLE crm_contact_class (
+  id SERIAL PRIMARY KEY,
+  contact_class VARCHAR(25),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

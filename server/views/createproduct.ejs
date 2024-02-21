@@ -61,7 +61,18 @@
       <label for="alcoholPercent">Alcohol %:</label>
       <input type="text" id="alcoholPercent" name="alcoholPercent" pattern="^(100(\.0{1,2})?|\d{1,2}(\.\d{1,2})?)$" title="Enter a valid percentage">
     </div>
+
+    <div class="hidden alcoholic-option">
+
+    <label for="alchType">Alchohol Type:</label>
+    <select id="alchType" name="alchType" required>
+      <option value="">Select Alcohol Type</option>
     
+      <% allAlch.forEach(allAlch => { %>
+        <option value="<%= allAlch.id %>"><%= allAlch.alch_type %></option>
+      <% }); %>
+    </select>
+    </div>
 
     <div class="hidden alcoholic-option">
       <label for="volumeLitresAlch">Volume / Litre </label>
@@ -78,6 +89,18 @@
       <label for="volumeLitresNonAlch">Volume / Litre </label>
       <input type="number" id="volumeLitresNonAlch" value = "0" name="volumeLitresNonAlch" step="0.001" required>
     </div>
+
+    <div class="hidden non-alcoholic-option">
+
+      <label for="nonAlchType">Non Alchohol Type:</label>
+      <select id="nonAlchType" name="nonAlchType" required>
+        <option value="">Select Non Alcohol Type</option>
+      
+        <% allNonAlch.forEach(allNonAlch => { %>
+          <option value="<%= allNonAlch.id %>"><%= allNonAlch.non_alch_type %></option>
+        <% }); %>
+      </select>
+      </div>
 
     <div class="hidden non-alcoholic-option">
       <label for="caseFormatNonAlch">Case Format:</label>
