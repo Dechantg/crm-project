@@ -9,6 +9,7 @@ DROP TABLE IF EXISTS crm_alch_classes CASCADE;
 DROP TABLE IF EXISTS crm_non_alch_classes CASCADE;
 DROP TABLE IF EXISTS crm_contacts CASCADE;
 DROP TABLE IF EXISTS crm_contact_class CASCADE;
+DROP TABLE IF EXISTS crm_contact_type CASCADE;
 
 
 
@@ -199,5 +200,39 @@ CREATE TABLE crm_non_alch_classes (
 CREATE TABLE crm_contact_class (
   id SERIAL PRIMARY KEY,
   contact_class VARCHAR(25),
+  contact_type VARCHAR(15),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE crm_contact_type (
+  id SERIAL PRIMARY KEY,
+  contact_type_name VARCHAR(25),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE crm_producer_contact (
+  id SERIAL PRIMARY KEY,
+  producer_id VARCHAR(25),
+  contact_id VARCHAR(25),
+  created_by VARCHAR(25),
+  active BOOLEAN DEFAULT true,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE crm_client_contact (
+  id SERIAL PRIMARY KEY,
+  client_id VARCHAR(25),
+  client_contact_id VARCHAR(25),
+  created_by VARCHAR(25),
+  active BOOLEAN DEFAULT true,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE crm_sales_rep_assignment (
+  id SERIAL PRIMARY KEY,
+  client_id VARCHAR(25),
+  sales_agent_id VARCHAR(25),
+  active BOOLEAN DEFAULT true,
+  created_by VARCHAR(25),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

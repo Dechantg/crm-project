@@ -7,11 +7,11 @@ const db = require('../connection');
 
 const addNonProduct = async (alchNonProduct) => {
   try {
-    const {productId} = alchNonProduct
+    const {productId, nonAlchType} = alchNonProduct
 
     const data = await db.query(
-      'INSERT INTO crm_non_alch_products (product_id) VALUES ($1) RETURNING id;',
-      [productId]
+      'INSERT INTO crm_non_alch_products (product_id, non_alch_class) VALUES ($1, $2) RETURNING id;',
+      [productId, nonAlchType]
     );
 
     const newNonAlchProduct = data.rows[0].id;

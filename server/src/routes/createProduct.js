@@ -5,11 +5,12 @@ const fs =                      require('fs').promises;
 const path =                    require('path');
 const                           imageUpload = require('../helpers/uploadImageAndThumbnail');
 const getAllProducers =         require('../../database/queries/get_all_producers');
-const getAllAlch =              require('../../database/queries/get_alch_class')
-const getAllNonAlch =           require('../../database/queries/get_all_non_alch_class')
+const getAllAlchClass =              require('../../database/queries/get_alch_class')
+const getAllNonAlchClass =           require('../../database/queries/get_all_non_alch_class')
 
 const addProduct =              require('../../database/queries/add_product');
 const addAlchProduct =          require('../../database/queries/add_alch_product');
+const addNonAlchProduct =       require('../../database/queries/add_non_alch_products')
 
 
 const router = express.Router();
@@ -21,8 +22,8 @@ router.get('/', async (req, res) => {
   try {
 
   const producers = await getAllProducers();
-  const allNonAlch = await getAllNonAlch();
-  const allAlch = await getAllAlch();
+  const allNonAlch = await getAllNonAlchClass();
+  const allAlch = await getAllAlchClass();
   console.log("here is the producers for verification", producers)
   console.log("here is the alch for verification", allAlch)
   console.log("here is the non-alch for verification", allNonAlch)
@@ -40,13 +41,13 @@ router.get('/', async (req, res) => {
 router.post('/alch', multerFile.single('file'), async (req, res) => {
   try {
 
-    const {producer, productName, alcoholicType, alcoholicPercent, volumeLitresAlch, caseFormatAlch, alchType } = req.body
     const fileDescription = req.body.description;
     const fileBuffer = req.file ? req.file.buffer : null;
     const originalFileName = req.file ? req.file.originalname : null;
     let imageId = null;
 
-    console.log("here is tjhe boday from my alch post", req.body)
+    console.log("looking for the poroduct type coming from front", req.body)
+
 
 
     // if logo included upload
@@ -55,7 +56,34 @@ router.post('/alch', multerFile.single('file'), async (req, res) => {
       imageId = result && result.image ? result.image.id : null;
     }
 
-  
+    const newProduct = {
+      producerId : req.body.producer,
+      productName : req.body.productName,
+      imageId : imageId,
+      productType : req.body.productType,
+      volumeLitres : req.body.volumeLitresAlch,
+      caseFormat : req.body.caseFormatAlch
+    }
+
+    console.log("here is my new product before query", newProduct);
+
+    const addedProduct = await addProduct(newProduct);
+
+    console.log("here is my new product after adding", addedProduct)
+
+    const newAlchProduct = {
+      addedProduct,
+      alchoholPercent: req.body.alcoholPercent,
+      alchType: req.body.alchType
+    };
+
+    console.log("here is me new alch product object before submitting", newAlchProduct);
+
+    const addedAlchProduct = await addAlchProduct(newAlchProduct);
+
+
+    console.log(" here is the addedAlchProduct after final query", addedAlchProduct)
+      
 
 
     res.json({ message: 'Product page rendered for alch.'});
@@ -70,24 +98,13 @@ router.post('/alch', multerFile.single('file'), async (req, res) => {
 router.post('/nonalch', multerFile.single('file'), async (req, res) => {
   try {
 
-    const {producer, productName, alcoholicType, volumeLitresNonAlch, caseFormatNonAlch, nonAlchType } = req.body
-
-
-    console.log("here is tjhe boday from my non alch post", req.body)
-
-
-    console.log("nonalch route preoducer: ", producer)
-    console.log("nonalch route productName: ", productName)
-    console.log("nonalch route alcohol type: ", alcoholicType)
-    console.log("nonalch route volume liters: ", volumeLitresNonAlch)
-    console.log("nonalch route caseformat: ", caseFormatNonAlch)
-
-
-
     const fileDescription = req.body.description;
     const fileBuffer = req.file ? req.file.buffer : null;
     const originalFileName = req.file ? req.file.originalname : null;
     let imageId = null;
+
+    console.log("looking for the poroduct type coming from front", req.body.productType)
+
 
 
     // if logo included upload
@@ -96,6 +113,23 @@ router.post('/nonalch', multerFile.single('file'), async (req, res) => {
       imageId = result && result.image ? result.image.id : null;
     }
 
+    const newProduct = {
+      producerId : req.body.producer,
+      productName : req.body.productName,
+      imageId : imageId,
+      productType : req.body.productType,
+      volumeLitres : req.body.volumeLitresNonAlch,
+      caseFormat : req.body.caseFormatNonAlch
+    }
+
+    const addedProduct = await addProduct(newProduct);
+
+    const newNonAlchProduct = {
+      productId : addedProduct,
+      nonAlchType : req.body.nonAlchType
+    };
+
+    const addedNonAlchProduct = await addNonAlchProduct(newNonAlchProduct);
 
 
     res.json({ message: 'Product page rendered for nonalch.'});

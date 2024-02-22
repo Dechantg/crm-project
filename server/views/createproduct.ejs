@@ -49,12 +49,25 @@
     <label for="productName">Product Name:</label>
     <input type="text" id="productName" name="productName" required>
 
-    <label for="alcoholicType">Alcoholic Type:</label>
-    <select id="alcoholicType" name="alcoholicType">
-      <option value="" selected disabled>Select Product Type</option>
+    <label for="productType">Product Class:</label>
+    <select id="productType" name="productType">
+      <option value="" selected disabled>Select Product Class</option>
       <option value="Alcoholic">Alcoholic</option>
       <option value="Non-Alcoholic">Non-Alcoholic</option>
     </select>
+
+    <div class="hidden alcoholic-option">
+
+    <label for="alchType">Alcohol Class:</label>
+    <select id="alchType" name="alchType" required>
+      <option value="n/a">Select Alcohol Type</option>
+    
+      <% allAlch.forEach(allAlch => { %>
+        <option value="<%= allAlch.id %>"><%= allAlch.alch_type %></option>
+      <% }); %>
+    </select>
+  </div>
+
 
 
     <div class="hidden alcoholic-option">
@@ -62,17 +75,9 @@
       <input type="text" id="alcoholPercent" name="alcoholPercent" pattern="^(100(\.0{1,2})?|\d{1,2}(\.\d{1,2})?)$" title="Enter a valid percentage">
     </div>
 
-    <div class="hidden alcoholic-option">
-
-    <label for="alchType">Alchohol Type:</label>
-    <select id="alchType" name="alchType" required>
-      <option value="">Select Alcohol Type</option>
     
-      <% allAlch.forEach(allAlch => { %>
-        <option value="<%= allAlch.id %>"><%= allAlch.alch_type %></option>
-      <% }); %>
-    </select>
-    </div>
+    
+    
 
     <div class="hidden alcoholic-option">
       <label for="volumeLitresAlch">Volume / Litre </label>
@@ -84,23 +89,22 @@
       <input type="text" id="caseFormatAlch" name="caseFormatAlch">
     </div>
     
-
-    <div class="hidden non-alcoholic-option">
-      <label for="volumeLitresNonAlch">Volume / Litre </label>
-      <input type="number" id="volumeLitresNonAlch" value = "0" name="volumeLitresNonAlch" step="0.001" required>
-    </div>
-
     <div class="hidden non-alcoholic-option">
 
-      <label for="nonAlchType">Non Alchohol Type:</label>
+      <label for="nonAlchType">Alcohol Class:</label>
       <select id="nonAlchType" name="nonAlchType" required>
-        <option value="">Select Non Alcohol Type</option>
+        <option value="n/a">Select Alcohol Type</option>
       
         <% allNonAlch.forEach(allNonAlch => { %>
           <option value="<%= allNonAlch.id %>"><%= allNonAlch.non_alch_type %></option>
         <% }); %>
       </select>
-      </div>
+    </div>
+
+    <div class="hidden non-alcoholic-option">
+      <label for="volumeLitresNonAlch">Volume / Litre </label>
+      <input type="number" id="volumeLitresNonAlch" value = "0" name="volumeLitresNonAlch" step="0.001" required>
+    </div>
 
     <div class="hidden non-alcoholic-option">
       <label for="caseFormatNonAlch">Case Format:</label>
@@ -121,14 +125,14 @@
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         const form = document.getElementById('productForm');
-        const alcoholicTypeSelect = document.getElementById('alcoholicType');
+        const productTypeSelect = document.getElementById('productType');
         const alcoholicSections = document.querySelectorAll('.alcoholic-option');
         const nonAlcoholicSections = document.querySelectorAll('.non-alcoholic-option');
     
         // Initial action setting
         form.action = '/create/product/alch';
     
-        alcoholicTypeSelect.addEventListener('change', function() {
+        productTypeSelect.addEventListener('change', function() {
           if (this.value === 'Alcoholic') {
             showElements(alcoholicSections);
             hideElements(nonAlcoholicSections);
