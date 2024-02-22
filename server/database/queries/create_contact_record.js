@@ -7,11 +7,11 @@
 const db = require('../connection');
 
 
-const addContact = async (contactClass) => {
+const addContact = async (contactClass, contactType) => {
   try {
     const data = await db.query(
-      'INSERT INTO crm_contacts (contact_classification) VALUES ($1) RETURNING id;',
-      [contactClass]
+      'INSERT INTO crm_contacts (contact_classification, contact_class) VALUES ($1, $2) RETURNING id;',
+      [contactClass, contactType]
     );
 
     const newContact = data.rows[0].id;
@@ -19,7 +19,7 @@ const addContact = async (contactClass) => {
     console.log("New contact created with id ", newContact)
     return newContact;
   } catch (error) {
-    console.error(`Error creating user: ${error.message}`);
+    console.error(`Error creating contact: ${error.message}`);
     throw { success: false, error: 'Internal Server Error' };
   }
 };

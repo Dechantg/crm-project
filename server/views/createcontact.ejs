@@ -29,10 +29,9 @@
 </head>
 <body>
 
-  <h2>Create Producer</h2>
+  <h2>Add A New Contact</h2>
 
-  <form action="/add/producer/generate" method="post" enctype="multipart/form-data">
-
+  <form action="/add/contact/generate" method="post" enctype="multipart/form-data">
     <label for="contactType">Contact Type:</label>
     <select id="contactType" name="contactType" required>
         <option value="" disabled selected>Please Select a Contact Type</option>
@@ -40,24 +39,32 @@
             <option value="<%= contact.id %>"><%= contact.contact_type_name %></option>
         <% }); %>
     </select>
+    <p></p>
 
-    <label for="contactClass">Contact Class:</label>
-    <select id="contactClass" name="contactClass" required>
+    <label for="contactClass" id="contactClassLabel" style="display: none;">Contact Class:</label>
+    <select id="contactClass" name="contactClass" style="display: none;" required>
         <option value="" disabled selected>Please Select a Contact Class</option>
         <% allContactClass.forEach(contact => { %>
             <option data-contacttype="<%= contact.contact_type %>" value="<%= contact.id %>"><%= contact.contact_class %></option>
         <% }); %>
     </select>
+    <p></p>
 
 
-    <label for="name">Producer Name:</label>
-    <input type="text" id="name" name="name" required>
+    <label for="honorific">Contact Honorific:</label>
+    <input type="text" id="honorific" name="honorific">
 
-    <label for="street1">Street Address 1:</label>
-    <input type="text" id="street1" name="street1" required>
+    <label for="firstName">Contact First Name:</label>
+    <input type="text" id="firstName" name="firstName" required>
 
-    <label for="street1">Street Address 2:</label>
-    <input type="text" id="street1" name="street2">
+    <label for="lastName">Contact Last Name:</label>
+    <input type="text" id="lastName" name="lastName" required>
+
+    <label for="streetOne">Street Address 1:</label>
+    <input type="text" id="streetOne" name="streetOne" required>
+
+    <label for="streetTwo">Street Address 2:</label>
+    <input type="text" id="streetTwo" name="streetTwo">
 
     <label for="city">City:</label>
     <input type="text" id="city" name="city" required>
@@ -72,17 +79,19 @@
     <input type="text" id="postal" name="postal" required>
 
 
-    <label for="description">Image Description:</label>
-    <input type="text" id="description" name="description">
+    <label for="imageDescription">Image Description:</label>
+    <input type="text" id="imageDescription" name="imageDescription">
   
     <label for="file">Choose a Brand Logo:</label>
     <input type="file" id="file" name="file" accept="image/*">
   
     <button type="submit">Upload</button>
+    
     <script>
       document.getElementById('contactType').addEventListener('change', function() {
           var selectedContactType = this.value;
           var contactClassDropdown = document.getElementById('contactClass');
+          var contactClassLabel = document.getElementById('contactClassLabel');
 
           // Reset the dropdown to its default state
           contactClassDropdown.selectedIndex = 0;
@@ -95,8 +104,18 @@
                   option.style.display = 'none';
               }
           });
+
+          // Show the second dropdown and label if a selection is made in the first dropdown
+          if (selectedContactType !== "") {
+              contactClassDropdown.style.display = 'block';
+              contactClassLabel.style.display = 'block';
+          } else {
+              contactClassDropdown.style.display = 'none';
+              contactClassLabel.style.display = 'none';
+          }
       });
   </script>
+
   </form>
 
 </body>

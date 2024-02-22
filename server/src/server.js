@@ -31,7 +31,8 @@ const uploadLicenceeList = require('./routes/uploadLicenceeList');
 const getLicenceList = require('./routes/getLicenceList');
 const createProducer = require('./routes/createProducer')
 const getProducer = require('./routes/getProducers');
-const createProduct = require('./routes/createProduct')
+const createProduct = require('./routes/createProduct');
+const createContact = require('./routes/createContact');
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -51,6 +52,7 @@ app.use('/getlicencelist', getLicenceList);
 app.use('/add/producer', createProducer);
 app.use('/get/producers', getProducer);
 app.use('/create/product', createProduct)
+app.use('/add/contact', createContact)
 
 
 
@@ -77,9 +79,7 @@ app.get('/licencee', (req, res) => {
   res.render('uploadlicencee');
 });
 
-app.get('/new/producer', (req, res) => {
-  res.render('createproducer');
-});
+
 
 
 

@@ -8,14 +8,14 @@ const db = require('../connection');
 const addAddress = async (addressDetails) => {
   try {
 
-     const {contactId, addressClassification, streetOne, streetTwo, city, province, country, postal} = addressDetails
+     const {contactId, contactClass, streetOne, streetTwo, city, province, country, postal} = addressDetails
 
 
 
 
     const data = await db.query(
       'INSERT INTO crm_address (contact_id, address_classification, street_address_one, street_address_two, address_city, address_province, address_country, address_postal_code) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id;',
-      [contactId, addressClassification, streetOne, streetTwo, city, province, country, postal]
+      [contactId, contactClass, streetOne, streetTwo, city, province, country, postal]
     );
 
     const newAddress = data.rows[0].id;
