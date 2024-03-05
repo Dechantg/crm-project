@@ -231,6 +231,14 @@ CREATE TABLE crm_producer_contact (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE crm_client (
+  id SERIAL PRIMARY KEY,
+  contact_id VARCHAR(25),
+  client_name VARCHAR(100),
+  client_logo VARCHAR(25),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 CREATE TABLE crm_client_contact (
   id SERIAL PRIMARY KEY,
   client_id VARCHAR(25),
@@ -248,4 +256,31 @@ CREATE TABLE crm_sales_rep_assignment (
   created_by VARCHAR(25),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE crm_products_bc (
+  id SERIAL PRIMARY KEY,
+  product_id VARCHAR(25),
+  wholesale_price SMALLINT,
+  bclrs_reatail_price SMALLINT,
+  bcldb_sku SMALLINT,
+  bcldb_status SMALLINT,
+  active BOOLEAN DEFAULT true,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE crm_sales_call (
+  id SERIAL PRIMARY KEY,
+  client_id VARCHAR(10),
+  sales_call_notes TEXT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE crm_product_tasting (
+  id SERIAL PRIMARY KEY,
+  sales_call_id VARCHAR(10),
+  product_if VARCHAR(10),
+  tasting_feedback TEXT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 
