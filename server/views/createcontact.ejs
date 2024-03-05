@@ -84,37 +84,86 @@
   
     <label for="file">Choose a Brand Logo:</label>
     <input type="file" id="file" name="file" accept="image/*">
-  
-    <button type="submit">Upload</button>
     
+    <div id="dynamic-emails-container">
+      <label>Voter Emails:</label><br>
+      <button type="button" class="add-email-button">+ Add Email</button>
+    
+      <div class="email-row default-row">
+        <input type="text" placeholder="Email" maxlength="55" class="email" required>
+        <select class="email-type" required>
+          <option value="" disabled selected>Please Select Email Type</option>
+          <% allEmailTypes.forEach(emailType => { %>
+            <option value="<%= emailType.id %>"><%= emailType.email_type %></option>
+          <% }); %>
+        </select>
+        <button type="button" class="remove-email-button">-</button>
+      </div>
+    </div><br>
+    
+  
+    <div>
+      <button type="submit">Upload</button>
+    </div>
     <script>
+  const formData = { emails: [] };
+  
+  const dynamicEmailsContainer = document.getElementById("dynamic-emails-container");
+  
+  dynamicEmailsContainer.addEventListener("click", function (event) {
+    if (event.target.classList.contains("remove-email-button")) {
+      removeDynamicEmailRow(event.target.closest(".email-row"));
+    }
+    if (event.target.classList.contains("add-email-button")) {
+      addDynamicEmailRow();
+    }
+  });
+  
       document.getElementById('contactType').addEventListener('change', function() {
-          var selectedContactType = this.value;
-          var contactClassDropdown = document.getElementById('contactClass');
-          var contactClassLabel = document.getElementById('contactClassLabel');
-
-          // Reset the dropdown to its default state
-          contactClassDropdown.selectedIndex = 0;
-
-          // Show only options with matching contact_type
-          Array.from(contactClassDropdown.options).forEach(option => {
-              if (option.dataset.contacttype === selectedContactType || option.value === "") {
-                  option.style.display = 'block';
-              } else {
-                  option.style.display = 'none';
-              }
-          });
-
-          // Show the second dropdown and label if a selection is made in the first dropdown
-          if (selectedContactType !== "") {
-              contactClassDropdown.style.display = 'block';
-              contactClassLabel.style.display = 'block';
+        var selectedContactType = this.value;
+        var contactClassDropdown = document.getElementById('contactClass');
+        var contactClassLabel = document.getElementById('contactClassLabel');
+  
+        contactClassDropdown.selectedIndex = 0;
+  
+        Array.from(contactClassDropdown.options).forEach(option => {
+          if (option.dataset.contacttype === selectedContactType || option.value === "") {
+            option.style.display = 'block';
           } else {
-              contactClassDropdown.style.display = 'none';
-              contactClassLabel.style.display = 'none';
+            option.style.display = 'none';
           }
+        });
+  
+        if (selectedContactType !== "") {
+          contactClassDropdown.style.display = 'block';
+          contactClassLabel.style.display = 'block';
+        } else {
+          contactClassDropdown.style.display = 'none';
+          contactClassLabel.style.display = 'none';
+        }
       });
-  </script>
+  
+      function addDynamicEmailRow() {
+    const newEmailRow = document.createElement("div");
+    newEmailRow.classList.add("email-row");
+    newEmailRow.innerHTML = `
+      <input type="text" placeholder="Email" maxlength="55" class="email" required>
+      <select class="email-type" required>
+        <option value="" disabled selected>Please Select Email Type</option>
+        <% allEmailTypes.forEach(emailType => { %>
+          <option value="<%= emailType.id %>"><%= emailType.email_type %></option>
+        <% }); %>
+      </select>
+      <button type="button" class="remove-email-button">-</button>
+    `;
+    dynamicEmailsContainer.insertBefore(newEmailRow, dynamicEmailsContainer.lastChild);
+  }
+      function removeDynamicEmailRow(emailRow) {
+        dynamicEmailsContainer.removeChild(emailRow);
+      }
+  
+  
+    </script>
 
   </form>
 

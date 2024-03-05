@@ -86,6 +86,12 @@ CREATE TABLE crm_phone (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE crm_phone_type (
+  id SERIAL PRIMARY KEY,
+  phone_number_type VARCHAR(15),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 CREATE TABLE crm_address (
   id SERIAL PRIMARY KEY,
   contact_id VARCHAR(25),
@@ -104,6 +110,12 @@ CREATE TABLE crm_email (
   contact_id VARCHAR(25),
   email_type VARCHAR(15),
   email VARCHAR(250),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE crm_email_types (
+  id SERIAL PRIMARY KEY,
+  email_type VARCHAR(15),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -236,3 +248,4 @@ CREATE TABLE crm_sales_rep_assignment (
   created_by VARCHAR(25),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+

@@ -1,7 +1,5 @@
 
 
-
-
 const express = require('express');
 const configureMulterFile = require('../helpers/mutlerFile');
 const fs = require('fs').promises;
@@ -9,12 +7,9 @@ const path = require('path');
 const imageUpload = require('../helpers/uploadImageAndThumbnail');
 const createContact = require('../../database/queries/create_contact_record');
 const addAddress = require('../../database/queries/add_address');
-const addContactName = require('../../database/queries/add_contact_name');
+const addProducer = require('../../database/queries/add_producer');
 const getContactClass = require('../../database/queries/get_all_contact_class');
 const getContactType = require('../../database/queries/get_all_contact_type');
-const getAllPhoneTypes = require('../../database/queries/get_all_phone_type');
-const getAllEmailTypes = require('../../database/queries/get_all_email_type');
-
 
 
 const router = express.Router();
@@ -32,16 +27,15 @@ router.get('/', async (req, res) => {
 
     const allContactClass = await getContactClass();
     const allContactType = await getContactType();
-    const allEmailTypes = await getAllEmailTypes();
-    const allPhoneType = await getAllPhoneTypes();
 
 
 
-    res.render('createcontact', {allContactClass, allContactType, allEmailTypes, allPhoneType});
+
+    res.render('createproducer', {allContactClass, allContactType });
 
 
   } catch (error) {
-    console.error('Error Rendering Create Contact Page:', error);
+    console.error('Error Rendering Create Producer Page:', error);
     res.status(500).send('Internal Server Error');
   }
   
@@ -51,64 +45,68 @@ router.get('/', async (req, res) => {
 router.post('/generate', multerFile.single('file'), async (req, res) => {
   try {
 
+    const fileDescription = req.body.description;
     const fileBuffer = req.file ? req.file.buffer : null;
     const originalFileName = req.file ? req.file.originalname : null;
     let imageId = null;
-    const {contactClass, contactType, streetOne, streetTwo, city, province, country, postal, imageDescription, honorific, firstName, lastName} = req.body
+    const producerName = req.body.name;
+
 
     // if logo included upload
     if (fileBuffer) {
-      const result = await imageUpload(imageDescription, fileBuffer, originalFileName);
+      const result = await imageUpload(fileDescription, fileBuffer, originalFileName);
       imageId = result && result.image ? result.image.id : null;
     }
 
+    const contactClass = req.body.contactClass
+    const contactType = req.body.contactType
+
     const contactId = await createContact(contactClass, contactType)
 
-    // console.log("Contact id test:", contactId)
+    console.log("Contact id test:", contactId)
 
-    const contactAddress = {
+    const producerAddress = {
       contactId,
-      contactClass,
-      streetOne,
-      streetTwo,
-      city,
-      province,
-      country,
-      postal
+      addressClassification: "Producer",
+      streetOne : req.body.street1,
+      streetTwo : req.body.street2,
+      city : req.body.city,
+      province : req.body.province,
+      country : req.body.country,
+      postal : req.body.postal
     };
 
-    const contactName = {
+    const producer = {
       contactId,
-      honorific,
-      firstName,
-      lastName
+      producerName,
+      imageId
     }
 
-    const addedContactName = await addContactName(contactName);
+    const addedProducer = await addProducer(producer);
     
-    const addedContactAddress = await addAddress(contactAddress);
+    const addedAddress = await addAddress(producerAddress);
 
-    // console.log("here is the id from the new address submiuttion", addedAddress)
+    console.log("here is the id from the new address submiuttion", addedAddress)
 
-    // console.log("here is the added producer if return from query: ", addedProducer)
+    console.log("here is the added producer if return from query: ", addedProducer)
 
-    // const dataTest = {
-    //   producerName,
-    //   streetOne : producerAddress.streetOne,
-    //   streetTwo : producerAddress.streetTwo,
-    //   cty : producerAddress.city,
-    //   province : producerAddress.province,
-    //   country : producerAddress.country,
-    //   postal : producerAddress.postal,
-    //   fileDescription,
-    //   imageId
-    // }
+    const dataTest = {
+      producerName,
+      streetOne : producerAddress.streetOne,
+      streetTwo : producerAddress.streetTwo,
+      cty : producerAddress.city,
+      province : producerAddress.province,
+      country : producerAddress.country,
+      postal : producerAddress.postal,
+      fileDescription,
+      imageId
+    }
 
 
     // console.log("here are my various input fields, this should be the one with just image info: ", dataTest)
 
 
-    res.json({ message: 'Contact Creation Rendered successfully.' });
+    res.json({ message: 'Image uploaded successfully.', dataTest });
   } catch (error) {
     console.error('Error handling file upload:', error);
     res.status(500).send('Internal Server Error');
