@@ -1,16 +1,3 @@
-DROP TABLE IF EXISTS crm_images CASCADE;
-DROP TABLE IF EXISTS crm_pdf CASCADE;
-DROP TABLE IF EXISTS crm_document CASCADE;
-DROP TABLE IF EXISTS crm_licence_list CASCADE;
-DROP TABLE IF EXISTS crm_products CASCADE;
-DROP TABLE IF EXISTS crm_alch_products CASCADE;
-DROP TABLE IF EXISTS crm_non_alch_products CASCADE;
-DROP TABLE IF EXISTS crm_alch_classes CASCADE;
-DROP TABLE IF EXISTS crm_non_alch_classes CASCADE;
-DROP TABLE IF EXISTS crm_contacts CASCADE;
-DROP TABLE IF EXISTS crm_contact_class CASCADE;
-DROP TABLE IF EXISTS crm_contact_type CASCADE;
-
 
 
 CREATE TABLE crm_roles (
@@ -38,8 +25,8 @@ CREATE TABLE crm_users (
 );
 
 CREATE TABLE crm_images (
-  id SERIAL PRIMARY KEY,crm_
-  file_description TEXT
+  id SERIAL PRIMARY KEY,
+  crm_file_description TEXT
 );
 
 CREATE TABLE crm_pdf (
