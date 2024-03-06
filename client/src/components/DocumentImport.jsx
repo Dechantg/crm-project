@@ -77,7 +77,6 @@ const DocumentImport = () => {
   return (
     <div>
       <input type="file" onChange={handleFileChange}
-      //accept=".xls, .xlsx, .csv"
       accept=".csv"
       />
       <input

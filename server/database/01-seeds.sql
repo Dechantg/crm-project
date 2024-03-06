@@ -11,3 +11,4 @@ INSERT INTO crm_users (
 ('bob', 'example', 'bob@example.com', 'test'),
 ('john', 'doe', 'john@example.com', 'test'),
 ('jane', 'smith', 'jane@example.com', 'test');
+

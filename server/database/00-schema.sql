@@ -63,7 +63,7 @@ CREATE TABLE crm_document (
 
 CREATE TABLE crm_contacts (
   id SERIAL PRIMARY KEY,
-  contact_classification VARCHAR(25),
+  contact_type VARCHAR(25),
   contact_class VARCHAR(10),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

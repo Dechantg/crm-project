@@ -61,7 +61,7 @@ router.post('/generate', multerFile.single('file'), async (req, res) => {
     const contactClass = req.body.contactClass
     const contactType = req.body.contactType
 
-    const contactId = await createContact(contactClass, contactType)
+    const contactId = await createContact(contactType, contactClass)
 
     console.log("Contact id test:", contactId)
 
