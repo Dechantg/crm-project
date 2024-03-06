@@ -7,7 +7,7 @@ const path = require('path');
 const imageUpload = require('../helpers/uploadImageAndThumbnail');
 const createContact = require('../../database/queries/create_contact_record');
 const addAddress = require('../../database/queries/add_address');
-const addProducer = require('../../database/queries/add_producer');
+const addClient = require('../../database/queries/add_client');
 const getContactClass = require('../../database/queries/get_all_contact_class');
 const getContactType = require('../../database/queries/get_all_contact_type');
 
@@ -31,7 +31,7 @@ router.get('/', async (req, res) => {
 
 
 
-    res.render('createproducer', {allContactClass, allContactType });
+    res.render('createclient', {allContactClass, allContactType });
 
 
   } catch (error) {
@@ -49,7 +49,7 @@ router.post('/generate', multerFile.single('file'), async (req, res) => {
     const fileBuffer = req.file ? req.file.buffer : null;
     const originalFileName = req.file ? req.file.originalname : null;
     let imageId = null;
-    const producerName = req.body.name;
+    const clientName = req.body.name;
 
 
     // if logo included upload
@@ -65,9 +65,9 @@ router.post('/generate', multerFile.single('file'), async (req, res) => {
 
     console.log("Contact id test:", contactId)
 
-    const producerAddress = {
+    const clientAddress = {
       contactId,
-      addressClassification: "Producer",
+      contactClass: "Client",
       streetOne : req.body.street1,
       streetTwo : req.body.street2,
       city : req.body.city,
@@ -76,28 +76,28 @@ router.post('/generate', multerFile.single('file'), async (req, res) => {
       postal : req.body.postal
     };
 
-    const producer = {
+    const client = {
       contactId,
-      producerName,
+      clientName,
       imageId
     }
 
-    const addedProducer = await addProducer(producer);
+    const addedClient = await addClient(client);
     
-    const addedAddress = await addAddress(producerAddress);
+    const addedAddress = await addAddress(clientAddress);
 
     console.log("here is the id from the new address submiuttion", addedAddress)
 
-    console.log("here is the added producer if return from query: ", addedProducer)
+    console.log("here is the added producer if return from query: ", addedClient)
 
     const dataTest = {
-      producerName,
-      streetOne : producerAddress.streetOne,
-      streetTwo : producerAddress.streetTwo,
-      cty : producerAddress.city,
-      province : producerAddress.province,
-      country : producerAddress.country,
-      postal : producerAddress.postal,
+      clientName,
+      streetOne : clientAddress.streetOne,
+      streetTwo : clientAddress.streetTwo,
+      cty : clientAddress.city,
+      province : clientAddress.province,
+      country : clientAddress.country,
+      postal : clientAddress.postal,
       fileDescription,
       imageId
     }

@@ -33,6 +33,7 @@ const createProducer = require('./routes/createProducer')
 const getProducer = require('./routes/getProducers');
 const createProduct = require('./routes/createProduct');
 const createContact = require('./routes/createContact');
+const createClient = require('./routes/createClient');
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -51,9 +52,9 @@ app.use('/upload/licenceelist', uploadLicenceeList);
 app.use('/getlicencelist', getLicenceList);
 app.use('/add/producer', createProducer);
 app.use('/get/producers', getProducer);
-app.use('/create/product', createProduct)
-app.use('/add/contact', createContact)
-
+app.use('/create/product', createProduct);
+app.use('/add/contact', createContact);
+app.use('/add/client', createClient);
 
 
 const port = process.env.PORT;

@@ -68,7 +68,7 @@ router.post('/generate', multerFile.single('file'), async (req, res) => {
 
     const producerAddress = {
       contactId,
-      addressClassification: "Producer",
+      contactClass: "Producer",
       streetOne : req.body.street1,
       streetTwo : req.body.street2,
       city : req.body.city,
