@@ -26,7 +26,12 @@ CREATE TABLE crm_users (
 
 CREATE TABLE crm_images (
   id SERIAL PRIMARY KEY,
-  crm_file_description TEXT
+  user_id VARCHAR(10),
+  file_name VARCHAR(100),
+  uuid_file_name VARCHAR(50),
+  thumbnail VARCHAR(50),
+  file_description TEXT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE crm_pdf (
