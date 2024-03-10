@@ -4,7 +4,7 @@ const router = express.Router();
 const fs = require('fs');
 const handleFile = require('../helpers/handleFile');
 
-const documentSourcePath = path.join(__dirname, '../../database/documents');
+const documentSourcePath = path.join(__dirname, process.env.IMAGE_PATH + '/documents');
 
 router.get('/:id', async (req, res) => {
   try {

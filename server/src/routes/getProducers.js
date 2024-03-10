@@ -6,7 +6,7 @@ const fs = require('fs').promises;
 const getAllProducers = require('../../database/queries/get_all_producers');
 const getProducerLogo = require('../../database/queries/get_producer_logo');
 
-const imagesThumbDirectory = path.join(__dirname, '../../database/images-thumb');
+const imagesThumbDirectory = path.join(__dirname, process.env.IMAGE_PATH + '/images-thumb');
 
 router.get('/', async (req, res) => {
   try {

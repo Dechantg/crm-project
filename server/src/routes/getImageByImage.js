@@ -4,7 +4,7 @@ const fs = require('fs');
 const imageSize = require('image-size');
 
 const router = express.Router();
-const imageSourcePath = path.join(__dirname, '../../database/images');
+const imageSourcePath = path.join(__dirname, process.env.IMAGE_PATH + '/images');
 
 router.get('/:id', async (req, res) => {
   try {

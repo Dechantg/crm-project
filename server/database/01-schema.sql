@@ -28,8 +28,8 @@ CREATE TABLE crm_images (
   id SERIAL PRIMARY KEY,
   user_id VARCHAR(10),
   file_name VARCHAR(100),
-  uuid_file_name VARCHAR(50),
-  thumbnail VARCHAR(50),
+  uuid_file_name VARCHAR(40),
+  thumbnail VARCHAR(40),
   file_description TEXT,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -221,6 +221,13 @@ CREATE TABLE crm_producer_contact (
   created_by VARCHAR(25),
   active BOOLEAN DEFAULT true,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE crm_client_type (
+  id SERIAL PRIMARY KEY,
+  client_type VARCHAR(25),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  active BOOLEAN DEFAULT true
 );
 
 CREATE TABLE crm_client (

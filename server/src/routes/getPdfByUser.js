@@ -6,7 +6,7 @@ const fs = require('fs').promises;
 
 const getPdfByUser = require('../../database/queries/get_pdf_by_user')
 
-const imagesThumbDirectory = path.join(__dirname, '../../database/pdf-thumbnail');
+const imagesThumbDirectory = path.join(__dirname, process.env.IMAGE_PATH + '/pdf-thumbnail');
 
 
 router.get('/', async (req, res) => {

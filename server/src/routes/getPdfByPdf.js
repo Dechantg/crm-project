@@ -3,7 +3,7 @@ const path = require('path');
 const router = express.Router();
 const fs = require('fs');
 
-const pdfSourcePath = path.join(__dirname, '../../database/pdf');
+const pdfSourcePath = path.join(__dirname, process.env.IMAGE_PATH + '/pdf');
 
 router.get('/:id', async (req, res) => {
   try {

@@ -7,7 +7,7 @@ const fs = require('fs').promises;
 
 const getImageByUser = require('../../database/queries/get_images_by_user')
 
-const imagesThumbDirectory = path.join(__dirname, '../../database/images-thumb');
+const imagesThumbDirectory = path.join(__dirname, process.env.IMAGE_PATH + '/images-thumb');
 
 
 router.get('/', async (req, res) => {

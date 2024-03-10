@@ -14,8 +14,8 @@ const router = express.Router();
 
 const multerFile = configureMulterFile();
 
-const pdfUploadPath = path.join(__dirname, '../../database/pdf');
-const pdfUploadThumbPath = path.join(__dirname, '../../database/pdf-thumbnail');
+const pdfUploadPath = path.join(__dirname, process.env.IMAGE_PATH + '/pdf');
+const pdfUploadThumbPath = path.join(__dirname, process.env.IMAGE_PATH + '/pdf-thumbnail');
 const userId = 1
 
 router.post('/', multerFile.single('file'), async (req, res) => {

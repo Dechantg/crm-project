@@ -16,8 +16,8 @@ const router = express.Router();
 
 const multerFile = configureMulterFile();
 
-// const imageUploadPath = path.join(__dirname, '../../database/images');
-// const imageUploadThumbPath = path.join(__dirname, '../../database/images-thumb');
+// const imageUploadPath = path.join(__dirname, process.env.IMAGE_PATH + '/images');
+// const imageUploadThumbPath = path.join(__dirname, process.env.IMAGE_PATH + '/images-thumb');
 // const userId = 1
 
 

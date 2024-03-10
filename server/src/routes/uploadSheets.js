@@ -8,7 +8,7 @@ const handleFile = require('../helpers/handleFile');
 
 const router = express.Router();
 
-const storagePath = path.join(__dirname, '../../database/documents');
+const storagePath = path.join(__dirname, process.env.IMAGE_PATH + '/documents');
 
 router.post('/', uploadMemory.single('file'), async (req, res) => {
   try {

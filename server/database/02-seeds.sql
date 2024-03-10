@@ -81,3 +81,18 @@ INSERT INTO crm_images (
 (17,1, 'trebbiano-2017.jpg', '67080bcb-8e6d-497d-95cc-a69ddd2a4273.jpg', 'ffe610f9-7b8b-45f0-b492-292033037b7d.jpg', 'Jasci Trebbiano'),
 (18,1, 'rudhir-chardonnay.jpg', '883777ee-2a80-44e2-8275-0bbcd17dbc71.jpg', '69f6f29f-c6eb-48f0-a6c7-e1f8f037a1fd.jpg', 'Jasci Rudhir Chardonnay');
 
+
+
+INSERT INTO crm_client_type (
+  id,
+  client_type
+) VALUES
+(1, 'Resturant'),
+(2, 'Wine Bar'),
+(3, 'Bar'),
+(4, 'Club'),
+(5, 'Coffee Shop'),
+(6, 'Government LRS'),
+(7, 'Private LRS'),
+(8, 'Grocery Retail'),
+(9, 'Boutique Retail');
