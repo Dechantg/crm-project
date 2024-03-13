@@ -32,4 +32,6 @@ DROP TABLE IF EXISTS crm_sales_rep_assignment CASCADE;
 DROP TABLE IF EXISTS crm_products_bc CASCADE;
 DROP TABLE IF EXISTS crm_sales_call CASCADE;
 DROP TABLE IF EXISTS crm_product_tasting CASCADE;
+DROP TABLE IF EXISTS crm_country_code CASCADE;
+DROP TABLE IF EXISTS crm_province_state CASCADE;
 

@@ -11,6 +11,9 @@ const addAddress = require('../../database/queries/add_address');
 const addProducer = require('../../database/queries/add_producer');
 const getContactClass = require('../../database/queries/get_all_contact_class');
 const getContactType = require('../../database/queries/get_all_contact_type');
+const getAllPhoneType = require('../../database/queries/get_all_phone_type');
+const getAllEmailType = require('../../database/queries/get_all_email_type');
+const getAllSocialMediaType = require('../../database/queries/get_all_social_media_type');
 
 
 const router = express.Router();
@@ -28,11 +31,14 @@ router.get('/', async (req, res) => {
 
     const allContactClass = await getContactClass();
     const allContactType = await getContactType();
+    const allEmailType = await getAllEmailType();
+    const allPhoneType = await getAllPhoneType();
+    const allSocialMediaType = await getAllSocialMediaType();
 
 
 
 
-    res.render('createproducer', {allContactClass, allContactType });
+    res.render('createproducer', {allContactClass, allContactType, allPhoneType, allEmailType, allSocialMediaType });
 
 
   } catch (error) {

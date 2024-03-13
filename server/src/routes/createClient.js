@@ -1,15 +1,21 @@
 
 
-const express = require('express');
-const configureMulterFile = require('../helpers/mutlerFile');
-const fs = require('fs').promises;
-const path = require('path');
-const imageUpload = require('../helpers/uploadImageAndThumbnail');
-const createContact = require('../../database/queries/create_contact_record');
-const addAddress = require('../../database/queries/add_address');
-const addClient = require('../../database/queries/add_client');
-const getContactClass = require('../../database/queries/get_all_contact_class');
-const getContactType = require('../../database/queries/get_all_contact_type');
+const express =               require('express');
+const configureMulterFile =   require('../helpers/mutlerFile');
+const fs =                    require('fs').promises;
+const path =                  require('path');
+const imageUpload =           require('../helpers/uploadImageAndThumbnail');
+const createContact =         require('../../database/queries/create_contact_record');
+const addAddress =            require('../../database/queries/add_address');
+const addClient =             require('../../database/queries/add_client');
+const getClientType =       require('../../database/queries/get_all_client_type');
+const getContactType =        require('../../database/queries/get_all_contact_type');
+const getAllCountry =         require('../../database/queries/get_all_country');
+const getAllProvince =        require('../../database/queries/get_all_province');
+const getContactClassId =     require('../../database/queries/get_contact_class_id_by_type')
+const getAllSocialMediaType = require('../../database/queries/get_all_social_media_type');
+const getAllPhoneType =       require('../../database/queries/get_all_phone_type');
+const getAllEmailType =       require('../../database/queries/get_all_email_type');
 
 
 const router = express.Router();
@@ -24,14 +30,25 @@ const multerFile = configureMulterFile();
 router.get('/', async (req, res) => {
 
   try {
+    
+    const contactType = "Client"
+    const allClientType = await getClientType();
+    const contactTypeId = await getContactClassId(contactType);
+    const allCountry = await getAllCountry();
+    const allProvince = await getAllProvince();
+    const allEmailType = await getAllEmailType();
+    const allPhoneType = await getAllPhoneType();
+    const allSocialMediaType = await getAllSocialMediaType();
 
-    const allContactClass = await getContactClass();
-    const allContactType = await getContactType();
+    var selectedCountryId
+    console.log("contact type id and name details", contactTypeId)
 
 
 
 
-    res.render('createclient', {allContactClass, allContactType });
+
+
+    res.render('createclient', {allClientType, contactTypeId, allCountry, allProvince, selectedCountryId, allEmailType, allPhoneType, allSocialMediaType });
 
 
   } catch (error) {
@@ -58,16 +75,18 @@ router.post('/generate', multerFile.single('file'), async (req, res) => {
       imageId = result && result.image ? result.image.id : null;
     }
 
-    const contactClass = req.body.contactClass
-    const contactType = req.body.contactType
+    const contactTypeId = req.body.contactTypeId
+    const clientType = req.body.clientType
 
-    const contactId = await createContact(contactType, contactClass)
+    console.log("here is the clientType: ", clientType)
+
+    const contactId = await createContact(contactTypeId, clientType)
 
     console.log("Contact id test:", contactId)
 
     const clientAddress = {
       contactId,
-      contactClass: "Client",
+      contactClass: contactTypeId,
       streetOne : req.body.street1,
       streetTwo : req.body.street2,
       city : req.body.city,

@@ -1,12 +1,4 @@
 
-
-
-
-
-
-
-
-
 const db = require('../connection');
 
 
@@ -19,7 +11,6 @@ const getAllPhoneType = async () => {
 
     const allPhoneType = data.rows;
     
-    console.log("All Phone Types Returned ", allPhoneType)
     return allPhoneType;
   } catch (error) {
     console.error(`Error returning phone types: ${error.message}`);

@@ -105,7 +105,7 @@ CREATE TABLE crm_email (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE crm_email_types (
+CREATE TABLE crm_email_type (
   id SERIAL PRIMARY KEY,
   email_type VARCHAR(15),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -129,8 +129,14 @@ CREATE TABLE crm_licencee_list (
 CREATE TABLE crm_social_media (
   id SERIAL PRIMARY KEY,
   contact_id VARCHAR(25),
+  social_media_type VARCHAR(10),
+  social_media TEXT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE crm_social_media_type (
+  id SERIAL PRIMARY KEY,
   social_media_type VARCHAR(25),
-  social_media VARCHAR(25),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -282,4 +288,17 @@ CREATE TABLE crm_product_tasting (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE crm_country_code (
+  id SERIAL PRIMARY KEY,
+  country_two_Letter VARCHAR(2),
+  country_name VARCHAR(50),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
+CREATE TABLE crm_province_state (
+  id SERIAL PRIMARY KEY,
+  country_code VARCHAR(5),
+  province_two_letter VARCHAR(5),
+  province_state_name VARCHAR(50),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

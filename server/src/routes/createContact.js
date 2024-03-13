@@ -12,8 +12,9 @@ const addAddress = require('../../database/queries/add_address');
 const addContactName = require('../../database/queries/add_contact_name');
 const getContactClass = require('../../database/queries/get_all_contact_class');
 const getContactType = require('../../database/queries/get_all_contact_type');
-const getAllPhoneTypes = require('../../database/queries/get_all_phone_type');
-const getAllEmailTypes = require('../../database/queries/get_all_email_type');
+const getAllPhoneType = require('../../database/queries/get_all_phone_type');
+const getAllEmailType = require('../../database/queries/get_all_email_type');
+const getAllSocialMediaType = require('../../database/queries/get_all_social_media_type');
 
 
 
@@ -32,12 +33,11 @@ router.get('/', async (req, res) => {
 
     const allContactClass = await getContactClass();
     const allContactType = await getContactType();
-    const allEmailTypes = await getAllEmailTypes();
-    const allPhoneType = await getAllPhoneTypes();
+    const allEmailType = await getAllEmailType();
+    const allPhoneType = await getAllPhoneType();
+    const allSocialMediaType = await getAllSocialMediaType();
 
-
-
-    res.render('createcontact', {allContactClass, allContactType, allEmailTypes, allPhoneType});
+    res.render('createcontact', {allContactClass, allContactType, allPhoneType, allEmailType, allSocialMediaType});
 
 
   } catch (error) {

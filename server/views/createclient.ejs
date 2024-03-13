@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Image Upload</title>
+  <title>Create New Client</title>
   <style>
     form {
       max-width: 400px;
@@ -34,18 +34,20 @@
   <form action="/add/client/generate" method="post" enctype="multipart/form-data">
 
     <label for="contactType">Contact Type:</label>
-    <select id="contactType" name="contactType" required>
-        <option value="" disabled selected>Please Select a Contact Type</option>
-        <% allContactType.forEach(contact => { %>
-            <option value="<%= contact.id %>"><%= contact.contact_type_name %></option>
-        <% }); %>
-    </select>
+    <% contactTypeId.forEach(function(contactType) { %>
+      <p><%= contactType.contact_type_name %></p>
+    <% }); %>
 
-    <label for="contactClass">Contact Class:</label>
-    <select id="contactClass" name="contactClass" required>
-        <option value="" disabled selected>Please Select a Contact Class</option>
-        <% allContactClass.forEach(contact => { %>
-            <option data-contacttype="<%= contact.contact_type %>" value="<%= contact.id %>"><%= contact.contact_class %></option>
+    <% contactTypeId.forEach(function(contactType) { %>
+      <input type="hidden" id="contactTypeId" name="contactTypeId" value="<%= contactType.id %>">
+    <% }); %>
+
+  
+    <label for="Client Type">Client Type:</label>
+    <select id="clientType" name="clientType" required>
+        <option value="" disabled selected>Please Select a Client Type</option>
+        <% allClientType.forEach(clientType => { %>
+            <option value="<%= clientType.client_type %>"><%= clientType.client_type %></option>
         <% }); %>
     </select>
 
@@ -62,11 +64,26 @@
     <label for="city">City:</label>
     <input type="text" id="city" name="city" required>
 
-    <label for="province">Province/State:</label>
-    <input type="text" id="province" name="province" required>
 
     <label for="country">Country:</label>
-    <input type="text" id="country" name="country" required>
+    <select id="country" name="country" required>
+      <option value="" disabled selected>Please Select A Province/State</option>
+
+      <% allCountry.forEach(function(country) { %>
+        <option value="<%= country.id %>"><%= country.country_name %></option>
+      <% }); %>
+    </select>
+    
+    <label for="province">Province/State:</label>
+    <select id="province" name="province" required>
+      <option value="" disabled selected>Please Select A Province/State</option>
+
+      <% allProvince.forEach(function(result) { %>
+        <% if (result.country_code === selectedCountryId) { %>
+          <option value="<%= result.id %>"><%= result.province_state_name %></option>
+        <% } %>
+      <% }); %>
+    </select>
 
     <label for="postal">Postal Code:</label>
     <input type="text" id="postal" name="postal" required>
@@ -77,26 +94,180 @@
   
     <label for="file">Choose a Brand Logo:</label>
     <input type="file" id="file" name="file" accept="image/*">
+
+    <div id="dynamic-emails-container">
+      <label>Voter Emails:</label><br>
+      <button type="button" class="add-email-button">+ Add Email</button>
+    
+      <div class="email-row default-row">
+        <input type="text" placeholder="Email" maxlength="55" class="email" required>
+        <select class="email-type" required>
+          <option value="" disabled selected>Please Select Email Type</option>
+          <% allEmailType.forEach(emailType => { %>
+            <option value="<%= emailType.id %>"><%= emailType.email_type %></option>
+          <% }); %>
+        </select>
+        <button type="button" class="remove-email-button">-</button>
+      </div>
+    </div><br>
+
+    <div id="dynamic-phones-container">
+      <label>Phone Numbers:</label><br>
+      <button type="button" class="add-phone-button">+ Add Phone Number</button>
+    
+      <div class="phone-row default-row">
+        <input type="text" placeholder="Phone Number" maxlength="15" class="phone" required>
+        <select class="phone-type" required>
+          <option value="" disabled selected>Please Select Phone Number Type</option>
+          <% allPhoneType.forEach(phoneType => { %>
+            <option value="<%= phoneType.id %>"><%= phoneType.phone_number_type %></option>
+          <% }); %>
+        </select>
+        <button type="button" class="remove-phone-button">-</button>
+      </div>
+    </div><br>
+
+    <div id="dynamic-social-media-container">
+      <label>Social Media:</label><br>
+      <button type="button" class="add-social-media-button">+ Add Social Media</button>
+    
+      <div class="social-media-row default-row">
+        <input type="text" placeholder="Social Media Username" maxlength="50" class="social-media-username" required>
+        <select class="social-media-type" required>
+          <option value="" disabled selected>Please Select Social Media Type</option>
+          <% allSocialMediaType.forEach(socialMediaType => { %>
+            <option value="<%= socialMediaType.id %>"><%= socialMediaType.social_media_type %></option>
+          <% }); %>
+        </select>
+        <button type="button" class="remove-social-media-button">-</button>
+      </div>
+    </div><br>
+    
+    
   
     <button type="submit">Upload</button>
+    
     <script>
-      document.getElementById('contactType').addEventListener('change', function() {
-          var selectedContactType = this.value;
-          var contactClassDropdown = document.getElementById('contactClass');
 
-          // Reset the dropdown to its default state
-          contactClassDropdown.selectedIndex = 0;
+const formData = { emails: [], phones: [], socialMedia: [] };
 
-          // Show only options with matching contact_type
-          Array.from(contactClassDropdown.options).forEach(option => {
-              if (option.dataset.contacttype === selectedContactType || option.value === "") {
-                  option.style.display = 'block';
-              } else {
-                  option.style.display = 'none';
-              }
-          });
-      });
-  </script>
+const dynamicEmailsContainer = document.getElementById("dynamic-emails-container");
+const dynamicPhonesContainer = document.getElementById("dynamic-phones-container");
+const dynamicSocialMediaContainer = document.getElementById("dynamic-social-media-container");
+
+dynamicEmailsContainer.addEventListener("click", function (event) {
+  if (event.target.classList.contains("remove-email-button")) {
+    removeDynamicEmailRow(event.target.closest(".email-row"));
+  }
+  if (event.target.classList.contains("add-email-button")) {
+    addDynamicEmailRow();
+  }
+});
+
+dynamicPhonesContainer.addEventListener("click", function (event) {
+  if (event.target.classList.contains("remove-phone-button")) {
+    removeDynamicPhoneRow(event.target.closest(".phone-row"));
+  }
+  if (event.target.classList.contains("add-phone-button")) {
+    addDynamicPhoneRow();
+  }
+});
+
+dynamicSocialMediaContainer.addEventListener("click", function (event) {
+  if (event.target.classList.contains("remove-social-media-button")) {
+    removeDynamicSocialMediaRow(event.target.closest(".social-media-row"));
+  }
+  if (event.target.classList.contains("add-social-media-button")) {
+    addDynamicSocialMediaRow();
+  }
+});
+
+
+      function handleCountryChange() {
+        var countrySelect = document.getElementById("country");
+        var selectedCountryId = countrySelect.options[countrySelect.selectedIndex].value;
+    
+        var provinceSelect = document.getElementById("province");
+        var allProvince = <%- JSON.stringify(allProvince) %>;
+        provinceSelect.innerHTML = '';
+    
+        allProvince.forEach(function(result) {
+          if (result.country_code === selectedCountryId) {
+            var option = document.createElement("option");
+            option.value = result.id;
+            option.text = result.province_state_name;
+            provinceSelect.appendChild(option);
+          }
+        });
+      }
+    
+      document.getElementById("country").addEventListener("change", handleCountryChange);
+    
+      handleCountryChange();
+
+
+function addDynamicEmailRow() {
+  const newEmailRow = document.createElement("div");
+  newEmailRow.classList.add("email-row");
+  newEmailRow.innerHTML = `
+    <input type="text" placeholder="Email" maxlength="55" class="email" required>
+    <select class="email-type" required>
+      <option value="" disabled selected>Please Select Email Type</option>
+      <% allEmailType.forEach(emailType => { %>
+        <option value="<%= emailType.id %>"><%= emailType.email_type %></option>
+      <% }); %>
+    </select>
+    <button type="button" class="remove-email-button">-</button>
+  `;
+  dynamicEmailsContainer.insertBefore(newEmailRow, dynamicEmailsContainer.lastChild);
+}
+
+function removeDynamicEmailRow(emailRow) {
+  dynamicEmailsContainer.removeChild(emailRow);
+}
+
+function addDynamicPhoneRow() {
+  const newPhoneRow = document.createElement("div");
+  newPhoneRow.classList.add("phone-row");
+  newPhoneRow.innerHTML = `
+    <input type="text" placeholder="Phone Number" maxlength="15" class="phone" required>
+    <select class="phone-type" required>
+      <option value="" disabled selected>Please Select Phone Number Type</option>
+      <% allPhoneType.forEach(phoneType => { %>
+        <option value="<%= phoneType.id %>"><%= phoneType.phone_number_type %></option>
+      <% }); %>
+    </select>
+    <button type="button" class="remove-phone-button">-</button>
+  `;
+  dynamicPhonesContainer.insertBefore(newPhoneRow, dynamicPhonesContainer.lastChild);
+}
+
+function removeDynamicPhoneRow(phoneRow) {
+  dynamicPhonesContainer.removeChild(phoneRow);
+}
+
+function addDynamicSocialMediaRow() {
+  const newSocialMediaRow = document.createElement("div");
+  newSocialMediaRow.classList.add("social-media-row");
+  newSocialMediaRow.innerHTML = `
+    <input type="text" placeholder="Social Media Username" maxlength="50" class="social-media-username" required>
+    <select class="social-media-type" required>
+      <option value="" disabled selected>Please Select Social Media Type</option>
+      <% allSocialMediaType.forEach(socialMediaType => { %>
+        <option value="<%= socialMediaType.id %>"><%= socialMediaType.social_media_type %></option>
+      <% }); %>
+    </select>
+    <button type="button" class="remove-social-media-button">-</button>
+  `;
+  dynamicSocialMediaContainer.insertBefore(newSocialMediaRow, dynamicSocialMediaContainer.lastChild);
+}
+
+function removeDynamicSocialMediaRow(socialMediaRow) {
+  dynamicSocialMediaContainer.removeChild(socialMediaRow);
+}
+    </script>
+    
+    
   </form>
 
 </body>

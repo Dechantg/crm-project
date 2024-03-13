@@ -86,83 +86,178 @@
     <input type="file" id="file" name="file" accept="image/*">
     
     <div id="dynamic-emails-container">
-      <label>Voter Emails:</label><br>
+      <label>Email:</label><br>
       <button type="button" class="add-email-button">+ Add Email</button>
     
       <div class="email-row default-row">
         <input type="text" placeholder="Email" maxlength="55" class="email" required>
         <select class="email-type" required>
           <option value="" disabled selected>Please Select Email Type</option>
-          <% allEmailTypes.forEach(emailType => { %>
+          <% allEmailType.forEach(emailType => { %>
             <option value="<%= emailType.id %>"><%= emailType.email_type %></option>
           <% }); %>
         </select>
         <button type="button" class="remove-email-button">-</button>
       </div>
     </div><br>
+
+    <div id="dynamic-phones-container">
+      <label>Phone Number:</label><br>
+      <button type="button" class="add-phone-button">+ Add Phone Number</button>
+    
+      <div class="phone-row default-row">
+        <input type="text" placeholder="Phone Number" maxlength="15" class="phone" required>
+        <select class="phone-type" required>
+          <option value="" disabled selected>Please Select Phone Number Type</option>
+          <% allPhoneType.forEach(phoneType => { %>
+            <option value="<%= phoneType.id %>"><%= phoneType.phone_number_type %></option>
+          <% }); %>
+        </select>
+        <button type="button" class="remove-phone-button">-</button>
+      </div>
+    </div><br>
+
+    <div id="dynamic-social-media-container">
+      <label>Social Media:</label><br>
+      <button type="button" class="add-social-media-button">+ Add Social Media</button>
+    
+      <div class="social-media-row default-row">
+        <input type="text" placeholder="Social Media Username" maxlength="50" class="social-media-username" required>
+        <select class="social-media-type" required>
+          <option value="" disabled selected>Please Select Social Media Type</option>
+          <% allSocialMediaType.forEach(socialMediaType => { %>
+            <option value="<%= socialMediaType.id %>"><%= socialMediaType.social_media_type %></option>
+          <% }); %>
+        </select>
+        <button type="button" class="remove-social-media-button">-</button>
+      </div>
+    </div><br>
+    
     
   
     <div>
       <button type="submit">Upload</button>
     </div>
     <script>
-  const formData = { emails: [] };
+
   
-  const dynamicEmailsContainer = document.getElementById("dynamic-emails-container");
-  
-  dynamicEmailsContainer.addEventListener("click", function (event) {
-    if (event.target.classList.contains("remove-email-button")) {
-      removeDynamicEmailRow(event.target.closest(".email-row"));
-    }
-    if (event.target.classList.contains("add-email-button")) {
-      addDynamicEmailRow();
+const formData = { emails: [], phones: [], socialMedia: [] };
+
+const dynamicEmailsContainer = document.getElementById("dynamic-emails-container");
+const dynamicPhonesContainer = document.getElementById("dynamic-phones-container");
+const dynamicSocialMediaContainer = document.getElementById("dynamic-social-media-container");
+
+dynamicEmailsContainer.addEventListener("click", function (event) {
+  if (event.target.classList.contains("remove-email-button")) {
+    removeDynamicEmailRow(event.target.closest(".email-row"));
+  }
+  if (event.target.classList.contains("add-email-button")) {
+    addDynamicEmailRow();
+  }
+});
+
+dynamicPhonesContainer.addEventListener("click", function (event) {
+  if (event.target.classList.contains("remove-phone-button")) {
+    removeDynamicPhoneRow(event.target.closest(".phone-row"));
+  }
+  if (event.target.classList.contains("add-phone-button")) {
+    addDynamicPhoneRow();
+  }
+});
+
+dynamicSocialMediaContainer.addEventListener("click", function (event) {
+  if (event.target.classList.contains("remove-social-media-button")) {
+    removeDynamicSocialMediaRow(event.target.closest(".social-media-row"));
+  }
+  if (event.target.classList.contains("add-social-media-button")) {
+    addDynamicSocialMediaRow();
+  }
+});
+
+document.getElementById('contactType').addEventListener('change', function() {
+  var selectedContactType = this.value;
+  var contactClassDropdown = document.getElementById('contactClass');
+  var contactClassLabel = document.getElementById('contactClassLabel');
+
+  contactClassDropdown.selectedIndex = 0;
+
+  Array.from(contactClassDropdown.options).forEach(option => {
+    if (option.dataset.contacttype === selectedContactType || option.value === "") {
+      option.style.display = 'block';
+    } else {
+      option.style.display = 'none';
     }
   });
-  
-      document.getElementById('contactType').addEventListener('change', function() {
-        var selectedContactType = this.value;
-        var contactClassDropdown = document.getElementById('contactClass');
-        var contactClassLabel = document.getElementById('contactClassLabel');
-  
-        contactClassDropdown.selectedIndex = 0;
-  
-        Array.from(contactClassDropdown.options).forEach(option => {
-          if (option.dataset.contacttype === selectedContactType || option.value === "") {
-            option.style.display = 'block';
-          } else {
-            option.style.display = 'none';
-          }
-        });
-  
-        if (selectedContactType !== "") {
-          contactClassDropdown.style.display = 'block';
-          contactClassLabel.style.display = 'block';
-        } else {
-          contactClassDropdown.style.display = 'none';
-          contactClassLabel.style.display = 'none';
-        }
-      });
-  
-      function addDynamicEmailRow() {
-    const newEmailRow = document.createElement("div");
-    newEmailRow.classList.add("email-row");
-    newEmailRow.innerHTML = `
-      <input type="text" placeholder="Email" maxlength="55" class="email" required>
-      <select class="email-type" required>
-        <option value="" disabled selected>Please Select Email Type</option>
-        <% allEmailTypes.forEach(emailType => { %>
-          <option value="<%= emailType.id %>"><%= emailType.email_type %></option>
-        <% }); %>
-      </select>
-      <button type="button" class="remove-email-button">-</button>
-    `;
-    dynamicEmailsContainer.insertBefore(newEmailRow, dynamicEmailsContainer.lastChild);
+
+  if (selectedContactType !== "") {
+    contactClassDropdown.style.display = 'block';
+    contactClassLabel.style.display = 'block';
+  } else {
+    contactClassDropdown.style.display = 'none';
+    contactClassLabel.style.display = 'none';
   }
-      function removeDynamicEmailRow(emailRow) {
-        dynamicEmailsContainer.removeChild(emailRow);
-      }
-  
-  
+});
+
+function addDynamicEmailRow() {
+  const newEmailRow = document.createElement("div");
+  newEmailRow.classList.add("email-row");
+  newEmailRow.innerHTML = `
+    <input type="text" placeholder="Email" maxlength="55" class="email" required>
+    <select class="email-type" required>
+      <option value="" disabled selected>Please Select Email Type</option>
+      <% allEmailType.forEach(emailType => { %>
+        <option value="<%= emailType.id %>"><%= emailType.email_type %></option>
+      <% }); %>
+    </select>
+    <button type="button" class="remove-email-button">-</button>
+  `;
+  dynamicEmailsContainer.insertBefore(newEmailRow, dynamicEmailsContainer.lastChild);
+}
+
+function removeDynamicEmailRow(emailRow) {
+  dynamicEmailsContainer.removeChild(emailRow);
+}
+
+function addDynamicPhoneRow() {
+  const newPhoneRow = document.createElement("div");
+  newPhoneRow.classList.add("phone-row");
+  newPhoneRow.innerHTML = `
+    <input type="text" placeholder="Phone Number" maxlength="15" class="phone" required>
+    <select class="phone-type" required>
+      <option value="" disabled selected>Please Select Phone Number Type</option>
+      <% allPhoneType.forEach(phoneType => { %>
+        <option value="<%= phoneType.id %>"><%= phoneType.phone_number_type %></option>
+      <% }); %>
+    </select>
+    <button type="button" class="remove-phone-button">-</button>
+  `;
+  dynamicPhonesContainer.insertBefore(newPhoneRow, dynamicPhonesContainer.lastChild);
+}
+
+function removeDynamicPhoneRow(phoneRow) {
+  dynamicPhonesContainer.removeChild(phoneRow);
+}
+
+function addDynamicSocialMediaRow() {
+  const newSocialMediaRow = document.createElement("div");
+  newSocialMediaRow.classList.add("social-media-row");
+  newSocialMediaRow.innerHTML = `
+    <input type="text" placeholder="Social Media Username" maxlength="50" class="social-media-username" required>
+    <select class="social-media-type" required>
+      <option value="" disabled selected>Please Select Social Media Type</option>
+      <% allSocialMediaType.forEach(socialMediaType => { %>
+        <option value="<%= socialMediaType.id %>"><%= socialMediaType.social_media_type %></option>
+      <% }); %>
+    </select>
+    <button type="button" class="remove-social-media-button">-</button>
+  `;
+  dynamicSocialMediaContainer.insertBefore(newSocialMediaRow, dynamicSocialMediaContainer.lastChild);
+}
+
+function removeDynamicSocialMediaRow(socialMediaRow) {
+  dynamicSocialMediaContainer.removeChild(socialMediaRow);
+}
+
     </script>
 
   </form>

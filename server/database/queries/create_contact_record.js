@@ -7,7 +7,7 @@
 const db = require('../connection');
 
 
-const addContact = async (contactClass, contactType) => {
+const addContact = async (contactType, contactClass) => {
   try {
     const data = await db.query(
       'INSERT INTO crm_contacts (contact_type, contact_class) VALUES ($1, $2) RETURNING id;',
