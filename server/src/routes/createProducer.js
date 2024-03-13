@@ -58,6 +58,7 @@ router.post('/generate', multerFile.single('file'), async (req, res) => {
     let imageId = null;
     const producerName = req.body.name;
 
+console.log("req.body from new upload data: ", req.body)
 
     // if logo included upload
     if (fileBuffer) {
@@ -70,7 +71,7 @@ router.post('/generate', multerFile.single('file'), async (req, res) => {
 
     const contactId = await createContact(contactType, contactClass)
 
-    console.log("Contact id test:", contactId)
+    // console.log("Contact id test:", contactId)
 
     const producerAddress = {
       contactId,
@@ -93,9 +94,9 @@ router.post('/generate', multerFile.single('file'), async (req, res) => {
     
     const addedAddress = await addAddress(producerAddress);
 
-    console.log("here is the id from the new address submiuttion", addedAddress)
+    // console.log("here is the id from the new address submiuttion", addedAddress)
 
-    console.log("here is the added producer if return from query: ", addedProducer)
+    // console.log("here is the added producer if return from query: ", addedProducer)
 
     const dataTest = {
       producerName,

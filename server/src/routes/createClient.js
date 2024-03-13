@@ -62,11 +62,14 @@ router.get('/', async (req, res) => {
 router.post('/generate', multerFile.single('file'), async (req, res) => {
   try {
 
-    const fileDescription = req.body.description;
+    // const fileDescription = req.body.description.length !== 0 ? req.body.description : null ;
+    const fileDescription = req.body.description
     const fileBuffer = req.file ? req.file.buffer : null;
     const originalFileName = req.file ? req.file.originalname : null;
     let imageId = null;
     const clientName = req.body.name;
+
+    console.log("req.body", req.body)
 
 
     // if logo included upload

@@ -37,7 +37,7 @@ const ImageImport = () => {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('description', description);
-
+console.log("From data from the image upload section", formData);
     try {
       const response = await fetch('/api/upload/image', {
         method: 'POST',
@@ -84,8 +84,8 @@ const ImageImport = () => {
             const queryResult = jsonData.images || [];
             const thumbnails = jsonData.thumbnails || [];
 
-            console.log("here is the queryResults object", queryResult);
-            console.log("here is the thumbnails object", thumbnails);
+            // console.log("here is the queryResults object", queryResult);
+            // console.log("here is the thumbnails object", thumbnails);
 
             const resultElements = [];
 

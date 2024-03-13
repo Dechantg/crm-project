@@ -9,6 +9,7 @@ import PdfImport from './components/PDFImport';
 import Index from './components/Index';
 import Header from './components/Header';
 import PdfView from './components/PdfView'
+import ClientImport from './components/ClientImport';
 
 const App = () => {
   return (
@@ -21,6 +22,8 @@ const App = () => {
         <Route path="/image" element={<ImageImport />} />
         <Route path="/pdf" element={<PdfImport />} />
         <Route path="/getpdf" element={<PdfView />} />
+        <Route path="/clientimport" element={<ClientImport />} />
+
 
       </Routes>
     
