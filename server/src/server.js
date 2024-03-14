@@ -82,7 +82,9 @@ app.get('/licencee', (req, res) => {
   res.render('uploadlicencee');
 });
 
-
+app.post('/test', (req, res) => {
+  res.send("Test Completed I think")
+})
 
 
 
