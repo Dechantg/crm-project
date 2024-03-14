@@ -24,8 +24,10 @@ CREATE TABLE crm_users (
   password_hash TEXT NOT NULL
 );
 
+CREATE SEQUENCE crm_images_id_seq START WITH 50;
+
 CREATE TABLE crm_images (
-  id SERIAL PRIMARY KEY,
+  id INTEGER DEFAULT nextval('crm_images_id_seq') PRIMARY KEY,
   user_id VARCHAR(10),
   file_name VARCHAR(100),
   uuid_file_name VARCHAR(40),

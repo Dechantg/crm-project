@@ -6,7 +6,7 @@ const db = require('../connection');
 const addImage = async (userId, fileName, uuidFileName, thumbNail, fileDescription) => {
   try {
     const data = await db.query(
-      'INSERT INTO crm_images (user_id, file_name, uuid_file_name, thumbnail, file_description) VALUES ($1, $2, $3, $4, $5) RETURNING *;',
+      `INSERT INTO crm_images (id, user_id, file_name, uuid_file_name, thumbnail, file_description) VALUES ('19', $1, $2, $3, $4, $5) RETURNING *;`,
       [userId, fileName, uuidFileName, thumbNail, fileDescription]
     );
 
