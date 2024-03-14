@@ -43,12 +43,19 @@ router.get('/', async (req, res) => {
     var selectedCountryId
     console.log("contact type id and name details", contactTypeId)
 
+    const clientDetails = {
+      allClientType,
+      contactTypeId,
+      allCountry,
+      allProvince,
+      allEmailType,
+      allPhoneType,
+      allSocialMediaType
+    }
 
 
 
-
-
-    res.render('createclient', {allClientType, contactTypeId, allCountry, allProvince, selectedCountryId, allEmailType, allPhoneType, allSocialMediaType });
+    res.json({clientDetails });
 
 
   } catch (error) {

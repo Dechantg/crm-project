@@ -35,9 +35,12 @@ const createProduct = require('./routes/createProduct');
 const createContact = require('./routes/createContact');
 const createClient = require('./routes/createClient');
 const resetDatabase = require('./routes/resetDatabase');
+const frontendTestRoute = require('./routes/frontendTestRoute');
 
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
+const getAllClient = require('./routes/getAllClients');
+
+// const storage = multer.memoryStorage();
+// const upload = multer({ storage: storage });
 
 
 app.use('/upload/sheet', uploadSheetsRoute);
@@ -57,6 +60,8 @@ app.use('/create/product', createProduct);
 app.use('/add/contact', createContact);
 app.use('/add/client', createClient);
 app.use('/api/careful/reset/dontbedumb', resetDatabase)
+app.use('/frontend', frontendTestRoute)
+app.use('/get/allclient', getAllClient)
 
 
 const port = process.env.PORT;

@@ -5,7 +5,7 @@ const db = require('../connection');
 
 const clientId = async () => {
   try {
-    const data = await db.query(`SELECT * FROM crm_client ORDER BY created_at DESC;`);
+    const data = await db.query(`SELECT * FROM crm_client;`);
     const clients = data.rows;
     return clients;
   } catch (error) {

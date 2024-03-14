@@ -4,11 +4,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const routes = [
-  { path: '/document', label: 'CSV and Excel Upload' },
+  // { path: '/document', label: 'CSV and Excel Upload' },
   { path: '/image', label: 'Image Upload' },
-  { path: '/pdf', label: 'PDF Upload' },
-
-
+  // { path: '/pdf', label: 'PDF Upload' },
+  { path: '/client', label: 'Client List' },
 
 ];
 
