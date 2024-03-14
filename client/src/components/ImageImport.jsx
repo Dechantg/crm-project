@@ -38,6 +38,7 @@ const ImageImport = () => {
     formData.append('file', file);
     formData.append('description', description);
 console.log("From data from the image upload section", formData);
+
     try {
       const response = await fetch('/api/upload/image', {
         method: 'POST',

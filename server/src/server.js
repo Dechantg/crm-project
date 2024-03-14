@@ -6,8 +6,10 @@ const morgan = require('morgan');
 const path = require('path');
 const session = require('express-session');
 const cors = require('cors');
+const configureMulterFile = require('./helpers/mutlerFile');
 
 
+// const multerFile = configureMulterFile();
 
 
 const app = express();
@@ -36,8 +38,6 @@ const createContact = require('./routes/createContact');
 const createClient = require('./routes/createClient');
 const resetDatabase = require('./routes/resetDatabase');
 
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
 
 
 app.use('/upload/sheet', uploadSheetsRoute);
@@ -82,9 +82,14 @@ app.get('/licencee', (req, res) => {
   res.render('uploadlicencee');
 });
 
-app.post('/test', (req, res) => {
-  res.send("Test Completed I think")
-})
+
+
+
+// app.post('/test', multerFile.single('file'), async (req, res) => {
+//   console.log("Data being passed over", req.body)
+//   console.log("file data:", req.file.buffer)
+//   res.send("Test Completed I think")
+// })
 
 
 
