@@ -35,3 +35,5 @@ DROP TABLE IF EXISTS crm_product_tasting CASCADE;
 DROP TABLE IF EXISTS crm_country_code CASCADE;
 DROP TABLE IF EXISTS crm_province_state CASCADE;
 
+
+DROP SEQUENCE crm_images_id_seq;

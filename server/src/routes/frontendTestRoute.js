@@ -36,12 +36,42 @@ router.post('/client-test', multerFile.single('image'), async (req, res) => {
     // console.log(req.file);
 
     dataTest = req.body
-    console.log("from inside the rest route the body", dataTest);
+    // console.log("from inside the rest route the body", dataTest);
 
     const fileDescription = req.body.clientName;
     const fileBuffer = req.file ? req.file.buffer : null;
     const originalFileName = req.file ? req.file.originalname : null;
     let imageId = null;
+
+    const contactType = "2";
+    const contactClass = req.body.contactClass
+
+    const contactId = "1";
+
+
+    const clientAddress = {
+      contactId,
+      contactClass: contactType,
+      streetOne : req.body.streetOne,
+      streetTwo : req.body.streetTwo,
+      city : req.body.city,
+      province : req.body.provinceId,
+      country : req.body.countryId,
+      postal : req.body.postalCode
+    }; 
+
+
+console.log("address object being constructed", clientAddress)
+
+const client = {
+  contactId,
+  clientName: req.body.clientName,
+  imageId,
+}
+
+console.log("client object being built", client);
+
+
 
     if (fileBuffer && fileBuffer.length > 0) {
       console.log("looking for the file buffer length", fileBuffer.length);

@@ -3,7 +3,9 @@ import Modal from 'react-modal';
 import '../views/Modal.scss'
 import '../views/Document.scss'
 import AddressForm from './AddressForm.jsx';
-
+import SocialMediaForm from './SocialMediaForm.jsx';
+import PhoneNumberForm from './PhoneNumberForm.jsx';
+import EmailForm from './EmailForm.jsx';
 
 const ClientCreateModal = ({ onClose }) => {
   const [file, setFile] = useState(null);
@@ -35,6 +37,13 @@ const ClientCreateModal = ({ onClose }) => {
     });
   }
 
+  const handleClientTypeChange = (event) => {
+    const selectedClientType = event.target.value;
+    setFormValues({
+        ...formValues,
+        clientType: selectedClientType,
+    });
+};
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -44,33 +53,44 @@ const ClientCreateModal = ({ onClose }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // formData.append('description', description);
-
-
     try {
-      const formData = new FormData();
-      for (const key in formValues){
-       if (Object.prototype.hasOwnProperty.call(formValues, key)){
-         formData.set(key, formValues[key]);
-       }
-      }
-      formData.set('image', file);
+        const formData = new FormData();
+        
+        for (const key in formValues) {
+            if (Object.prototype.hasOwnProperty.call(formValues, key)) {
+                formData.set(key, formValues[key]);
+            }
+        }
 
-      console.log("here is the submit trigger")
-      const response = await fetch('/api/frontend/client-test', {
-        method: 'POST',
-        body: formData,
-      });
+       
 
-      
+        const phoneNumberRowsString = JSON.stringify(formValues.phoneNumberRows);
+        formData.set('phoneNumberRows', phoneNumberRowsString);
 
+        const socialMediaRowsString = JSON.stringify(formValues.socialMediaRows);
+        formData.set('socialMediaRows', socialMediaRowsString);
+
+        const emailRowsString = JSON.stringify(formValues.emailRows);
+        formData.set('emailRows', emailRowsString);
+
+
+        // Append file
+        formData.append('image', file);
+
+        const response = await fetch('/api/add/client/generate', {
+            method: 'POST',
+            body: formData,
+        });
 
     } catch (error) {
-      console.error('Error uploading data:', error);
-      
+        console.error('Error uploading data:', error);
     }
+
     onClose();
-  }
+};
+
+
+
 
   if (!clientCreationDetails) {
     return <div>Loading...</div>;
@@ -95,6 +115,18 @@ const ClientCreateModal = ({ onClose }) => {
         <div className="scroll-container">
           <form encType="multipart/form-data" method="POST" onSubmit={handleSubmit}>
             <label>
+
+            <label htmlFor="clientTypeSelect">Select Client Type:</label>
+            <select id="clientTypeSelect" value={formValues.client_type} onChange={handleClientTypeChange}>
+                <option value="">Select a client type...</option>
+                {clientCreationDetails.allClientType.map(clientType => (
+                    <option key={clientType.id} value={clientType.client_type}>
+                        {clientType.client_type}
+                    </option>
+                ))}
+            </select> 
+              <br></br>
+            
               Client Name:
               <input
                 type="text"
@@ -103,8 +135,11 @@ const ClientCreateModal = ({ onClose }) => {
                 value={formValues.clientName}
                 onChange={handleOnChange}
               />
+               
               <br></br>
-             
+              
+              <br></br>
+
                <div>
             <AddressForm
                 clientCreationDetails={clientCreationDetails}
@@ -112,8 +147,36 @@ const ClientCreateModal = ({ onClose }) => {
                 setFormValues={setFormValues}
             />
         </div>
-              <br></br>
-<input type="file" accept=".bmp,.png,.gif,.jpeg,.jpg,.tiff" onChange={handleFileChange} />
+        <br></br>
+        
+        <br></br>
+        <div>
+          <h3>Phone Number</h3>
+            <PhoneNumberForm
+                clientCreationDetails={clientCreationDetails}
+                formValues={formValues}
+                setFormValues={setFormValues}
+            />
+        </div>
+        <br></br>
+        <div>
+          <h3>Email Address</h3>
+            <EmailForm
+                clientCreationDetails={clientCreationDetails}
+                formValues={formValues}
+                setFormValues={setFormValues}
+            />
+        </div>
+        <div>
+          <h3>Social Media Accounts</h3>
+            <SocialMediaForm
+                clientCreationDetails={clientCreationDetails}
+                formValues={formValues}
+                setFormValues={setFormValues}
+            />
+        </div>
+        <br></br>
+        <input type="file" accept=".bmp,.png,.gif,.jpeg,.jpg,.tiff" onChange={handleFileChange} />
 
             </label>
             <br></br>

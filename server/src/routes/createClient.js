@@ -66,7 +66,7 @@ router.get('/', async (req, res) => {
 });
 
 
-router.post('/generate', multerFile.single('file'), async (req, res) => {
+router.post('/generate', multerFile.single('image'), async (req, res) => {
   try {
 
     const fileDescription = req.body.description;
@@ -82,30 +82,30 @@ router.post('/generate', multerFile.single('file'), async (req, res) => {
       imageId = result && result.image ? result.image.id : null;
     }
 
-    const contactTypeId = req.body.contactTypeId
-    const clientType = req.body.clientType
+    const contactType = "2";
+    const contactClass = req.body.contactClass
 
-    console.log("here is the clientType: ", clientType)
 
-    const contactId = await createContact(contactTypeId, clientType)
+    const contactId = await createContact(contactType, contactClass)
 
     console.log("Contact id test:", contactId)
 
+
     const clientAddress = {
       contactId,
-      contactClass: contactTypeId,
-      streetOne : req.body.street1,
-      streetTwo : req.body.street2,
+      contactClass: contactType,
+      streetOne : req.body.streetOne,
+      streetTwo : req.body.streetTwo,
       city : req.body.city,
-      province : req.body.province,
-      country : req.body.country,
-      postal : req.body.postal
-    };
+      province : req.body.provinceId,
+      country : req.body.countryId,
+      postal : req.body.postalCode
+    }; 
 
     const client = {
       contactId,
-      clientName,
-      imageId
+      clientName: req.body.clientName,
+      imageId,
     }
 
     const addedClient = await addClient(client);
@@ -132,7 +132,7 @@ router.post('/generate', multerFile.single('file'), async (req, res) => {
     // console.log("here are my various input fields, this should be the one with just image info: ", dataTest)
 
 
-    res.json({ message: 'Image uploaded successfully.', dataTest });
+    res.json({ message: 'Client Created successfully.', dataTest });
   } catch (error) {
     console.error('Error handling file upload:', error);
     res.status(500).send('Internal Server Error');
