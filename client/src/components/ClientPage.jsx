@@ -15,7 +15,7 @@ const ClientList = () => {
       try {
         const responce = await fetch('/api/get/allclient');
         const data = await responce.json();
-        console.log("data from my backend: ", data)
+        console.log("client data from my backend: ", data)
 
         setAllClients(data.allClients);
       } catch (error) {
@@ -38,7 +38,7 @@ const ClientList = () => {
     <div>
       <button onClick={handleCreateNew}>Create New Client</button>
       <h1>Client List</h1>
-      {/* Render your client list */}
+      {/* Render client list */}
       {allClients ? (
         <div>
           {allClients.map(client => (

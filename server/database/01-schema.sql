@@ -153,7 +153,7 @@ CREATE TABLE crm_client_list (
 
 CREATE TABLE crm_products (
   id SERIAL PRIMARY KEY,
-  producer_id VARCHAR(50),
+  supplier_id VARCHAR(50),
   product_name VARCHAR(100),
   product_image VARCHAR(25),
   product_type VARCHAR(25),
@@ -187,13 +187,21 @@ CREATE TABLE crm_products_bc_alcoholic (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE crm_producer (
+CREATE TABLE crm_supplier (
   id SERIAL PRIMARY KEY,
   contact_id VARCHAR(25),
-  producer_name VARCHAR(100),
-  producer_logo VARCHAR(25),
+  supplier_name VARCHAR(100),
+  supplier_type VARCHAR(25),
+  supplier_logo VARCHAR(25),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 
+);
+
+CREATE TABLE crm_supplier_type (
+  id SERIAL PRIMARY KEY,
+  supplier_type VARCHAR(25),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  active BOOLEAN DEFAULT true
 );
 
 CREATE TABLE crm_alch_classes (
@@ -222,9 +230,9 @@ CREATE TABLE crm_contact_type (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE crm_producer_contact (
+CREATE TABLE crm_supplier_contact (
   id SERIAL PRIMARY KEY,
-  producer_id VARCHAR(25),
+  supplier_id VARCHAR(25),
   contact_id VARCHAR(25),
   created_by VARCHAR(25),
   active BOOLEAN DEFAULT true,

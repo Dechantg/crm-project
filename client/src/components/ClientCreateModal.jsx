@@ -11,8 +11,7 @@ const ClientCreateModal = ({ onClose }) => {
   const [file, setFile] = useState(null);
   const [clientCreationDetails, setClientCreationDetails] = useState(null);
 
-  const [formValues, setFormValues] = useState({
-  });
+  const [formValues, setFormValues] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {

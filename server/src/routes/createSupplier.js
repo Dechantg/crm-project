@@ -8,13 +8,15 @@ const path = require('path');
 const imageUpload = require('../helpers/uploadImageAndThumbnail');
 const createContact = require('../../database/queries/create_contact_record');
 const addAddress = require('../../database/queries/add_address');
-const addProducer = require('../../database/queries/add_producer');
+const addSupplier = require('../../database/queries/add_supplier');
 const getContactClass = require('../../database/queries/get_all_contact_class');
 const getContactType = require('../../database/queries/get_all_contact_type');
 const getAllPhoneType = require('../../database/queries/get_all_phone_type');
 const getAllEmailType = require('../../database/queries/get_all_email_type');
 const getAllSocialMediaType = require('../../database/queries/get_all_social_media_type');
-
+const getAllCountry =         require('../../database/queries/get_all_country');
+const getAllProvince =        require('../../database/queries/get_all_province');
+const getSupplierType = require('../../database/queries/get_all_supplier_type')
 
 const router = express.Router();
 
@@ -29,20 +31,33 @@ router.get('/', async (req, res) => {
 
   try {
 
-    const allContactClass = await getContactClass();
-    const allContactType = await getContactType();
+    const contactType = "Supplier"
+    const allSupplierType = await getSupplierType();
+    const contactTypeId = await getContactClassId(contactType);
+    const allCountry = await getAllCountry();
+    const allProvince = await getAllProvince();
     const allEmailType = await getAllEmailType();
     const allPhoneType = await getAllPhoneType();
     const allSocialMediaType = await getAllSocialMediaType();
 
+    const supplierDetails = {
+      allSupplierType,
+      contactTypeId,
+      allCountry,
+      allProvince,
+      allEmailType,
+      allPhoneType,
+      allSocialMediaType
+    }
 
 
 
-    res.render('createproducer', {allContactClass, allContactType, allPhoneType, allEmailType, allSocialMediaType });
+
+    res.json({supplierDetails });
 
 
   } catch (error) {
-    console.error('Error Rendering Create Producer Page:', error);
+    console.error('Error Rendering Create Supplier Page:', error);
     res.status(500).send('Internal Server Error');
   }
   
@@ -56,7 +71,7 @@ router.post('/generate', multerFile.single('file'), async (req, res) => {
     const fileBuffer = req.file ? req.file.buffer : null;
     const originalFileName = req.file ? req.file.originalname : null;
     let imageId = null;
-    const producerName = req.body.name;
+    const supplierName = req.body.name;
 
 
     // if logo included upload
@@ -72,9 +87,9 @@ router.post('/generate', multerFile.single('file'), async (req, res) => {
 
     console.log("Contact id test:", contactId)
 
-    const producerAddress = {
+    const supplierAddress = {
       contactId,
-      contactClass: "Producer",
+      contactClass: "Supplier",
       streetOne : req.body.street1,
       streetTwo : req.body.street2,
       city : req.body.city,
@@ -83,28 +98,28 @@ router.post('/generate', multerFile.single('file'), async (req, res) => {
       postal : req.body.postal
     };
 
-    const producer = {
+    const supplier = {
       contactId,
-      producerName,
+      supplierName,
       imageId
     }
 
-    const addedProducer = await addProducer(producer);
+    const addedSupplier = await addSupplier(supplier);
     
-    const addedAddress = await addAddress(producerAddress);
+    const addedAddress = await addAddress(supplierAddress);
 
     console.log("here is the id from the new address submiuttion", addedAddress)
 
-    console.log("here is the added producer if return from query: ", addedProducer)
+    console.log("here is the added supplier if return from query: ", addedSupplier)
 
     const dataTest = {
-      producerName,
-      streetOne : producerAddress.streetOne,
-      streetTwo : producerAddress.streetTwo,
-      cty : producerAddress.city,
-      province : producerAddress.province,
-      country : producerAddress.country,
-      postal : producerAddress.postal,
+      supplierName,
+      streetOne : supplierAddress.streetOne,
+      streetTwo : supplierAddress.streetTwo,
+      cty : supplierAddress.city,
+      province : supplierAddress.province,
+      country : supplierAddress.country,
+      postal : supplierAddress.postal,
       fileDescription,
       imageId
     }

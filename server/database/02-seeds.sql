@@ -36,6 +36,18 @@ INSERT INTO crm_contact_class (
 (10, 'Distilery Rep', '3'),
 (11, 'Whatever the fuck Alex is', '3');
 
+INSERT INTO crm_supplier (
+  id,
+  supplier_name,
+  supplier_type
+) VALUES 
+(1, 'Savian', 1),
+(2, 'Jasci', 1),
+(3, '54 Gin', 2),
+(4, 'Avanzi', 1),
+(5, 'Tassoni', 3),
+(6, 'Scrappy''s', 4);
+
 INSERT INTO crm_alch_classes (
   id,
   alch_type
@@ -106,7 +118,15 @@ INSERT INTO crm_images (
 (17,1, 'trebbiano-2017.jpg', '67080bcb-8e6d-497d-95cc-a69ddd2a4273.jpg', 'ffe610f9-7b8b-45f0-b492-292033037b7d.jpg', 'Jasci Trebbiano'),
 (18,1, 'rudhir-chardonnay.jpg', '883777ee-2a80-44e2-8275-0bbcd17dbc71.jpg', '69f6f29f-c6eb-48f0-a6c7-e1f8f037a1fd.jpg', 'Jasci Rudhir Chardonnay');
 
-
+INSERT INTO crm_supplier_type (
+  id,
+  supplier_type
+) VALUES
+(1, 'Winnery'),
+(2, 'Distillery'),
+(3, 'Water'),
+(4, 'Bitters'),
+(5, 'Distributor');
 
 INSERT INTO crm_client_type (
   id,
