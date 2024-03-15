@@ -27,11 +27,11 @@ CREATE TABLE crm_users (
 CREATE SEQUENCE crm_images_id_seq START WITH 50;
 
 CREATE TABLE crm_images (
-  id INTEGER DEFAULT nextval('crm_images_id_seq') PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   user_id VARCHAR(10),
   file_name VARCHAR(100),
-  uuid_file_name VARCHAR(40),
-  thumbnail VARCHAR(40),
+  uuid_file_name VARCHAR(150),
+  thumbnail VARCHAR(150),
   file_description TEXT,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
