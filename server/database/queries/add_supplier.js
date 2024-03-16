@@ -6,11 +6,11 @@ const db = require('../connection');
 
 const addSupplier = async (supplier) => {
   try {
-    const {contactId, SupplierName, imageId} = supplier
+    const {enityId, SupplierName, imageId} = supplier
 
     const data = await db.query(
       'INSERT INTO crm_supplier (entity_id, supplier_name, supplier_logo) VALUES ($1, $2, $3) RETURNING id;',
-      [contactId, SupplierName, imageId]
+      [enityId, SupplierName, imageId]
     );
 
     const newSupplier = data.rows[0].id;

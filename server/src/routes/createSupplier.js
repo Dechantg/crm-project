@@ -6,18 +6,18 @@ const configureMulterFile = require('../helpers/mutlerFile');
 const fs = require('fs').promises;
 const path = require('path');
 const imageUpload = require('../helpers/uploadImageAndThumbnail');
-const createContact = require('../../database/queries/create_contact_record');
+const createContact = require('../../database/queries/create_entity_record');
 const addAddress = require('../../database/queries/add_address');
 const addSupplier = require('../../database/queries/add_supplier');
 const getContactClass = require('../../database/queries/get_all_contact_class');
-const getContactType = require('../../database/queries/get_all_contact_type');
+const getContactType = require('../../database/queries/get_all_entity_type');
 const getAllPhoneType = require('../../database/queries/get_all_phone_type');
 const getAllEmailType = require('../../database/queries/get_all_email_type');
 const getAllSocialMediaType = require('../../database/queries/get_all_social_media_type');
 const getAllCountry =         require('../../database/queries/get_all_country');
 const getAllProvince =        require('../../database/queries/get_all_province');
 const getSupplierType = require('../../database/queries/get_all_supplier_type');
-const getContactClassId =     require('../../database/queries/get_contact_class_id_by_type')
+const getContactClassId =     require('../../database/queries/get_entity_class_id_by_name')
 
 
 const router = express.Router();
@@ -77,7 +77,7 @@ router.post('/generate', multerFile.single('file'), async (req, res) => {
     const originalFileName = req.file ? req.file.originalname : null;
     let imageId = null;
     const supplierName = req.body.name;
-
+    const establishment = true;
 
     // if logo included upload
     if (fileBuffer) {
@@ -85,10 +85,11 @@ router.post('/generate', multerFile.single('file'), async (req, res) => {
       imageId = result && result.image ? result.image.id : null;
     }
 
-    const contactClass = req.body.contactClass
-    const contactType = "3"
+    const entityClass = "3";
+    const contactType = req.body.contactClass
 
-    const entityId = await createContact(contactType, contactClass)
+
+    const entityId = await createContact(entityClass, contactType, establishment)
 
     console.log("Contact id test:", entityId)
 

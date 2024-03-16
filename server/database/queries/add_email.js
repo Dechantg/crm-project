@@ -10,19 +10,19 @@ const db = require('../connection');
 
 const addContactEmail = async (contactEmail) => {
   try {
-    const {contactId, phoneEmailType, phoneEmail} = contactEmail
+    const {entityId, phoneEmailType, phoneEmail} = contactEmail
 
     const data = await db.query(
       'INSERT INTO crm_phone (entity_id, email_type, email) VALUES ($1, $2, $3) RETURNING id;',
-      [contactId, phoneEmailType, phoneEmail]
+      [entityId, phoneEmailType, phoneEmail]
     );
 
     const newContactEmail = data.rows[0].id;
     
-    console.log("New Contact Name created with id ", newContactEmail)
+    console.log("New Entity Phone created with id ", newContactEmail)
     return newContactEmail;
   } catch (error) {
-    console.error(`Error creating user: ${error.message}`);
+    console.error(`Error creating email: ${error.message}`);
     throw { success: false, error: 'Internal Server Error' };
   }
 };

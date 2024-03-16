@@ -9,11 +9,11 @@ const db = require('../connection');
 
 const addContactClass = async (newClass) => {
   try {
-    const {contactClass, contactType} = newClass
+    const {entityClass, contactType} = newClass
 
     const data = await db.query(
-      'INSERT INTO crm_contact_class (contact_class, contact_type) VALUES ($1, $2) RETURNING id;',
-      [contactClass, contactType]
+      'INSERT INTO crm_contact_class (entity_class, contact_type) VALUES ($1, $2) RETURNING id;',
+      [entityClass, contactType]
     );
 
     const newContactClass = data.rows[0].id;

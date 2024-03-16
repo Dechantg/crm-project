@@ -59,6 +59,7 @@ CREATE TABLE crm_entities (
   id SERIAL PRIMARY KEY,
   entity_class VARCHAR(25),
   entity_type VARCHAR(25),
+  establishment BOOLEAN,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

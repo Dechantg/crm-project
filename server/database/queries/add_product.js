@@ -15,10 +15,10 @@ const addProduct = async (product) => {
 
     const newProduct = data.rows[0].id;
     
-    console.log("New contact created with id ", newProduct)
+    console.log("New product created with id ", newProduct)
     return newProduct;
   } catch (error) {
-    console.error(`Error creating user: ${error.message}`);
+    console.error(`Error creating product: ${error.message}`);
     throw { success: false, error: 'Internal Server Error' };
   }
 };
