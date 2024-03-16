@@ -9,7 +9,7 @@ const addSupplier = async (supplier) => {
     const {contactId, SupplierName, imageId} = supplier
 
     const data = await db.query(
-      'INSERT INTO crm_supplier (contact_id, supplier_name, supplier_logo) VALUES ($1, $2, $3) RETURNING id;',
+      'INSERT INTO crm_supplier (entity_id, supplier_name, supplier_logo) VALUES ($1, $2, $3) RETURNING id;',
       [contactId, SupplierName, imageId]
     );
 

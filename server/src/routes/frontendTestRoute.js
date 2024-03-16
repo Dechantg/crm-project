@@ -46,11 +46,11 @@ router.post('/supplier-test', multerFile.single('image'), async (req, res) => {
     const contactType = "2";
     const contactClass = req.body.contactClass
 
-    const contactId = "1";
+    const entityId = "1";
 
 
     const clientAddress = {
-      contactId,
+      entityId,
       contactClass: contactType,
       streetOne : req.body.streetOne,
       streetTwo : req.body.streetTwo,
@@ -64,7 +64,7 @@ router.post('/supplier-test', multerFile.single('image'), async (req, res) => {
 console.log("address object being constructed", clientAddress)
 
 const client = {
-  contactId,
+  entityId,
   clientName: req.body.clientName,
   imageId,
 }
@@ -104,12 +104,12 @@ console.log("client object being built", client);
 
     // console.log("here is the clientType: ", clientType)
 
-    // const contactId = await createContact(contactTypeId, clientType)
+    // const entityId = await createContact(contactTypeId, clientType)
 
-    // console.log("Contact id test:", contactId)
+    // console.log("Contact id test:", entityId)
 
     // const clientAddress = {
-    //   contactId,
+    //   entityId,
     //   contactClass: contactTypeId,
     //   streetOne : req.body.street1,
     //   streetTwo : req.body.street2,
@@ -120,7 +120,7 @@ console.log("client object being built", client);
     // };
 
     // const client = {
-    //   contactId,
+    //   entityId,
     //   clientName,
     //   imageId
     // }

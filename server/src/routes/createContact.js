@@ -62,12 +62,12 @@ router.post('/generate', multerFile.single('file'), async (req, res) => {
       imageId = result && result.image ? result.image.id : null;
     }
 
-    const contactId = await createContact(contactType, contactClass)
+    const entityId = await createContact(contactType, contactClass)
 
-    // console.log("Contact id test:", contactId)
+    // console.log("Contact id test:", entityId)
 
     const contactAddress = {
-      contactId,
+      entityId,
       contactClass,
       streetOne,
       streetTwo,
@@ -78,7 +78,7 @@ router.post('/generate', multerFile.single('file'), async (req, res) => {
     };
 
     const contactName = {
-      contactId,
+      entityId,
       honorific,
       firstName,
       lastName

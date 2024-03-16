@@ -12,7 +12,7 @@ const addContactName = async (contactName) => {
     const {contactId, firstName, lastName, honorific} = contactName
 
     const data = await db.query(
-      'INSERT INTO crm_contact_name (contact_id, first_name, last_name, honorific) VALUES ($1, $2, $3, $4) RETURNING id;',
+      'INSERT INTO crm_contact_name (entity_id, first_name, last_name, honorific) VALUES ($1, $2, $3, $4) RETURNING id;',
       [contactId, firstName, lastName, honorific]
     );
 

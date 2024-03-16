@@ -55,16 +55,16 @@ CREATE TABLE crm_document (
   file_description TEXT
 );
 
-CREATE TABLE crm_contacts (
+CREATE TABLE crm_entities (
   id SERIAL PRIMARY KEY,
-  contact_type VARCHAR(25),
-  contact_class VARCHAR(10),
+  entity_class VARCHAR(25),
+  entity_type VARCHAR(25),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE crm_contact_name (
   id SERIAL PRIMARY KEY,
-  contact_id VARCHAR(25),
+  entity_id VARCHAR(25),
   first_name VARCHAR(25),
   last_name VARCHAR(25),
   honorific VARCHAR(10),
@@ -74,7 +74,7 @@ CREATE TABLE crm_contact_name (
 
 CREATE TABLE crm_phone (
   id SERIAL PRIMARY KEY,
-  contact_id VARCHAR(25),
+  entity_id VARCHAR(25),
   phone_number_type VARCHAR(15),
   phone_number VARCHAR(15),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -88,7 +88,7 @@ CREATE TABLE crm_phone_type (
 
 CREATE TABLE crm_address (
   id SERIAL PRIMARY KEY,
-  contact_id VARCHAR(25),
+  entity_id VARCHAR(25),
   address_classification VARCHAR(25),
   street_address_one VARCHAR(250),
   street_address_two VARCHAR(250),
@@ -101,7 +101,7 @@ CREATE TABLE crm_address (
 
 CREATE TABLE crm_email (
   id SERIAL PRIMARY KEY,
-  contact_id VARCHAR(25),
+  entity_id VARCHAR(25),
   email_type VARCHAR(15),
   email VARCHAR(250),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -116,7 +116,7 @@ CREATE TABLE crm_email_type (
 
 CREATE TABLE crm_licencee_list (
   id SERIAL PRIMARY KEY,
-  contact_id VARCHAR(25),
+  entity_id VARCHAR(25),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   user_id VARCHAR(25),
   licence_number VARCHAR(10),
@@ -130,7 +130,7 @@ CREATE TABLE crm_licencee_list (
 
 CREATE TABLE crm_social_media (
   id SERIAL PRIMARY KEY,
-  contact_id VARCHAR(25),
+  entity_id VARCHAR(25),
   social_media_type VARCHAR(10),
   social_media TEXT,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -145,7 +145,7 @@ CREATE TABLE crm_social_media_type (
 
 CREATE TABLE crm_client_list (
   id SERIAL PRIMARY KEY,
-  contact_id VARCHAR(25),
+  entity_id VARCHAR(25),
   client_classification VARCHAR(25),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -189,7 +189,7 @@ CREATE TABLE crm_products_bc_alcoholic (
 
 CREATE TABLE crm_supplier (
   id SERIAL PRIMARY KEY,
-  contact_id VARCHAR(25),
+  entity_id VARCHAR(25),
   supplier_name VARCHAR(100),
   supplier_type VARCHAR(25),
   supplier_logo VARCHAR(25),
@@ -219,21 +219,21 @@ CREATE TABLE crm_non_alch_classes (
 
 CREATE TABLE crm_contact_class (
   id SERIAL PRIMARY KEY,
-  contact_class VARCHAR(25),
-  contact_type VARCHAR(15),
+  entity_class VARCHAR(25),
+  contact_type VARCHAR(25),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE crm_contact_type (
+CREATE TABLE crm_entity_class (
   id SERIAL PRIMARY KEY,
-  contact_type_name VARCHAR(25),
+  entity_class_name VARCHAR(25),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE crm_supplier_contact (
   id SERIAL PRIMARY KEY,
   supplier_id VARCHAR(25),
-  contact_id VARCHAR(25),
+  entity_id VARCHAR(25),
   created_by VARCHAR(25),
   active BOOLEAN DEFAULT true,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -248,7 +248,7 @@ CREATE TABLE crm_client_type (
 
 CREATE TABLE crm_client (
   id SERIAL PRIMARY KEY,
-  contact_id VARCHAR(25),
+  entity_id VARCHAR(25),
   client_name VARCHAR(100),
   client_logo VARCHAR(25),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -257,7 +257,7 @@ CREATE TABLE crm_client (
 CREATE TABLE crm_client_contact (
   id SERIAL PRIMARY KEY,
   client_id VARCHAR(25),
-  client_contact_id VARCHAR(25),
+  entity_id VARCHAR(25),
   created_by VARCHAR(25),
   active BOOLEAN DEFAULT true,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP

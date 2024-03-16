@@ -13,7 +13,7 @@ const addContactEmail = async (contactEmail) => {
     const {contactId, phoneEmailType, phoneEmail} = contactEmail
 
     const data = await db.query(
-      'INSERT INTO crm_phone (contact_id, email_type, email) VALUES ($1, $2, $3) RETURNING id;',
+      'INSERT INTO crm_phone (entity_id, email_type, email) VALUES ($1, $2, $3) RETURNING id;',
       [contactId, phoneEmailType, phoneEmail]
     );
 

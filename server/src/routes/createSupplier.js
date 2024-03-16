@@ -86,25 +86,25 @@ router.post('/generate', multerFile.single('file'), async (req, res) => {
     }
 
     const contactClass = req.body.contactClass
-    const contactType = req.body.contactType
+    const contactType = "3"
 
-    const contactId = await createContact(contactType, contactClass)
+    const entityId = await createContact(contactType, contactClass)
 
-    console.log("Contact id test:", contactId)
+    console.log("Contact id test:", entityId)
 
     const supplierAddress = {
-      contactId,
-      contactClass: "Supplier",
-      streetOne : req.body.street1,
-      streetTwo : req.body.street2,
+      entityId,
+      contactType: contactType,
+      streetOne : req.body.streetOne,
+      streetTwo : req.body.streetTwo,
       city : req.body.city,
-      province : req.body.province,
-      country : req.body.country,
-      postal : req.body.postal
+      province : req.body.provinceId,
+      country : req.body.countryId,
+      postal : req.body.postalCode
     };
 
     const supplier = {
-      contactId,
+      entityId,
       supplierName,
       imageId
     }

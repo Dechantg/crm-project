@@ -9,7 +9,7 @@ const addClient = async (client) => {
     const {contactId, clientName, imageId} = client
 
     const data = await db.query(
-      'INSERT INTO crm_client (contact_id, client_name, client_logo) VALUES ($1, $2, $3) RETURNING id;',
+      'INSERT INTO crm_client (entity_id, client_name, client_logo) VALUES ($1, $2, $3) RETURNING id;',
       [contactId, clientName, imageId]
     );
 

@@ -77,7 +77,7 @@ const ClientCreateModal = ({ onClose }) => {
         // Append file
         formData.append('image', file);
 
-        const response = await fetch('/api/add/client/generate', {
+        const response = await fetch('/api/frontend/supplier-test', {
             method: 'POST',
             body: formData,
         });

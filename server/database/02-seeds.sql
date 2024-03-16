@@ -12,8 +12,8 @@ INSERT INTO crm_users (
 ('john', 'doe', 'john@example.com', 'test'),
 ('jane', 'smith', 'jane@example.com', 'test');
 
-INSERT INTO crm_contact_type (id,
-  contact_type_name
+INSERT INTO crm_entity_class (id,
+  entity_class_name
 ) VALUES
 (1, 'Internal'),
 (2, 'Client'),
@@ -21,8 +21,8 @@ INSERT INTO crm_contact_type (id,
 
 INSERT INTO crm_contact_class (
   id,
-  contact_class,
-  contact_type
+  contact_type,
+  entity_class
 ) VALUES
 (1, 'Sales Manager', '1'),
 (2, 'Territory Manager', '1'),
