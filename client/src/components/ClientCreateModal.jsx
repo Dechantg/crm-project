@@ -41,7 +41,7 @@ const ClientCreateModal = ({ onClose }) => {
     const selectedClientType = event.target.value;
     setFormValues({
         ...formValues,
-        clientType: selectedClientType,
+        entityType: selectedClientType,
     });
 };
 
@@ -77,7 +77,7 @@ const ClientCreateModal = ({ onClose }) => {
         // Append file
         formData.append('image', file);
 
-        const response = await fetch('/api/frontend/supplier-test', {
+        const response = await fetch('/api/frontend/test', {
             method: 'POST',
             body: formData,
         });

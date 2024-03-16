@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const path = require('path');
 const fs = require('fs').promises;
+const getSupplierEntityId = require('../../database/queries/get_entity_by_class_and_establishment')
 
 const getAllSupplier = require('../../database/queries/get_all_supplier');
 const getSupplierLogo = require('../../database/queries/get_producer_logo');
@@ -11,7 +12,14 @@ const imagesThumbDirectory = path.join(__dirname, process.env.IMAGE_PATH + '/ima
 router.get('/', async (req, res) => {
   try {
 
+    const entityClass = "3";
+    const establishment = true;
+
+    const allSupplierEntityId = await getSupplierEntityId(entityClass, establishment)
+
     const allSupplier = await getAllSupplier();
+
+    console.log("querey results for all supplier entity id", allSupplierEntityId)
 
     console.log("query results from the get supplier: ", allSupplier);
 

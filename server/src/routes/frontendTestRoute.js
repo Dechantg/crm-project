@@ -9,7 +9,7 @@ const createContact =         require('../../database/queries/create_entity_reco
 const addAddress =            require('../../database/queries/add_address');
 const addClient =             require('../../database/queries/add_client');
 const getClientType =       require('../../database/queries/get_all_client_type');
-const getContactType =        require('../../database/queries/get_all_entity_type');
+const getContactType =        require('../../database/queries/get_all_entity_class');
 const getAllCountry =         require('../../database/queries/get_all_country');
 const getAllProvince =        require('../../database/queries/get_all_province');
 const getContactClassId =     require('../../database/queries/get_entity_class_id_by_name')
@@ -30,7 +30,7 @@ const userId = 1
 
 
 
-router.post('/supplier-test', multerFile.single('image'), async (req, res) => {
+router.post('/test', multerFile.single('image'), async (req, res) => {
   try {
 
     // console.log(req.file);

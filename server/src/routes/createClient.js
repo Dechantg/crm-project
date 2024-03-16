@@ -5,14 +5,14 @@ const configureMulterFile =   require('../helpers/mutlerFile');
 const fs =                    require('fs').promises;
 const path =                  require('path');
 const imageUpload =           require('../helpers/uploadImageAndThumbnail');
-const createContact =         require('../../database/queries/create_entity_record');
+const createEntity =         require('../../database/queries/create_entity_record');
 const addAddress =            require('../../database/queries/add_address');
 const addClient =             require('../../database/queries/add_client');
 const getClientType =       require('../../database/queries/get_all_client_type');
-const getContactType =        require('../../database/queries/get_all_entity_type');
+const getEntityType =        require('../../database/queries/get_all_entity_class');
 const getAllCountry =         require('../../database/queries/get_all_country');
 const getAllProvince =        require('../../database/queries/get_all_province');
-const getContactClassId =     require('../../database/queries/get_entity_class_id_by_name')
+const getEntityClassId =     require('../../database/queries/get_entity_class_id_by_name')
 const getAllSocialMediaType = require('../../database/queries/get_all_social_media_type');
 const getAllPhoneType =       require('../../database/queries/get_all_phone_type');
 const getAllEmailType =       require('../../database/queries/get_all_email_type');
@@ -31,9 +31,9 @@ router.get('/', async (req, res) => {
 
   try {
     
-    const contactType = "Client"
+    const enityType = "Client"
     const allType = await getClientType();
-    const contactTypeId = await getContactClassId(contactType);
+    const entityTypeId = await getEntityClassId(enityType);
     const allCountry = await getAllCountry();
     const allProvince = await getAllProvince();
     const allEmailType = await getAllEmailType();
@@ -41,11 +41,11 @@ router.get('/', async (req, res) => {
     const allSocialMediaType = await getAllSocialMediaType();
 
     // var selectedCountryId
-    console.log("contact type id and name details", contactTypeId)
+    console.log("entity type id and name details", entityTypeId)
 
     const creationDetails = {
       allType,
-      contactTypeId,
+      entityTypeId,
       allCountry,
       allProvince,
       allEmailType,
@@ -87,13 +87,14 @@ router.post('/generate', multerFile.single('image'), async (req, res) => {
     const entityType = req.body.enityType
 
 
-    const entityId = await createContact(entityClass, entityType, establishment)
+    const entityId = await createEntity(entityClass, entityType, establishment)
 
-    console.log("Contact id test:", entityId)
+    console.log("entity id test:", entityId)
 
 
     const clientAddress = {
       entityId,
+      establishment,
       entityClass: entityClass,
       streetOne : req.body.streetOne,
       streetTwo : req.body.streetTwo,

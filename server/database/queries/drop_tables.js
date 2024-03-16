@@ -3,7 +3,8 @@ const db = require('../connection');
 
 const dropTables = async () => {
   try {
-    const dropTablesSql = fs.readFileSync('../drop_schema.sql', 'utf-8');
+
+    const dropTablesSql = fs.readFileSync('database/00-drop_schema_with_seq.sql', 'utf-8');
 
     const queries = dropTablesSql.split(';').map(query => query.trim()).filter(Boolean);
 

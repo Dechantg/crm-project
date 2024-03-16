@@ -10,7 +10,7 @@ const createContact = require('../../database/queries/create_entity_record');
 const addAddress = require('../../database/queries/add_address');
 const addSupplier = require('../../database/queries/add_supplier');
 const getContactClass = require('../../database/queries/get_all_contact_class');
-const getContactType = require('../../database/queries/get_all_entity_type');
+const getContactType = require('../../database/queries/get_all_entity_class');
 const getAllPhoneType = require('../../database/queries/get_all_phone_type');
 const getAllEmailType = require('../../database/queries/get_all_email_type');
 const getAllSocialMediaType = require('../../database/queries/get_all_social_media_type');
@@ -86,16 +86,17 @@ router.post('/generate', multerFile.single('file'), async (req, res) => {
     }
 
     const entityClass = "3";
-    const contactType = req.body.contactClass
+    const contactType = req.body.contactType
 
 
     const entityId = await createContact(entityClass, contactType, establishment)
 
-    console.log("Contact id test:", entityId)
+    console.log("entity id test:", entityId)
 
     const supplierAddress = {
       entityId,
-      contactType: contactType,
+      establishment,
+      entityClass: entityClass,
       streetOne : req.body.streetOne,
       streetTwo : req.body.streetTwo,
       city : req.body.city,

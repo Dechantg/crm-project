@@ -1,0 +1,84 @@
+
+
+DROP TABLE IF EXISTS crm_roles CASCADE;
+DROP TABLE IF EXISTS crm_permissions CASCADE;
+DROP TABLE IF EXISTS crm_users CASCADE;
+DROP TABLE IF EXISTS crm_images CASCADE;
+DROP TABLE IF EXISTS crm_pdf CASCADE;
+DROP TABLE IF EXISTS crm_document CASCADE;
+DROP TABLE IF EXISTS crm_entities CASCADE;
+DROP TABLE IF EXISTS crm_contact_name CASCADE;
+DROP TABLE IF EXISTS crm_phone CASCADE;
+DROP TABLE IF EXISTS crm_phone_type CASCADE;
+DROP TABLE IF EXISTS crm_contact_class CASCADE;
+DROP TABLE IF EXISTS crm_address CASCADE;
+DROP TABLE IF EXISTS crm_email CASCADE;
+DROP TABLE IF EXISTS crm_email_type CASCADE;
+DROP TABLE IF EXISTS crm_licencee_list CASCADE;
+DROP TABLE IF EXISTS crm_social_media CASCADE;
+DROP TABLE IF EXISTS crm_client_list CASCADE;
+DROP TABLE IF EXISTS crm_products CASCADE;
+DROP TABLE IF EXISTS crm_alch_products CASCADE;
+DROP TABLE IF EXISTS crm_non_alch_products CASCADE;
+DROP TABLE IF EXISTS crm_products_bc_alcoholic CASCADE;
+DROP TABLE IF EXISTS crm_alch_classes CASCADE;
+DROP TABLE IF EXISTS crm_non_alch_classes CASCADE;
+DROP TABLE IF EXISTS crm_contact_type CASCADE;
+DROP TABLE IF EXISTS crm_supplier_contact CASCADE;
+DROP TABLE IF EXISTS crm_client CASCADE;
+DROP TABLE IF EXISTS crm_supplier CASCADE;
+DROP TABLE IF EXISTS crm_client_contact CASCADE;
+DROP TABLE IF EXISTS crm_sales_rep_assignment CASCADE;
+DROP TABLE IF EXISTS crm_products_bc CASCADE;
+DROP TABLE IF EXISTS crm_sales_call CASCADE;
+DROP TABLE IF EXISTS crm_product_tasting CASCADE;
+DROP TABLE IF EXISTS crm_country_code CASCADE;
+DROP TABLE IF EXISTS crm_province_state CASCADE;
+DROP TABLE IF EXISTS crm_entity_class CASCADE;
+DROP TABLE IF EXISTS crm_social_media_type CASCADE;
+DROP TABLE IF EXISTS crm_supplier_type CASCADE;
+DROP TABLE IF EXISTS crm_client_type CASCADE;
+
+
+
+DROP SEQUENCE IF EXISTS crm_images_id_seq;
+DROP SEQUENCE IF EXISTS crm_roles_seq;
+DROP SEQUENCE IF EXISTS crm_permissions_seq;
+DROP SEQUENCE IF EXISTS crm_users_seq;
+DROP SEQUENCE IF EXISTS crm_pdf_seq;
+DROP SEQUENCE IF EXISTS crm_document_seq;
+DROP SEQUENCE IF EXISTS crm_entities_seq;
+DROP SEQUENCE IF EXISTS crm_contact_name_seq;
+DROP SEQUENCE IF EXISTS crm_phone_seq;
+DROP SEQUENCE IF EXISTS crm_phone_type_seq;
+DROP SEQUENCE IF EXISTS crm_address_seq;
+DROP SEQUENCE IF EXISTS crm_email_seq;
+DROP SEQUENCE IF EXISTS crm_email_type_seq;
+DROP SEQUENCE IF EXISTS crm_licencee_list_seq;
+DROP SEQUENCE IF EXISTS crm_social_media_seq;
+DROP SEQUENCE IF EXISTS crm_social_media_type_seq;
+DROP SEQUENCE IF EXISTS crm_client_list_seq;
+DROP SEQUENCE IF EXISTS crm_products_seq;
+DROP SEQUENCE IF EXISTS crm_alch_products_seq;
+DROP SEQUENCE IF EXISTS crm_non_alch_products_seq;
+DROP SEQUENCE IF EXISTS crm_products_bc_alcoholic_seq;
+DROP SEQUENCE IF EXISTS crm_supplier_seq;
+DROP SEQUENCE IF EXISTS crm_supplier_type_seq;
+DROP SEQUENCE IF EXISTS crm_alch_classes_seq;
+DROP SEQUENCE IF EXISTS crm_non_alch_classes_seq;
+DROP SEQUENCE IF EXISTS crm_contact_class_seq;
+DROP SEQUENCE IF EXISTS crm_entity_class_seq;
+DROP SEQUENCE IF EXISTS crm_supplier_contact_seq;
+DROP SEQUENCE IF EXISTS crm_client_type_seq;
+DROP SEQUENCE IF EXISTS crm_client_seq;
+DROP SEQUENCE IF EXISTS crm_client_contact_seq;
+DROP SEQUENCE IF EXISTS crm_sales_rep_assignment_seq;
+DROP SEQUENCE IF EXISTS crm_products_bc_seq;
+DROP SEQUENCE IF EXISTS crm_sales_call_seq;
+DROP SEQUENCE IF EXISTS crm_product_tasting_seq;
+DROP SEQUENCE IF EXISTS crm_country_code_seq;
+DROP SEQUENCE IF EXISTS crm_province_state_seq;
+
+
+-- DROP TABLE IF EXISTS ;
+-- DROP SEQUENCE IF EXISTS ;

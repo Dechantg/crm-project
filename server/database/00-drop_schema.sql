@@ -37,4 +37,3 @@ DROP TABLE IF EXISTS crm_province_state CASCADE;
 DROP TABLE IF EXISTS crm_entity_class CASCADE;
 
 
-DROP SEQUENCE crm_images_id_seq;
