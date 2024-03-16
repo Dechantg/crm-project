@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const AddressForm = ({ clientCreationDetails, formValues, setFormValues }) => {
+const AddressForm = ({ modalCreationDetails, formValues, setFormValues }) => {
     const [selectedCountry, setSelectedCountry] = useState('');
     const [provincesForSelectedCountry, setProvincesForSelectedCountry] = useState([]);
 
@@ -25,7 +25,7 @@ const AddressForm = ({ clientCreationDetails, formValues, setFormValues }) => {
         setSelectedCountry(selectedCountryId);
 
         // Filter provinces based on selected country
-        const filteredProvinces = clientCreationDetails.allProvince.filter(province => province.country_code === selectedCountryId);
+        const filteredProvinces = modalCreationDetails.allProvince.filter(province => province.country_code === selectedCountryId);
         setProvincesForSelectedCountry(filteredProvinces);
     };
 
@@ -66,7 +66,7 @@ const AddressForm = ({ clientCreationDetails, formValues, setFormValues }) => {
                     value={selectedCountry}
                     onChange={handleCountryChange}>
                 <option value="">Select a country...</option>
-                {clientCreationDetails.allCountry.map(country => (
+                {modalCreationDetails.allCountry.map(country => (
                     <option key={country.id} value={country.id}>
                         {country.country_name}
                     </option>

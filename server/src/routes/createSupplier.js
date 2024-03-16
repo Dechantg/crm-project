@@ -16,7 +16,9 @@ const getAllEmailType = require('../../database/queries/get_all_email_type');
 const getAllSocialMediaType = require('../../database/queries/get_all_social_media_type');
 const getAllCountry =         require('../../database/queries/get_all_country');
 const getAllProvince =        require('../../database/queries/get_all_province');
-const getSupplierType = require('../../database/queries/get_all_supplier_type')
+const getSupplierType = require('../../database/queries/get_all_supplier_type');
+const getContactClassId =     require('../../database/queries/get_contact_class_id_by_type')
+
 
 const router = express.Router();
 
@@ -32,7 +34,7 @@ router.get('/', async (req, res) => {
   try {
 
     const contactType = "Supplier"
-    const allSupplierType = await getSupplierType();
+    const allType = await getSupplierType();
     const contactTypeId = await getContactClassId(contactType);
     const allCountry = await getAllCountry();
     const allProvince = await getAllProvince();
@@ -40,8 +42,10 @@ router.get('/', async (req, res) => {
     const allPhoneType = await getAllPhoneType();
     const allSocialMediaType = await getAllSocialMediaType();
 
-    const supplierDetails = {
-      allSupplierType,
+    console.log('here are the all supplier type crap', allType);
+
+    const creationDetails = {
+      allType,
       contactTypeId,
       allCountry,
       allProvince,
@@ -53,7 +57,8 @@ router.get('/', async (req, res) => {
 
 
 
-    res.json({supplierDetails });
+
+    res.json({creationDetails });
 
 
   } catch (error) {

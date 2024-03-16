@@ -11,9 +11,9 @@ const imagesThumbDirectory = path.join(__dirname, process.env.IMAGE_PATH + '/ima
 router.get('/', async (req, res) => {
   try {
 
-    const queryResult = await getAllSupplier();
+    const allSupplier = await getAllSupplier();
 
-    console.log("query results from the get supplier: ", queryResult);
+    console.log("query results from the get supplier: ", allSupplier);
 
     // if (queryResult && queryResult.length > 0) {
     //   const thumbnailImages = await Promise.all(
@@ -60,7 +60,7 @@ router.get('/', async (req, res) => {
     //     })
     //   );
 
-      res.json({ producers: queryResult });
+      res.json({ allSupplier });
     
   } catch (error) {
     console.error('Error retrieving Images:', error);

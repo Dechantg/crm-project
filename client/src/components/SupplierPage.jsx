@@ -2,20 +2,22 @@ import React, { useState, useEffect } from 'react';
 import ImageView from './ImageViewer';
 import '../views/Document.scss'
 
+import SupplierCreateModal from './SupplierCreateModal';
 
-const ProducerList = () => {
-  const [allProducer, setAllProducer] = useState(null);
-  const [openCreateProducerModal, setOpenProducerModal] = useState(false);
+
+const SupplierList = () => {
+  const [allSupplier, setAllSupplier] = useState(null);
+  const [openCreateSupplierModal, setOpenCreateSupplierModal] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const responce = await fetch('/api/get/producers');
+        const responce = await fetch('/api/get/supplier');
         const data = await responce.json();
-        console.log("producer data from my backend", data)
-        setAllProducer(data.queryResult);
+        console.log("supplier data from my backend", data)
+        setAllSupplier(data.allSupplier);
       } catch (error) {
-        console.error("Error fetching producer data: ', error")
+        console.error("Error fetching supplier data: ', error")
       }
     };
     fetchData();
@@ -23,11 +25,11 @@ const ProducerList = () => {
 
   const handleCreateNew = () => {
     console.log("modal button clicking")
-    setOpenProducerModal(true);
+    setOpenCreateSupplierModal(true);
   };
 
   const handleCloseModal = () => {
-    setOpenProducerModal(false);
+    setOpenCreateSupplierModal(false);
   };
 
 
@@ -35,15 +37,15 @@ const ProducerList = () => {
 
   return (
 <div>
-      <button onClick={handleCreateNew}>Create New Producer</button>
-      <h1>Producer List</h1>
-      {/* Render producer list */}
-      {queryResult ? (
+      <button onClick={handleCreateNew}>Create New Supplier</button>
+      <h1>Supplier List</h1>
+      {/* Render supplier list */}
+      {allSupplier ? (
         <div>
-          {queryResult.map(producer => (
-            <div key={producer.id}>
-              <p>Producer ID: {producer.id}</p>
-              <p>Producer Name: {producer.producer_name}</p>
+          {allSupplier.map(supplier => (
+            <div key={supplier.id}>
+              <p>Supplier ID: {supplier.id}</p>
+              <p>Supplier Name: {supplier.supplier_name}</p>
               {/* Add more data display as needed */}
             </div>
           ))}
@@ -52,8 +54,8 @@ const ProducerList = () => {
         <p>Loading...</p>
       )}
       {/* Render the modal */}
-      {openCreateProducerModal && <ProducerCreateModal onClose={() => setOpenProducerModal(false)} />}
+      {openCreateSupplierModal && <SupplierCreateModal onClose={() => setOpenCreateSupplierModal(false)} />}
     </div>
   );
 };
-export default ProducerList;
+export default SupplierList;

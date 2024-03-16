@@ -32,7 +32,7 @@ router.get('/', async (req, res) => {
   try {
     
     const contactType = "Client"
-    const allClientType = await getClientType();
+    const allType = await getClientType();
     const contactTypeId = await getContactClassId(contactType);
     const allCountry = await getAllCountry();
     const allProvince = await getAllProvince();
@@ -40,11 +40,11 @@ router.get('/', async (req, res) => {
     const allPhoneType = await getAllPhoneType();
     const allSocialMediaType = await getAllSocialMediaType();
 
-    var selectedCountryId
+    // var selectedCountryId
     console.log("contact type id and name details", contactTypeId)
 
-    const clientDetails = {
-      allClientType,
+    const creationDetails = {
+      allType,
       contactTypeId,
       allCountry,
       allProvince,
@@ -55,7 +55,7 @@ router.get('/', async (req, res) => {
 
 
 
-    res.json({clientDetails });
+    res.json({creationDetails });
 
 
   } catch (error) {

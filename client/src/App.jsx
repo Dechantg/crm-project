@@ -7,8 +7,8 @@ import PDFImport from './components/PDFImport';
 import Index from './components/Index';
 import Header from './components/Header';
 import PdfView from './components/PdfView';
-import ClientCreation from './components/ClientCreateModal';
 import ClientPage from './components/ClientPage';
+import SupplierPage from './components/SupplierPage';
 
 const App = () => {
   return (
@@ -22,6 +22,8 @@ const App = () => {
           <Route path="/pdf" element={<PDFImport />} />
           <Route path="/getpdf" element={<PdfView />} />
           <Route path="/client" element={<ClientPage />} />
+          <Route path="/supplier" element={<SupplierPage />} />
+
         </Routes>
       </div>
     </div>

@@ -8,6 +8,8 @@ const routes = [
   { path: '/image', label: 'Image Upload' },
   // { path: '/pdf', label: 'PDF Upload' },
   { path: '/client', label: 'Client List' },
+  { path: '/supplier', label: 'Supplier List' },
+
 
 ];
 

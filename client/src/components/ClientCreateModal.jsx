@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import '../views/Modal.scss'
@@ -9,7 +10,7 @@ import EmailForm from './EmailForm.jsx';
 
 const ClientCreateModal = ({ onClose }) => {
   const [file, setFile] = useState(null);
-  const [clientCreationDetails, setClientCreationDetails] = useState(null);
+  const [modalCreationDetails, setModalCreationDetails] = useState(null);
 
   const [formValues, setFormValues] = useState({});
 
@@ -18,9 +19,9 @@ const ClientCreateModal = ({ onClose }) => {
       try {
         const responce = await fetch('/api/add/client');
         const data = await responce.json();
-        console.log("data from my backend: ", data.clientDetails)
+        console.log("data from my backend: ", data.creationDetails)
 
-        setClientCreationDetails(data.clientDetails);
+        setModalCreationDetails(data.creationDetails);
       } catch (error) {
         console.error('Error fetching client data: ', error);
       }
@@ -91,7 +92,7 @@ const ClientCreateModal = ({ onClose }) => {
 
 
 
-  if (!clientCreationDetails) {
+  if (!modalCreationDetails) {
     return <div>Loading...</div>;
   }
 
@@ -118,7 +119,7 @@ const ClientCreateModal = ({ onClose }) => {
             <label htmlFor="clientTypeSelect">Select Client Type:</label>
             <select id="clientTypeSelect" value={formValues.client_type} onChange={handleClientTypeChange}>
                 <option value="">Select a client type...</option>
-                {clientCreationDetails.allClientType.map(clientType => (
+                {modalCreationDetails.allType.map(clientType => (
                     <option key={clientType.id} value={clientType.client_type}>
                         {clientType.client_type}
                     </option>
@@ -141,7 +142,7 @@ const ClientCreateModal = ({ onClose }) => {
 
                <div>
             <AddressForm
-                clientCreationDetails={clientCreationDetails}
+                modalCreationDetails={modalCreationDetails}
                 formValues={formValues}
                 setFormValues={setFormValues}
             />
@@ -152,7 +153,7 @@ const ClientCreateModal = ({ onClose }) => {
         <div>
           <h3>Phone Number</h3>
             <PhoneNumberForm
-                clientCreationDetails={clientCreationDetails}
+                modalCreationDetails={modalCreationDetails}
                 formValues={formValues}
                 setFormValues={setFormValues}
             />
@@ -161,7 +162,7 @@ const ClientCreateModal = ({ onClose }) => {
         <div>
           <h3>Email Address</h3>
             <EmailForm
-                clientCreationDetails={clientCreationDetails}
+                modalCreationDetails={modalCreationDetails}
                 formValues={formValues}
                 setFormValues={setFormValues}
             />
@@ -169,7 +170,7 @@ const ClientCreateModal = ({ onClose }) => {
         <div>
           <h3>Social Media Accounts</h3>
             <SocialMediaForm
-                clientCreationDetails={clientCreationDetails}
+                modalCreationDetails={modalCreationDetails}
                 formValues={formValues}
                 setFormValues={setFormValues}
             />

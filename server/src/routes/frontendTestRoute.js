@@ -30,13 +30,13 @@ const userId = 1
 
 
 
-router.post('/client-test', multerFile.single('image'), async (req, res) => {
+router.post('/supplier-test', multerFile.single('image'), async (req, res) => {
   try {
 
     // console.log(req.file);
 
     dataTest = req.body
-    // console.log("from inside the rest route the body", dataTest);
+    console.log("from inside the rest route the body", dataTest);
 
     const fileDescription = req.body.clientName;
     const fileBuffer = req.file ? req.file.buffer : null;

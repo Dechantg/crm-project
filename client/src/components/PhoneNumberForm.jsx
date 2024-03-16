@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const PhoneNumberForm = ({ clientCreationDetails, formValues, setFormValues }) => {
+const PhoneNumberForm = ({ modalCreationDetails, formValues, setFormValues }) => {
     const [phoneNumberRows, setPhoneNumberRows] = useState([
         {
             phoneType: '',
@@ -74,7 +74,7 @@ const PhoneNumberForm = ({ clientCreationDetails, formValues, setFormValues }) =
                             value={row.phoneType}
                             onChange={(event) => handlePhoneNumberChange(event, index)}>
                         <option value="">Phone Type...</option>
-                        {clientCreationDetails.allPhoneType.map(phoneType => (
+                        {modalCreationDetails.allPhoneType.map(phoneType => (
                             <option key={phoneType.id} value={phoneType.id}>
                                 {phoneType.phone_number_type}
                             </option>
