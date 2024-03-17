@@ -1,29 +1,29 @@
 
 
 
-
-
-
 const db = require('../connection');
 
-
-const addContactPhone = async (contactPhone) => {
+const addEntityPhone = async (entityId, entityPhone) => {
   try {
-    const {contactId, phoneNumberType, phoneNumber} = contactPhone
+    const placeholders = entityPhone.map((_, index) => `($1, $${index * 2 + 2}, $${index * 2 + 3})`).join(',');
 
-    const data = await db.query(
-      'INSERT INTO crm_phone (contact_id, phone_number_type, phone_number) VALUES ($1, $2, $3) RETURNING id;',
-      [contactId, phoneNumberType, phoneNumber]
+    const values = [entityId, ...entityPhone.flatMap(option => [option.phoneType, option.phoneNumber])];
+    
+
+    const data = await db.query(`
+      INSERT INTO crm_phone (entity_id, phone_number_type, phone_number)
+      VALUES ${placeholders}
+      RETURNING *;`,
+      values
     );
 
-    const newContactPhone = data.rows[0].id;
-    
-    console.log("New Contact Name created with id ", newContactPhone)
-    return newContactPhone;
+    const insertedOptions = data.rows;
+    return insertedOptions;
   } catch (error) {
-    console.error(`Error creating user: ${error.message}`);
-    throw { success: false, error: 'Internal Server Error' };
+    console.error('An error occurred while adding Phone Numbers:', error);
+    return error;
   }
 };
 
-module.exports = addContactPhone;
+module.exports = addEntityPhone;
+

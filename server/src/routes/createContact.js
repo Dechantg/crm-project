@@ -7,11 +7,11 @@ const configureMulterFile = require('../helpers/mutlerFile');
 const fs = require('fs').promises;
 const path = require('path');
 const imageUpload = require('../helpers/uploadImageAndThumbnail');
-const createContact = require('../../database/queries/create_contact_record');
+const createEntity = require('../../database/queries/create_entity_record');
 const addAddress = require('../../database/queries/add_address');
 const addContactName = require('../../database/queries/add_contact_name');
 const getContactClass = require('../../database/queries/get_all_contact_class');
-const getContactType = require('../../database/queries/get_all_contact_type');
+const getContactType = require('../../database/queries/get_all_entity_class');
 const getAllPhoneType = require('../../database/queries/get_all_phone_type');
 const getAllEmailType = require('../../database/queries/get_all_email_type');
 const getAllSocialMediaType = require('../../database/queries/get_all_social_media_type');
@@ -55,6 +55,7 @@ router.post('/generate', multerFile.single('file'), async (req, res) => {
     const originalFileName = req.file ? req.file.originalname : null;
     let imageId = null;
     const {contactClass, contactType, streetOne, streetTwo, city, province, country, postal, imageDescription, honorific, firstName, lastName} = req.body
+    const establishment = true;
 
     // if logo included upload
     if (fileBuffer) {
@@ -62,12 +63,12 @@ router.post('/generate', multerFile.single('file'), async (req, res) => {
       imageId = result && result.image ? result.image.id : null;
     }
 
-    const contactId = await createContact(contactType, contactClass)
+    const entityId = await createEntity(entityClass, entityType, establishment)
 
-    // console.log("Contact id test:", contactId)
+    // console.log("Contact id test:", entityId)
 
     const contactAddress = {
-      contactId,
+      entityId,
       contactClass,
       streetOne,
       streetTwo,
@@ -78,7 +79,7 @@ router.post('/generate', multerFile.single('file'), async (req, res) => {
     };
 
     const contactName = {
-      contactId,
+      entityId,
       honorific,
       firstName,
       lastName

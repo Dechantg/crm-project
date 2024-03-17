@@ -29,8 +29,8 @@ const getImageByImage = require('./routes/getImageByImage')
 const getDocumentByDocument = require('./routes/getDocumentByDocument');
 const uploadLicenceeList = require('./routes/uploadLicenceeList');
 const getLicenceList = require('./routes/getLicenceList');
-const createProducer = require('./routes/createProducer')
-const getProducer = require('./routes/getProducers');
+const createSupplier = require('./routes/createSupplier')
+const getSupplier = require('./routes/getAllSuppliers');
 const createProduct = require('./routes/createProduct');
 const createContact = require('./routes/createContact');
 const createClient = require('./routes/createClient');
@@ -54,8 +54,8 @@ app.use('/download/image', getImageByImage);
 app.use('/download/document', getDocumentByDocument);
 app.use('/upload/licenceelist', uploadLicenceeList);
 app.use('/getlicencelist', getLicenceList);
-app.use('/add/producer', createProducer);
-app.use('/get/producers', getProducer);
+app.use('/add/supplier', createSupplier);
+app.use('/get/supplier', getSupplier);
 app.use('/create/product', createProduct);
 app.use('/add/contact', createContact);
 app.use('/add/client', createClient);

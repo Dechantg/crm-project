@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const SocialMediaForm = ({ clientCreationDetails, formValues, setFormValues }) => {
+const SocialMediaForm = ({ modalCreationDetails, formValues, setFormValues }) => {
     const [socialMediaRows, setSocialMediaRows] = useState([
         {
             socialType: '',
@@ -74,7 +74,7 @@ const SocialMediaForm = ({ clientCreationDetails, formValues, setFormValues }) =
                             value={row.socialType}
                             onChange={(event) => handleSocialMediaChange(event, index)}>
                         <option value="">Social Media Type...</option>
-                        {clientCreationDetails.allSocialMediaType.map(socialMediaType => (
+                        {modalCreationDetails.allSocialMediaType.map(socialMediaType => (
                             <option key={socialMediaType.id} value={socialMediaType.id}>
                                 {socialMediaType.social_media_type}
                             </option>

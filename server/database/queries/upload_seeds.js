@@ -4,7 +4,7 @@ const db = require('../connection');
 
 const uploadSeeds = async () => {
   try {
-    const seedsSql = fs.readFileSync('../02-seeds.sql', 'utf-8');
+    const seedsSql = fs.readFileSync('database/03-seeds.sql', 'utf-8');
 
     const queries = seedsSql.split(';').map(query => query.trim()).filter(Boolean);
 

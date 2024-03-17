@@ -4,7 +4,7 @@ const db = require('../connection');
 
 const uploadSchema = async () => {
   try {
-    const schemaSql = fs.readFileSync('../01-schema.sql', 'utf-8');
+    const schemaSql = fs.readFileSync('database/02-schema_with_seq.sql', 'utf-8');
 
     const queries = schemaSql.split(';').map(query => query.trim()).filter(Boolean);
 

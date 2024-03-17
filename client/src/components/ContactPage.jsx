@@ -5,7 +5,7 @@ import '../views/Document.scss'
 import ClientCreateModal from './ClientCreateModal';
 
 
-const ClientList = () => {
+const ContactList = () => {
 
   const [allClients, setAllClients] = useState(null);
   const [openCreateClientModal, setOpenCreateClientModal] = useState(false);
@@ -57,4 +57,4 @@ const ClientList = () => {
     </div>
   );
 };
-export default ClientList;
+export default ContactList;

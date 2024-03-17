@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const EmailForm = ({ clientCreationDetails, formValues, setFormValues }) => {
+const EmailForm = ({ modalCreationDetails, formValues, setFormValues }) => {
     const [emailRows, setEmailRows] = useState([
         {
             emailType: '',
@@ -74,7 +74,7 @@ const EmailForm = ({ clientCreationDetails, formValues, setFormValues }) => {
                             value={row.emailType}
                             onChange={(event) => handleEmailChange(event, index)}>
                         <option value="">Email Type...</option>
-                        {clientCreationDetails.allEmailType.map(emailType => (
+                        {modalCreationDetails.allEmailType.map(emailType => (
                             <option key={emailType.id} value={emailType.id}>
                                 {emailType.email_type}
                             </option>

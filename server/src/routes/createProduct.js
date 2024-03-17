@@ -4,7 +4,7 @@ const configureMulterFile =     require('../helpers/mutlerFile');
 const fs =                      require('fs').promises;
 const path =                    require('path');
 const                           imageUpload = require('../helpers/uploadImageAndThumbnail');
-const getAllProducers =         require('../../database/queries/get_all_producers');
+const getAllProducers =         require('../../database/queries/get_all_supplier');
 const getAllAlchClass =              require('../../database/queries/get_alch_class')
 const getAllNonAlchClass =           require('../../database/queries/get_all_non_alch_class')
 

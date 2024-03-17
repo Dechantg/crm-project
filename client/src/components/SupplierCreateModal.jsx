@@ -8,7 +8,7 @@ import SocialMediaForm from './SocialMediaForm.jsx';
 import PhoneNumberForm from './PhoneNumberForm.jsx';
 import EmailForm from './EmailForm.jsx';
 
-const ClientCreateModal = ({ onClose }) => {
+const SupplierCreateModal = ({ onClose }) => {
   const [file, setFile] = useState(null);
   const [modalCreationDetails, setModalCreationDetails] = useState(null);
 
@@ -17,7 +17,7 @@ const ClientCreateModal = ({ onClose }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const responce = await fetch('/api/add/client');
+        const responce = await fetch('/api/add/supplier');
         const data = await responce.json();
         console.log("data from my backend: ", data.creationDetails)
 
@@ -37,14 +37,14 @@ const ClientCreateModal = ({ onClose }) => {
     });
   }
 
-  const handleClientTypeChange = (event) => {
-    const selectedClientType = event.target.value;
-    const [id, clientType] = selectedClientType.split(',');
+  const handleSupplierTypeChange = (event) => {    
+    const selectedSupplierType = event.target.value;
+    const [id, supplierType] = selectedSupplierType.split(',');
 
     setFormValues({
         ...formValues,
         entityTypeId: id,
-        entityType: clientType,
+        entityType: supplierType,
     });
 };
 
@@ -80,7 +80,7 @@ const ClientCreateModal = ({ onClose }) => {
         // Append file
         formData.append('image', file);
 
-        const response = await fetch('/api/add/client/generate', {
+        const response = await fetch('/api/add/supplier/generate', {
             method: 'POST',
             body: formData,
         });
@@ -104,7 +104,7 @@ const ClientCreateModal = ({ onClose }) => {
     <Modal
       isOpen={true}
       onRequestClose={onClose}
-      contentLabel="Create Client Modal"
+      contentLabel="Create Supplier Modal"
       
     >
       <div>
@@ -112,30 +112,30 @@ const ClientCreateModal = ({ onClose }) => {
         <button onClick={onClose}>
             Close
           </button>
-          <h1>New Client</h1>
+          <h1>New Supplier</h1>
        
         </div>
         <div className="scroll-container">
           <form encType="multipart/form-data" method="POST" onSubmit={handleSubmit}>
             <label>
 
-            <label htmlFor="clientTypeSelect">Select Client Type:</label>
-            <select id="clientTypeSelect" value={formValues.client_type} onChange={handleClientTypeChange}>
+            <label htmlFor="supplierTypeSelect">Select Supplier Type:</label>
+            <select id="supplierTypeSelect" value={formValues.supplier_type} onChange={handleSupplierTypeChange}>
                 <option value="">Select a client type...</option>
-                {modalCreationDetails.allType.map(clientType => (
-                    <option key={clientType.id} value={`${clientType.id},${clientType.client_type}`}>
-                        {clientType.client_type}
+                {modalCreationDetails.allType.map(supplierType => (
+        <option key={supplierType.id} value={`${supplierType.id},${supplierType.supplier_type}`}>
+        {supplierType.supplier_type}
                     </option>
                 ))}
             </select> 
               <br></br>
             
-              Client Name:
+              Supplier Name:
               <input
                 type="text"
-                name="clientName"
-                id='clientName'
-                value={formValues.clientName}
+                name="supplierName"
+                id='supplierName'
+                value={formValues.supplierName}
                 onChange={handleOnChange}
               />
                
@@ -193,4 +193,4 @@ const ClientCreateModal = ({ onClose }) => {
   );
 };
 
-export default ClientCreateModal;
+export default SupplierCreateModal;

@@ -5,17 +5,20 @@ const configureMulterFile =   require('../helpers/mutlerFile');
 const fs =                    require('fs').promises;
 const path =                  require('path');
 const imageUpload =           require('../helpers/uploadImageAndThumbnail');
-const createContact =         require('../../database/queries/create_contact_record');
+const createContact =         require('../../database/queries/create_entity_record');
 const addAddress =            require('../../database/queries/add_address');
 const addClient =             require('../../database/queries/add_client');
 const getClientType =       require('../../database/queries/get_all_client_type');
-const getContactType =        require('../../database/queries/get_all_contact_type');
+const getContactType =        require('../../database/queries/get_all_entity_class');
 const getAllCountry =         require('../../database/queries/get_all_country');
 const getAllProvince =        require('../../database/queries/get_all_province');
-const getContactClassId =     require('../../database/queries/get_contact_class_id_by_type')
+const getContactClassId =     require('../../database/queries/get_entity_class_id_by_name')
 const getAllSocialMediaType = require('../../database/queries/get_all_social_media_type');
 const getAllPhoneType =       require('../../database/queries/get_all_phone_type');
 const getAllEmailType =       require('../../database/queries/get_all_email_type');
+const addPhoneNumbers = require('../../database/queries/add_phone')
+const addEmails = require('../../database/queries/add_email')
+const addSocialMedia = require('../../database/queries/add_social_media')
 
 
 const router = express.Router();
@@ -30,13 +33,13 @@ const userId = 1
 
 
 
-router.post('/client-test', multerFile.single('image'), async (req, res) => {
+router.post('/test', multerFile.single('image'), async (req, res) => {
   try {
 
     // console.log(req.file);
 
     dataTest = req.body
-    // console.log("from inside the rest route the body", dataTest);
+    console.log("from inside the rest route the body", dataTest);
 
     const fileDescription = req.body.clientName;
     const fileBuffer = req.file ? req.file.buffer : null;
@@ -46,11 +49,49 @@ router.post('/client-test', multerFile.single('image'), async (req, res) => {
     const contactType = "2";
     const contactClass = req.body.contactClass
 
-    const contactId = "1";
+    const entityId = "1";
+
+
+    if (req.body.socialMediaRows) {
+      const socialMedia = JSON.parse(req.body.socialMediaRows);
+      
+      if (Array.isArray(socialMedia) && socialMedia.some(obj => obj.socialType !== '' || obj.socialmedia !== '')) {
+        addSocialMedia(entityId, socialMedia);
+        
+        console.log("Social Media with EntityId", socialMedia);
+      } else {
+        console.log("Social Media Rows Object is empty");
+      }
+    } 
+
+
+    if (req.body.emailRows !== 'undefined' && req.body.emailRows !== '') {
+      const emails = JSON.parse(req.body.emailRows);
+      addEmails(entityId, emails);
+
+    console.log("emails after adding entityId", emails);
+    } else {
+      console.log("Emails object empty")
+    }
+
+
+    if (req.body.phoneNumberRows !== 'undefined' && req.body.phoneNumberRows !== '') {
+      const phoneNumbers = JSON.parse(req.body.phoneNumberRows);
+
+      addPhoneNumbers(entityId, phoneNumbers)
+
+    console.log("phone numbers object", phoneNumbers);
+    } else {
+      console.log("phone numbers object empty")
+    }
+
+
+
+
 
 
     const clientAddress = {
-      contactId,
+      entityId,
       contactClass: contactType,
       streetOne : req.body.streetOne,
       streetTwo : req.body.streetTwo,
@@ -64,7 +105,7 @@ router.post('/client-test', multerFile.single('image'), async (req, res) => {
 console.log("address object being constructed", clientAddress)
 
 const client = {
-  contactId,
+  entityId,
   clientName: req.body.clientName,
   imageId,
 }
@@ -104,12 +145,12 @@ console.log("client object being built", client);
 
     // console.log("here is the clientType: ", clientType)
 
-    // const contactId = await createContact(contactTypeId, clientType)
+    // const entityId = await createContact(contactTypeId, clientType)
 
-    // console.log("Contact id test:", contactId)
+    // console.log("Contact id test:", entityId)
 
     // const clientAddress = {
-    //   contactId,
+    //   entityId,
     //   contactClass: contactTypeId,
     //   streetOne : req.body.street1,
     //   streetTwo : req.body.street2,
@@ -120,7 +161,7 @@ console.log("client object being built", client);
     // };
 
     // const client = {
-    //   contactId,
+    //   entityId,
     //   clientName,
     //   imageId
     // }
