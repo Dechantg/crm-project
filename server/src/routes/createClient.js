@@ -88,6 +88,8 @@ console.log("thge req body", req.body)
 
     const entityClass = "2";
     const entityType = req.body.entityType
+    const entityTypeId = req.body.entityTypeId;
+
     console.log("there entity type thing", entityType)
 
 
@@ -143,6 +145,7 @@ console.log("thge req body", req.body)
 
     const client = {
       entityId,
+      entityTypeId,
       clientName: req.body.clientName,
       imageId,
     }

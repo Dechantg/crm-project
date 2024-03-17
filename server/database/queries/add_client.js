@@ -6,11 +6,12 @@ const db = require('../connection');
 
 const addClient = async (client) => {
   try {
-    const {entityId, clientName, imageId} = client
+
+    const {entityId, entityTypeId, clientName, imageId} = client
 
     const data = await db.query(
-      'INSERT INTO crm_client (entity_id, client_name, client_logo) VALUES ($1, $2, $3) RETURNING id;',
-      [entityId, clientName, imageId]
+      'INSERT INTO crm_client (entity_id, client_type, client_name, client_logo) VALUES ($1, $2, $3, $4) RETURNING id;',
+      [entityId, entityTypeId, clientName, imageId]
     );
 
     const newClient = data.rows[0].id;

@@ -39,9 +39,12 @@ const ClientCreateModal = ({ onClose }) => {
 
   const handleClientTypeChange = (event) => {
     const selectedClientType = event.target.value;
+    const [id, clientType] = selectedClientType.split(',');
+
     setFormValues({
         ...formValues,
-        entityType: selectedClientType,
+        entityTypeId: id,
+        entityType: clientType,
     });
 };
 
@@ -120,7 +123,7 @@ const ClientCreateModal = ({ onClose }) => {
             <select id="clientTypeSelect" value={formValues.client_type} onChange={handleClientTypeChange}>
                 <option value="">Select a client type...</option>
                 {modalCreationDetails.allType.map(clientType => (
-                    <option key={clientType.id} value={clientType.client_type}>
+                    <option key={clientType.id} value={`${clientType.id},${clientType.client_type}`}>
                         {clientType.client_type}
                     </option>
                 ))}

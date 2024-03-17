@@ -287,6 +287,7 @@ CREATE TABLE crm_client (
   id INTEGER DEFAULT nextval('crm_client_seq') PRIMARY KEY,
   entity_id VARCHAR(25),
   client_name VARCHAR(100),
+  client_type VARCHAR(25),
   client_logo VARCHAR(25),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

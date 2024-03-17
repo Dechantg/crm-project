@@ -37,11 +37,14 @@ const SupplierCreateModal = ({ onClose }) => {
     });
   }
 
-  const handleClientTypeChange = (event) => {
-    const selectedClientType = event.target.value;
+  const handleSupplierTypeChange = (event) => {    
+    const selectedSupplierType = event.target.value;
+    const [id, supplierType] = selectedSupplierType.split(',');
+
     setFormValues({
         ...formValues,
-        entityType: selectedClientType,
+        entityTypeId: id,
+        entityType: supplierType,
     });
 };
 
@@ -116,12 +119,12 @@ const SupplierCreateModal = ({ onClose }) => {
           <form encType="multipart/form-data" method="POST" onSubmit={handleSubmit}>
             <label>
 
-            <label htmlFor="clientTypeSelect">Select Supplier Type:</label>
-            <select id="clientTypeSelect" value={formValues.supplier_type} onChange={handleClientTypeChange}>
+            <label htmlFor="supplierTypeSelect">Select Supplier Type:</label>
+            <select id="supplierTypeSelect" value={formValues.supplier_type} onChange={handleSupplierTypeChange}>
                 <option value="">Select a client type...</option>
-                {modalCreationDetails.allType.map(clientType => (
-                    <option key={clientType.id} value={clientType.supplier_type}>
-                        {clientType.supplier_type}
+                {modalCreationDetails.allType.map(supplierType => (
+        <option key={supplierType.id} value={`${supplierType.id},${supplierType.supplier_type}`}>
+        {supplierType.supplier_type}
                     </option>
                 ))}
             </select> 

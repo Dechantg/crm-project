@@ -6,7 +6,7 @@ const configureMulterFile = require('../helpers/mutlerFile');
 const fs = require('fs').promises;
 const path = require('path');
 const imageUpload = require('../helpers/uploadImageAndThumbnail');
-const createContact = require('../../database/queries/create_entity_record');
+const createEntity = require('../../database/queries/create_entity_record');
 const addAddress = require('../../database/queries/add_address');
 const addSupplier = require('../../database/queries/add_supplier');
 const getContactClass = require('../../database/queries/get_all_contact_class');
@@ -75,11 +75,13 @@ router.get('/', async (req, res) => {
 router.post('/generate', multerFile.single('file'), async (req, res) => {
   try {
 
+    console.log("from inside the generation path the req.body", req.body)
+
     const fileDescription = req.body.description;
     const fileBuffer = req.file ? req.file.buffer : null;
     const originalFileName = req.file ? req.file.originalname : null;
     let imageId = null;
-    const supplierName = req.body.name;
+    const supplierName = req.body.supplierName;
     const establishment = true;
 
     // if logo included upload
@@ -89,10 +91,13 @@ router.post('/generate', multerFile.single('file'), async (req, res) => {
     }
 
     const entityClass = "3";
-    const entityType = req.body.entityType
+    const entityType = req.body.entityType;
+    const entityTypeId = req.body.entityTypeId;
 
 
-    const entityId = await createContact(entityClass, entityType, establishment)
+    const entityId = await createEntity(entityClass, entityType, establishment)
+
+    console.log("entity id after generation", entityId)
 
     if (req.body.socialMediaRows) {
       const socialMedia = JSON.parse(req.body.socialMediaRows);
@@ -143,6 +148,7 @@ router.post('/generate', multerFile.single('file'), async (req, res) => {
 
     const supplier = {
       entityId,
+      entityTypeId,
       supplierName,
       imageId
     }
