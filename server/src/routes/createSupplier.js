@@ -17,7 +17,10 @@ const getAllSocialMediaType = require('../../database/queries/get_all_social_med
 const getAllCountry =         require('../../database/queries/get_all_country');
 const getAllProvince =        require('../../database/queries/get_all_province');
 const getSupplierType = require('../../database/queries/get_all_supplier_type');
-const getContactClassId =     require('../../database/queries/get_entity_class_id_by_name')
+const getContactClassId =     require('../../database/queries/get_entity_class_id_by_name');
+const addPhoneNumbers = require('../../database/queries/add_phone');
+const addEmails = require('../../database/queries/add_email');
+const addSocialMedia = require('../../database/queries/add_social_media');
 
 
 const router = express.Router();
@@ -86,10 +89,43 @@ router.post('/generate', multerFile.single('file'), async (req, res) => {
     }
 
     const entityClass = "3";
-    const contactType = req.body.contactType
+    const entityType = req.body.entityType
 
 
-    const entityId = await createContact(entityClass, contactType, establishment)
+    const entityId = await createContact(entityClass, entityType, establishment)
+
+    if (req.body.socialMediaRows) {
+      const socialMedia = JSON.parse(req.body.socialMediaRows);
+      
+      if (Array.isArray(socialMedia) && socialMedia.some(obj => obj.socialType !== '' || obj.socialmedia !== '')) {
+        await addSocialMedia(entityId, socialMedia);
+        
+        console.log("Social Media with EntityId", socialMedia);
+      } else {
+        console.log("Social Media Rows Object is empty");
+      }
+    } 
+
+
+    if (req.body.emailRows !== 'undefined' && req.body.emailRows !== '') {
+      const emails = JSON.parse(req.body.emailRows);
+      await addEmails(entityId, emails);
+
+    console.log("emails after adding entityId", emails);
+    } else {
+      console.log("Emails object empty")
+    }
+
+
+    if (req.body.phoneNumberRows !== 'undefined' && req.body.phoneNumberRows !== '') {
+      const phoneNumbers = JSON.parse(req.body.phoneNumberRows);
+
+      await addPhoneNumbers(entityId, phoneNumbers)
+
+    console.log("phone numbers object", phoneNumbers);
+    } else {
+      console.log("phone numbers object empty")
+    }
 
     console.log("entity id test:", entityId)
 

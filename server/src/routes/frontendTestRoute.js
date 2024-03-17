@@ -16,6 +16,9 @@ const getContactClassId =     require('../../database/queries/get_entity_class_i
 const getAllSocialMediaType = require('../../database/queries/get_all_social_media_type');
 const getAllPhoneType =       require('../../database/queries/get_all_phone_type');
 const getAllEmailType =       require('../../database/queries/get_all_email_type');
+const addPhoneNumbers = require('../../database/queries/add_phone')
+const addEmails = require('../../database/queries/add_email')
+const addSocialMedia = require('../../database/queries/add_social_media')
 
 
 const router = express.Router();
@@ -47,6 +50,44 @@ router.post('/test', multerFile.single('image'), async (req, res) => {
     const contactClass = req.body.contactClass
 
     const entityId = "1";
+
+
+    if (req.body.socialMediaRows) {
+      const socialMedia = JSON.parse(req.body.socialMediaRows);
+      
+      if (Array.isArray(socialMedia) && socialMedia.some(obj => obj.socialType !== '' || obj.socialmedia !== '')) {
+        addSocialMedia(entityId, socialMedia);
+        
+        console.log("Social Media with EntityId", socialMedia);
+      } else {
+        console.log("Social Media Rows Object is empty");
+      }
+    } 
+
+
+    if (req.body.emailRows !== 'undefined' && req.body.emailRows !== '') {
+      const emails = JSON.parse(req.body.emailRows);
+      addEmails(entityId, emails);
+
+    console.log("emails after adding entityId", emails);
+    } else {
+      console.log("Emails object empty")
+    }
+
+
+    if (req.body.phoneNumberRows !== 'undefined' && req.body.phoneNumberRows !== '') {
+      const phoneNumbers = JSON.parse(req.body.phoneNumberRows);
+
+      addPhoneNumbers(entityId, phoneNumbers)
+
+    console.log("phone numbers object", phoneNumbers);
+    } else {
+      console.log("phone numbers object empty")
+    }
+
+
+
+
 
 
     const clientAddress = {

@@ -16,6 +16,9 @@ const getEntityClassId =     require('../../database/queries/get_entity_class_id
 const getAllSocialMediaType = require('../../database/queries/get_all_social_media_type');
 const getAllPhoneType =       require('../../database/queries/get_all_phone_type');
 const getAllEmailType =       require('../../database/queries/get_all_email_type');
+const addPhoneNumbers = require('../../database/queries/add_phone');
+const addEmails = require('../../database/queries/add_email');
+const addSocialMedia = require('../../database/queries/add_social_media');
 
 
 const router = express.Router();
@@ -75,7 +78,7 @@ router.post('/generate', multerFile.single('image'), async (req, res) => {
     let imageId = null;
     const clientName = req.body.name;
     const establishment = true;
-
+console.log("thge req body", req.body)
 
     // if logo included upload
     if (fileBuffer) {
@@ -84,12 +87,46 @@ router.post('/generate', multerFile.single('image'), async (req, res) => {
     }
 
     const entityClass = "2";
-    const entityType = req.body.enityType
+    const entityType = req.body.entityType
+    console.log("there entity type thing", entityType)
 
 
     const entityId = await createEntity(entityClass, entityType, establishment)
 
     console.log("entity id test:", entityId)
+
+    if (req.body.socialMediaRows) {
+      const socialMedia = JSON.parse(req.body.socialMediaRows);
+      
+      if (Array.isArray(socialMedia) && socialMedia.some(obj => obj.socialType !== '' || obj.socialmedia !== '')) {
+        await addSocialMedia(entityId, socialMedia);
+        
+        console.log("Social Media with EntityId", socialMedia);
+      } else {
+        console.log("Social Media Rows Object is empty");
+      }
+    } 
+
+
+    if (req.body.emailRows !== 'undefined' && req.body.emailRows !== '') {
+      const emails = JSON.parse(req.body.emailRows);
+      await addEmails(entityId, emails);
+
+    console.log("emails after adding entityId", emails);
+    } else {
+      console.log("Emails object empty")
+    }
+
+
+    if (req.body.phoneNumberRows !== 'undefined' && req.body.phoneNumberRows !== '') {
+      const phoneNumbers = JSON.parse(req.body.phoneNumberRows);
+
+      await addPhoneNumbers(entityId, phoneNumbers)
+
+    console.log("phone numbers object", phoneNumbers);
+    } else {
+      console.log("phone numbers object empty")
+    }
 
 
     const clientAddress = {

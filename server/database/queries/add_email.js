@@ -1,30 +1,29 @@
 
 
 
-
-
-
-
 const db = require('../connection');
 
-
-const addContactEmail = async (contactEmail) => {
+const addEntityEmail = async (entityId, entityEmail) => {
   try {
-    const {entityId, phoneEmailType, phoneEmail} = contactEmail
+    const placeholders = entityEmail.map((_, index) => `($1, $${index * 2 + 2}, $${index * 2 + 3})`).join(',');
 
-    const data = await db.query(
-      'INSERT INTO crm_phone (entity_id, email_type, email) VALUES ($1, $2, $3) RETURNING id;',
-      [entityId, phoneEmailType, phoneEmail]
+    const values = [entityId, ...entityEmail.flatMap(option => [option.emailType, option.email])];
+    
+
+    const data = await db.query(`
+      INSERT INTO crm_email (entity_id, email_type, email)
+      VALUES ${placeholders}
+      RETURNING *;`,
+      values
     );
 
-    const newContactEmail = data.rows[0].id;
-    
-    console.log("New Entity Phone created with id ", newContactEmail)
-    return newContactEmail;
+    const insertedOptions = data.rows;
+    return insertedOptions;
   } catch (error) {
-    console.error(`Error creating email: ${error.message}`);
-    throw { success: false, error: 'Internal Server Error' };
+    console.error('An error occurred while adding Emails:', error);
+    return error;
   }
 };
 
-module.exports = addContactEmail;
+module.exports = addEntityEmail;
+
