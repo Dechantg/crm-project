@@ -8,11 +8,12 @@ import SupplierCreateModal from './SupplierCreateModal';
 const SupplierList = () => {
   const [allSupplier, setAllSupplier] = useState(null);
   const [openCreateSupplierModal, setOpenCreateSupplierModal] = useState(false);
+  const [refreshPage, setRefreshPage] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const responce = await fetch('/api/get/supplier');
+        const responce = await fetch('/api/get/allsupplier');
         const data = await responce.json();
         console.log("supplier data from my backend", data)
         setAllSupplier(data.allSupplier);
@@ -21,7 +22,7 @@ const SupplierList = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [refreshPage]);
 
   const handleCreateNew = () => {
     console.log("modal button clicking")
@@ -30,6 +31,8 @@ const SupplierList = () => {
 
   const handleCloseModal = () => {
     setOpenCreateSupplierModal(false);
+    setRefreshPage(prevState => !prevState);
+
   };
 
 
@@ -54,7 +57,7 @@ const SupplierList = () => {
         <p>Loading...</p>
       )}
       {/* Render the modal */}
-      {openCreateSupplierModal && <SupplierCreateModal onClose={() => setOpenCreateSupplierModal(false)} />}
+      {openCreateSupplierModal && <SupplierCreateModal onClose={handleCloseModal} />}
     </div>
   );
 };

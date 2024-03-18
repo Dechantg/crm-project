@@ -3,7 +3,7 @@
 
 const db = require('../connection');
 
-const getAllEntityType = async () => {
+const getAllEntityClass = async () => {
   try {
     const data = await db.query(`SELECT * FROM crm_entity_class ORDER BY entity_class_name ASC;`);
     const allEntityType = data.rows;
@@ -14,4 +14,4 @@ const getAllEntityType = async () => {
   }
 };
 
-module.exports = getAllEntityType;
+module.exports = getAllEntityClass;

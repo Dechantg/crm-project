@@ -9,6 +9,7 @@ const ClientList = () => {
 
   const [allClients, setAllClients] = useState(null);
   const [openCreateClientModal, setOpenCreateClientModal] = useState(false);
+  const [refreshPage, setRefreshPage] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,7 +24,7 @@ const ClientList = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [refreshPage]);
 
   const handleCreateNew = () => {
     console.log("modal button clicking")
@@ -32,6 +33,7 @@ const ClientList = () => {
 
   const handleCloseModal = () => {
     setOpenCreateClientModal(false);
+    setRefreshPage(prevState => !prevState);
   };
 
   return (
@@ -53,7 +55,7 @@ const ClientList = () => {
         <p>Loading...</p>
       )}
       {/* Render the modal */}
-      {openCreateClientModal && <ClientCreateModal onClose={() => setOpenCreateClientModal(false)} />}
+      {openCreateClientModal && <ClientCreateModal onClose={handleCloseModal} />}
     </div>
   );
 };

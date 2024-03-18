@@ -36,7 +36,7 @@ const createContact = require('./routes/createContact');
 const createClient = require('./routes/createClient');
 const resetDatabase = require('./routes/resetDatabase');
 const frontendTestRoute = require('./routes/frontendTestRoute');
-
+const getAllContact = require('./routes/getAllContacts');
 const getAllClient = require('./routes/getAllClients');
 
 // const storage = multer.memoryStorage();
@@ -46,6 +46,8 @@ const getAllClient = require('./routes/getAllClients');
 app.use('/upload/sheet', uploadSheetsRoute);
 app.use('/upload/image', uploadImageRoute);
 app.use('/upload/pdf', uploadPDF);
+
+
 app.use('/download/pdf', getPdF);
 app.use('/getdocument', getDocumentByUser);
 app.use('/getimage', getImageByUser);
@@ -54,14 +56,23 @@ app.use('/download/image', getImageByImage);
 app.use('/download/document', getDocumentByDocument);
 app.use('/upload/licenceelist', uploadLicenceeList);
 app.use('/getlicencelist', getLicenceList);
+
+
 app.use('/add/supplier', createSupplier);
-app.use('/get/supplier', getSupplier);
-app.use('/create/product', createProduct);
-app.use('/add/contact', createContact);
 app.use('/add/client', createClient);
-app.use('/api/careful/reset/dontbedumb', resetDatabase)
-app.use('/frontend', frontendTestRoute)
-app.use('/get/allclient', getAllClient)
+app.use('/add/contact', createContact);
+app.use('/add/product', createProduct);
+
+
+app.use('/get/allsupplier', getSupplier);
+app.use('/get/allclient', getAllClient);
+app.use('/get/allcontact', getAllContact);
+
+
+app.use('/api/careful/reset/dontbedumb', resetDatabase);
+
+
+app.use('/frontend', frontendTestRoute);
 
 
 const port = process.env.PORT;
