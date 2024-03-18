@@ -7,6 +7,7 @@ const fs = require('fs').promises;
 
 const getAllProducts = require('../../database/queries/get_all_products');
 const getAllProductImages = require('../../database/queries/get_thumbs_by_id');
+const getAllSupplier = require('../../database/queries/get_all_supplier');
 
 const imagesThumbDirectory = path.join(__dirname, process.env.IMAGE_PATH + '/images-thumb');
 
@@ -16,12 +17,26 @@ router.get('/', async (req, res) => {
 
   try {
 
-    allProducts = await getAllProducts();
+    const allProducts = await getAllProducts();
+    const allSuppliers = await getAllSupplier();
 
     const productImages = allProducts.map(product => ({
       image: product.product_image
     }));
     
+    const allSupplierObject = {};
+    allSuppliers.forEach(result => {
+      allSupplierObject[result.id] = result.supplier_name
+    })
+
+    allProducts.forEach(product => {
+      const supplierName = allSupplierObject[product.supplier_id];
+      if (supplierName) {
+        product.supplier_name = supplierName;
+      }
+    });
+
+
     const queryResult = await getAllProductImages(productImages);
 
     const queryResultObject = {};
