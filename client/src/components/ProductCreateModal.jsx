@@ -138,7 +138,7 @@ const handleAlchPercentChange = (event) => {
 
       formData.append('image', file);
 
-      const response = await fetch('/api/frontend/test', {
+      const response = await fetch('/api/add/product/generate', {
         method: 'POST',
         body: formData,
       });
