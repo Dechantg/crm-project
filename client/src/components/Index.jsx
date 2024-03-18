@@ -22,8 +22,11 @@ const IndexPage = () => {
       {routes.map((route, index) => (
         <div key={index}>
           <Link to={route.path}>
+          <br></br>
+
             <button>{route.label}</button>
           </Link>
+
         </div>
       ))}
     </div>
