@@ -46,71 +46,10 @@ router.post('/test', multerFile.single('image'), async (req, res) => {
     const originalFileName = req.file ? req.file.originalname : null;
     let imageId = null;
 
-    const contactType = "2";
-    const contactClass = req.body.contactClass
-
-    const entityId = "1";
-
-
-    if (req.body.socialMediaRows) {
-      const socialMedia = JSON.parse(req.body.socialMediaRows);
-      
-      if (Array.isArray(socialMedia) && socialMedia.some(obj => obj.socialType !== '' || obj.socialmedia !== '')) {
-        addSocialMedia(entityId, socialMedia);
-        
-        console.log("Social Media with EntityId", socialMedia);
-      } else {
-        console.log("Social Media Rows Object is empty");
-      }
-    } 
-
-
-    if (req.body.emailRows !== 'undefined' && req.body.emailRows !== '') {
-      const emails = JSON.parse(req.body.emailRows);
-      addEmails(entityId, emails);
-
-    console.log("emails after adding entityId", emails);
-    } else {
-      console.log("Emails object empty")
-    }
-
-
-    if (req.body.phoneNumberRows !== 'undefined' && req.body.phoneNumberRows !== '') {
-      const phoneNumbers = JSON.parse(req.body.phoneNumberRows);
-
-      addPhoneNumbers(entityId, phoneNumbers)
-
-    console.log("phone numbers object", phoneNumbers);
-    } else {
-      console.log("phone numbers object empty")
-    }
 
 
 
 
-
-
-    const clientAddress = {
-      entityId,
-      contactClass: contactType,
-      streetOne : req.body.streetOne,
-      streetTwo : req.body.streetTwo,
-      city : req.body.city,
-      province : req.body.provinceId,
-      country : req.body.countryId,
-      postal : req.body.postalCode
-    }; 
-
-
-console.log("address object being constructed", clientAddress)
-
-const client = {
-  entityId,
-  clientName: req.body.clientName,
-  imageId,
-}
-
-console.log("client object being built", client);
 
 
 
@@ -119,75 +58,6 @@ console.log("client object being built", client);
   } else {
       console.log("No image file has been uploaded");
   }
-// console.log("file description", fileDescription)
-
-
-
-
-
-
-
-    // const fileDescription = req.body.description;
-    // const fileBuffer = req.file ? req.file.buffer : null;
-    // const originalFileName = req.file ? req.file.originalname : null;
-    // let imageId = null;
-    // const clientName = req.body.name;
-
-
-    // // if logo included upload
-    // if (fileBuffer) {
-    //   const result = await imageUpload(fileDescription, fileBuffer, originalFileName);
-    //   imageId = result && result.image ? result.image.id : null;
-    // }
-
-    // const contactTypeId = req.body.contactTypeId
-    // const clientType = req.body.clientType
-
-    // console.log("here is the clientType: ", clientType)
-
-    // const entityId = await createContact(contactTypeId, clientType)
-
-    // console.log("Contact id test:", entityId)
-
-    // const clientAddress = {
-    //   entityId,
-    //   contactClass: contactTypeId,
-    //   streetOne : req.body.street1,
-    //   streetTwo : req.body.street2,
-    //   city : req.body.city,
-    //   province : req.body.province,
-    //   country : req.body.country,
-    //   postal : req.body.postal
-    // };
-
-    // const client = {
-    //   entityId,
-    //   clientName,
-    //   imageId
-    // }
-
-    // const addedClient = await addClient(client);
-    
-    // const addedAddress = await addAddress(clientAddress);
-
-    // console.log("here is the id from the new address submiuttion", addedAddress)
-
-    // console.log("here is the added producer if return from query: ", addedClient)
-
-    // const dataTest = {
-    //   clientName,
-    //   streetOne : clientAddress.streetOne,
-    //   streetTwo : clientAddress.streetTwo,
-    //   cty : clientAddress.city,
-    //   province : clientAddress.province,
-    //   country : clientAddress.country,
-    //   postal : clientAddress.postal,
-    //   fileDescription,
-    //   imageId
-    // }
-
-
-    // console.log("here are my various input fields, this should be the one with just image info: ", dataTest)
 
 
     res.json({ message: 'Test Path successfull.', dataTest });

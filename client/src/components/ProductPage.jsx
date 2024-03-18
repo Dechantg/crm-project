@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ImageView from './ImageViewer';
 import '../views/Document.scss'
 
-import SupplierCreateModal from './SupplierCreateModal';
+import ProductCreateModal from './ProductCreateModal';
 
 
 const ProductList = () => {
@@ -83,7 +83,7 @@ const ProductList = () => {
 )}
 
       {/* Render the modal */}
-      {/* {openCreateProductModal && <ProductCreateModal onClose={handleCloseModal} />} */}
+      {openCreateProductModal && <ProductCreateModal onClose={handleCloseModal} />}
     </div>
   );
 };
