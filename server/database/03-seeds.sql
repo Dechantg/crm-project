@@ -74,10 +74,10 @@ INSERT INTO crm_supplier (
 ) VALUES 
 (1, 'Savian', 1, 9),
 (2, 'Jasci', 1, 14),
-(3, '58 Gin', 2, 0),
+(3, '58 Gin', 2, 19),
 (4, 'Avanzi', 1, 12),
-(5, 'Tassoni', 3, 0),
-(6, 'Scrappy''s', 4, 0);
+(5, 'Tassoni', 3, 23),
+(6, 'Scrappy''s', 4, 27);
 
 
 INSERT INTO crm_non_alch_classes (
@@ -142,7 +142,12 @@ INSERT INTO crm_images (
 (19, 1, 'imageslogo.jpg', 'ac3e0e55-e05a-4633-924f-3b292b052b8f.jpg', '62efc4b4-b2c2-47eb-984c-24c2813d1cd5.jpg', '58 logo'),
 (20, 1, 'APPLE & H BOTTLE IMAGE 70CL.jpg', '671ac333-27f0-4aa4-81a9-fa327f2ecaf8.jpg', 'e31215c8-a381-4aed-b318-9c6ecf9ef226.jpg', '58 apple hibiscus'),
 (21, 1, 'ENGLISH BERRY BOTTLE IMAGE 70CL.jpg', '88d5e3d6-5bd2-4d38-92bd-eee947c0c7d2.jpg', 'e43fd942-e99f-4437-b169-fcb2c2376d92.jpg', '58 english berry'),
-(22, 1, 'LONDON DRY BOTTLE IMAGE 70CL.jpg', '8526bf53-f122-4427-97db-f6574f30701c.jpg', '43c1edac-bf05-41cd-aee0-3b108897e3ed.jpg', '58 london dry');
+(22, 1, 'LONDON DRY BOTTLE IMAGE 70CL.jpg', '8526bf53-f122-4427-97db-f6574f30701c.jpg', '43c1edac-bf05-41cd-aee0-3b108897e3ed.jpg', '58 london dry'),
+(23, 1, 'Logo Tassoni 1793.jpg', 'cf2bd1ad-df2d-4391-ab55-524fcad21872.jpg', '5ca7b1bb-7215-462a-b05d-b514f9322654.jpg', 'tassoni logo' ),
+(24, 1, 'Img-6-pack_0_0(2).png', '487b9dfd-da5e-4b90-9d1a-10bd8711b783.png', '4093b21f-c1d6-4015-866a-b26ee12295d3.png', 'Tonica 6 pack'),
+(25, 1, 'Img-6-pack_1_0.png', 'cb51c604-d669-482e-a739-707fff6dcedb.png', '11c79f52-2cda-415a-8c2b-2fb7cf24cda0.png', 'cedrata 6 pack'),
+(26, 1, 'Mirto_6.jpg', 'c914e26f-13db-4fc4-90aa-bcf1c0042a9f.jpg', '7154b42b-2655-49e4-8a0b-4f09f50bc599.jpg', 'Mirto 6 pack'),
+(27, 1, 'th.jpeg', 'e3c5797a-cb65-4586-b3a7-24a8b904ddc2.jpeg', '32f09822-e43f-4a70-b97d-34c49a8c2630.jpeg', 'scrappy''s logo');
 
 
 
@@ -398,7 +403,10 @@ INSERT INTO crm_products (
 (12, 4, 'Chiaretto', 'Alch', 3, .750, 6),
 (13, 4, 'Franciacorta', 'Alch', 4, .750, 6),
 (14, 4, 'Lugana', 'Alch', 5, .750, 6),
-(15, 4, 'Dorobianco', 'Alch', 6, .750, 6);
+(15, 4, 'Dorobianco', 'Alch', 6, .750, 6),
+(16, 5, 'Tassoni Tonica',  'Non-Alch', 24, .180, 4),
+(17, 5, 'Tassoni Cedrata', 'Non-Alch', 25, .180, 4),
+(18, 5, 'Tassoni Mitro', 'Non-Alch', 26, .180, 4);
 
 
 INSERT INTO crm_alch_products (

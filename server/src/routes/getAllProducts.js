@@ -19,10 +19,22 @@ router.get('/', async (req, res) => {
     allProducts = await getAllProducts();
 
     const productImages = allProducts.map(product => ({
-      product_image: product.product_image
+      image: product.product_image
     }));
     
     const queryResult = await getAllProductImages(productImages);
+
+    const queryResultObject = {};
+    queryResult.forEach(result => {
+        queryResultObject[result.id] = result.thumbnail;
+    });
+
+    allProducts.forEach(product => {
+      const thumbnail = queryResultObject[product.product_image];
+      if (thumbnail) {
+          product.thumbnail = thumbnail;
+      }
+  });
 
     if (queryResult && queryResult.length > 0) {
       const thumbnails = queryResult.map(item => item.thumbnail);
@@ -37,7 +49,8 @@ router.get('/', async (req, res) => {
 
     console.log("Here are the all products", queryResult);
 
-    res.json({ allProducts, images: queryResult, thumbnails: thumbnailImages });
+    res.json({ allProducts, thumbnails: thumbnailImages });
+
       }
 
   } catch (error) {

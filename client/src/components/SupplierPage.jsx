@@ -7,6 +7,9 @@ import SupplierCreateModal from './SupplierCreateModal';
 
 const SupplierList = () => {
   const [allSupplier, setAllSupplier] = useState(null);
+  const [thumbnails, setThumbnails] = useState(null);
+  const [selectedSupplier, setSelectedSupplier] = useState(null);
+
   const [openCreateSupplierModal, setOpenCreateSupplierModal] = useState(false);
   const [refreshPage, setRefreshPage] = useState(false);
 
@@ -17,6 +20,7 @@ const SupplierList = () => {
         const data = await responce.json();
         console.log("supplier data from my backend", data)
         setAllSupplier(data.allSupplier);
+        setThumbnails(data.thumbnails)
       } catch (error) {
         console.error("Error fetching supplier data: ', error")
       }
@@ -35,7 +39,11 @@ const SupplierList = () => {
 
   };
 
-
+  const openDetailsModal = (supplier) => {
+    setSelectedSupplier(supplier);
+    console.log("from the modal click supplier", supplier)
+    // You may trigger modal opening logic here
+  };
 
 
   return (
@@ -43,20 +51,36 @@ const SupplierList = () => {
       <button onClick={handleCreateNew}>Create New Supplier</button>
       <h1>Supplier List</h1>
       {/* Render supplier list */}
-      {allSupplier ? (
-        <div>
-          {allSupplier.map(supplier => (
-            <div key={supplier.id}>
-              <p>Supplier Name: {supplier.supplier_name}</p>
-              {/* Add more data display as needed */}
-              <hr/>
+      
+{allSupplier ? (
+  <div>
+    {allSupplier.map(supplier => (
+      <div key={supplier.id}>
+        <p>Supplier: {supplier.supplier_name}</p>
+        {thumbnails && thumbnails.map(image => {
+          if (image.name === supplier.thumbnail) {
+            return (
+              <div key={`${supplier.id}-${image.id}`} onClick={() => openDetailsModal(supplier)}>
 
-            </div>
-          ))}
-        </div>
-      ) : (
-        <p>Loading...</p>
-      )}
+              <img
+                key={`${supplier.id}-${image.id}`}
+                src={`data:image/jpeg;base64,${image.data}`}
+                alt={image.name}
+                style={{ width: '50px', height: '50px', marginRight: '10px', cursor: 'pointer' }}
+              />
+              </div>
+            );
+          }
+          return null;
+        })}
+        <hr />
+      </div>
+    ))}
+  </div>
+) : (
+  <p>Loading...</p>
+)}
+
       {/* Render the modal */}
       {openCreateSupplierModal && <SupplierCreateModal onClose={handleCloseModal} />}
     </div>

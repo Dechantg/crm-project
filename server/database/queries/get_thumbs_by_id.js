@@ -3,7 +3,7 @@ const db = require('../connection');
 
 const getThumbsById = async (imageIds) => {
   try {
-    const ids = imageIds.map(image => image.product_image);
+    const ids = imageIds.map(image => image.image);
 
 
     const queryString = `

@@ -65,8 +65,8 @@ CREATE TABLE crm_images (
   id INTEGER DEFAULT nextval('crm_images_id_seq') PRIMARY KEY,
   user_id VARCHAR(10),
   file_name VARCHAR(100),
-  uuid_file_name VARCHAR(40),
-  thumbnail VARCHAR(40),
+  uuid_file_name VARCHAR(50),
+  thumbnail VARCHAR(50),
   file_description TEXT,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
