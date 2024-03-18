@@ -38,6 +38,7 @@ DROP TABLE IF EXISTS crm_entity_class CASCADE;
 DROP TABLE IF EXISTS crm_social_media_type CASCADE;
 DROP TABLE IF EXISTS crm_supplier_type CASCADE;
 DROP TABLE IF EXISTS crm_client_type CASCADE;
+DROP TABLE IF EXISTS crm_product_class CASCADE;
 
 
 
@@ -78,7 +79,7 @@ DROP SEQUENCE IF EXISTS crm_sales_call_seq;
 DROP SEQUENCE IF EXISTS crm_product_tasting_seq;
 DROP SEQUENCE IF EXISTS crm_country_code_seq;
 DROP SEQUENCE IF EXISTS crm_province_state_seq;
-
+DROP SEQUENCE IF EXISTS crm_product_class_seq;
 
 -- DROP TABLE IF EXISTS ;
 -- DROP SEQUENCE IF EXISTS ;

@@ -179,13 +179,14 @@ const SupplierCreateModal = ({ onClose }) => {
             />
         </div>
         <br></br>
+        Supplier Logo: 
         <input type="file" accept=".bmp,.png,.gif,.jpeg,.jpg,.tiff" onChange={handleFileChange} />
+        <br></br>
 
             </label>
             <br></br>
-
             <br></br>
-            <button type='submit'>Create Client</button>
+            <button type='submit'>Create Supplier</button>
           </form>
         </div>
       </div>

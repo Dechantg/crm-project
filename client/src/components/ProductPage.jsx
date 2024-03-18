@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ImageView from './ImageViewer';
 import '../views/Document.scss'
 
-import SupplierCreateModal from './SupplierCreateModal';
+import ProductCreateModal from './ProductCreateModal';
 
 
 const ProductList = () => {
@@ -56,7 +56,7 @@ const ProductList = () => {
   <div>
     {allProducts.map(product => (
       <div key={product.id}>
-        <p>Product: {product.product_name}</p>
+        <p onClick={() => openDetailsModal(product)} >Product: {product.product_name}</p>
         <p>Supplier: {product.supplier_name}</p>
         {thumbnails && thumbnails.map(image => {
           if (image.name === product.thumbnail) {
@@ -83,7 +83,7 @@ const ProductList = () => {
 )}
 
       {/* Render the modal */}
-      {/* {openCreateProductModal && <ProductCreateModal onClose={handleCloseModal} />} */}
+      {openCreateProductModal && <ProductCreateModal onClose={handleCloseModal} />}
     </div>
   );
 };

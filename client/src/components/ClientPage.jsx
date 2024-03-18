@@ -10,6 +10,8 @@ const ClientList = () => {
   const [allClients, setAllClients] = useState(null);
   const [openCreateClientModal, setOpenCreateClientModal] = useState(false);
   const [refreshPage, setRefreshPage] = useState(false);
+  const [selectedClient, setSelectedClient] = useState(null);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,6 +38,12 @@ const ClientList = () => {
     setRefreshPage(prevState => !prevState);
   };
 
+  const openDetailsModal = (client) => {
+    setSelectedClient(client);
+    console.log("from the modal click client", client)
+    // You may trigger modal opening logic here
+  };
+
   return (
     <div>
       <button onClick={handleCreateNew}>Create New Client</button>
@@ -45,7 +53,7 @@ const ClientList = () => {
         <div>
           {allClients.map(client => (
             <div key={client.id}>
-              <p>Client Name: {client.client_name}</p>
+              <p onClick={() => openDetailsModal(client)}>Client Name: {client.client_name}</p>
               {/* Add more data display as needed */}
               <hr/>
 

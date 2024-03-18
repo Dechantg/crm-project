@@ -10,6 +10,8 @@ const ContactList = () => {
   const [allContact, setAllContact] = useState(null);
   const [openCreateContactModal, setOpenCreateContactModal] = useState(false);
   const [refreshPage, setRefreshPage] = useState(false);
+  const [selectedContact, setSelectedContact] = useState(null);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,6 +39,12 @@ const ContactList = () => {
 
   };
 
+  const openDetailsModal = (contact) => {
+    setSelectedContact(contact);
+    console.log("from the modal click contact", contact)
+    // You may trigger modal opening logic here
+  };
+
   return (
     <div>
       <button onClick={handleCreateNew}>Create New Contact</button>
@@ -46,7 +54,7 @@ const ContactList = () => {
         <div>
           {allContact.map(contact => (
             <div key={contact.contact_id}>
-              <p>Contact Name: {contact.honorific} {contact.first_name} {contact.last_name}</p>
+              <p onClick={() => openDetailsModal(contact)}>Contact Name: {contact.honorific} {contact.first_name} {contact.last_name}</p>
               <p> Contact Role: {contact.entity_type} </p>
 
               {/* Add more data display as needed */}

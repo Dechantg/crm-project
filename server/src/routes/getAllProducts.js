@@ -62,7 +62,7 @@ router.get('/', async (req, res) => {
       );
 
 
-    console.log("Here are the all products", queryResult);
+    // console.log("Here are the all products", queryResult);
 
     res.json({ allProducts, thumbnails: thumbnailImages });
 

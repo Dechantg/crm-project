@@ -35,6 +35,8 @@ CREATE SEQUENCE crm_sales_call_seq START WITH 50;
 CREATE SEQUENCE crm_product_tasting_seq START WITH 50;
 CREATE SEQUENCE crm_country_code_seq START WITH 100;
 CREATE SEQUENCE crm_province_state_seq START WITH 250;
+CREATE SEQUENCE crm_product_class_seq START WITH 50;
+
 
 CREATE TABLE crm_roles (
   id INTEGER DEFAULT nextval('crm_roles_seq') PRIMARY KEY,
@@ -198,6 +200,11 @@ CREATE TABLE crm_products (
   volume_litres DECIMAL(5,3),
   case_format SMALLINT,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE crm_product_class (
+  id INTEGER DEFAULT nextval('crm_product_class_seq') PRIMARY KEY,
+  product_class_name VARCHAR(25)
 );
 
 CREATE TABLE crm_alch_products (

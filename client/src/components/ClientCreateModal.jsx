@@ -179,6 +179,7 @@ const ClientCreateModal = ({ onClose }) => {
             />
         </div>
         <br></br>
+        Client Logo: 
         <input type="file" accept=".bmp,.png,.gif,.jpeg,.jpg,.tiff" onChange={handleFileChange} />
 
             </label>
