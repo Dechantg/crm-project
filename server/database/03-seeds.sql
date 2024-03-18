@@ -408,6 +408,20 @@ INSERT INTO crm_products (
 (17, 5, 'Tassoni Cedrata', 'Non-Alch', 25, .180, 4),
 (18, 5, 'Tassoni Mitro', 'Non-Alch', 26, .180, 4);
 
+INSERT INTO crm_client (
+  id,
+  client_name,
+  client_type
+) VALUES 
+(1, 'Jagerhof', 1),
+(2, 'Como', 1),
+(3, 'Keefer Bar', 3),
+(4, 'Bar None', 4),
+(5, 'Caulfiend BCLRS', 6),
+(6, 'Legacy Liquor', 7),
+(7, 'Caulfield Safeway', 8),
+(8, 'Modern Bartender', 9);
+
 
 INSERT INTO crm_alch_products (
   id,
