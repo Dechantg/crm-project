@@ -10,6 +10,7 @@ const routes = [
   { path: '/client', label: 'Client List' },
   { path: '/supplier', label: 'Supplier List' },
   { path: '/contact', label: 'Contact List' },
+  { path: '/product', label: 'Product List' },
 
 
 

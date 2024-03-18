@@ -5,7 +5,8 @@ const fs = require('fs').promises;
 const getSupplierEntityId = require('../../database/queries/get_entity_by_class_and_establishment')
 
 const getAllSupplier = require('../../database/queries/get_all_supplier');
-const getSupplierLogo = require('../../database/queries/get_producer_logo');
+const getSupplierLogo = require('../../database/queries/get_thumbs_by_id');
+
 
 const imagesThumbDirectory = path.join(__dirname, process.env.IMAGE_PATH + '/images-thumb');
 
@@ -19,56 +20,49 @@ router.get('/', async (req, res) => {
 
     const allSupplier = await getAllSupplier();
 
-    console.log("querey results for all supplier entity id", allSupplierEntityId)
+    const supplierImages = allSupplier.map(supplier => ({
+      image: supplier.supplier_logo
+    }));
 
-    console.log("query results from the get supplier: ", allSupplier);
+    const queryResult = await getSupplierLogo(supplierImages);
 
-    // if (queryResult && queryResult.length > 0) {
-    //   const thumbnailImages = await Promise.all(
-    //     queryResult.map(async producer => {
-    //       if (producer.producer_logo !== null) {
-    //         const logoDetails = await getProducerLogo(producer.producer_logo);
 
-    //         console.log("images thumb directory: ", imagesThumbDirectory);
-    //         console.log("images thumb file", logoDetails[0].thumbnail);
+   
 
-    //         const imagePath = path.join(imagesThumbDirectory, logoDetails[0].thumbnail);
+    const queryResultObject = {};
+    queryResult.forEach(result => {
+        queryResultObject[result.id] = result.thumbnail;
+    });
 
-    //         try {
-    //           await fs.access(imagePath);
-    //           const imageBuffer = await fs.readFile(imagePath);
+    allSupplier.forEach(supplier => {
+      const thumbnail = queryResultObject[supplier.supplier_logo];
+      if (thumbnail) {
+          supplier.thumbnail = thumbnail;
+      }
+  });
 
-    //           return {
-    //             id: producer.id,
-    //             created_at: producer.created_at,
-    //             file_name: producer.file_name,
-    //             uuid_file_name: producer.uuid_file_name,
-    //             thumbnail: producer.thumbnail,
-    //             file_description: producer.file_description,
-    //             logo_details: logoDetails,
-    //             data: imageBuffer.toString('base64')
-    //           };
-    //         } catch (error) {
-    //           console.error('Error accessing or reading image file:', error);
-    //           return null;
-    //         }
-    //       } else {
-    //         // For items with null producer_logo, return without thumbnail data
-    //         return {
-    //           id: producer.id,
-    //           created_at: producer.created_at,
-    //           file_name: producer.file_name,
-    //           uuid_file_name: producer.uuid_file_name,
-    //           thumbnail: producer.thumbnail,
-    //           file_description: producer.file_description,
-    //           logo_details: null,
-    //           data: null
-    //         };
-    //       }
-    //     })
-    //   );
+console.log("the mapping of query resulkt", allSupplier);
 
-      res.json({ allSupplier });
+    if (queryResult && queryResult.length > 0) {
+      const thumbnails = queryResult.map(item => item.thumbnail);
+      const thumbnailImages = await Promise.all(
+        thumbnails.map(async thumbnail => {
+          const imagePath = path.join(imagesThumbDirectory, thumbnail);
+          const imageBuffer = await fs.readFile(imagePath);
+          return { name: thumbnail, data: imageBuffer.toString('base64') };
+        })
+      );
+
+      res.json({ allSupplier, thumbnails: thumbnailImages  });
+
+
+      }
+
+
+
+    // console.log("Here are the all products", supplierImages);
+
+
     
   } catch (error) {
     console.error('Error retrieving Images:', error);

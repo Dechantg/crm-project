@@ -10,6 +10,7 @@ import PdfView from './components/PdfView';
 import ClientPage from './components/ClientPage';
 import SupplierPage from './components/SupplierPage';
 import ContactPage from './components/ContactPage';
+import ProductPage from './components/ProductPage'
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
           <Route path="/client" element={<ClientPage />} />
           <Route path="/supplier" element={<SupplierPage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/product" element={<ProductPage />} />
 
 
         </Routes>
