@@ -1,8 +1,6 @@
 
 const express = require('express');
-const path = require('path');
 const router = express.Router();
-const fs = require('fs');
 
 const getAllContact = require('../../database/queries/get_all_contact');
 const getAllEntity = require ('../../database/queries/get_all_entity');

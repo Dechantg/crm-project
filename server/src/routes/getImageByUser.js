@@ -28,6 +28,8 @@ router.get('/', async (req, res) => {
         })
       );
 
+      console.log("from inside the image route", queryResult)
+
       res.json({ images: queryResult, thumbnails: thumbnailImages });
     } else {
       res.status(404).json({ error: 'File Record not found' });

@@ -38,6 +38,7 @@ const resetDatabase = require('./routes/resetDatabase');
 const frontendTestRoute = require('./routes/frontendTestRoute');
 const getAllContact = require('./routes/getAllContacts');
 const getAllClient = require('./routes/getAllClients');
+const getAllProducts = require('./routes/getAllProducts');
 
 // const storage = multer.memoryStorage();
 // const upload = multer({ storage: storage });
@@ -67,6 +68,7 @@ app.use('/add/product', createProduct);
 app.use('/get/allsupplier', getSupplier);
 app.use('/get/allclient', getAllClient);
 app.use('/get/allcontact', getAllContact);
+app.use('/get/allproducts', getAllProducts);
 
 
 app.use('/api/careful/reset/dontbedumb', resetDatabase);

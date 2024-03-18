@@ -69,24 +69,16 @@ INSERT INTO crm_contact (
 INSERT INTO crm_supplier (
   id,
   supplier_name,
-  supplier_type
+  supplier_type,
+  supplier_logo
 ) VALUES 
-(1, 'Savian', 1),
-(2, 'Jasci', 1),
-(3, '54 Gin', 2),
-(4, 'Avanzi', 1),
-(5, 'Tassoni', 3),
-(6, 'Scrappy''s', 4);
+(1, 'Savian', 1, 9),
+(2, 'Jasci', 1, 14),
+(3, '58 Gin', 2, 0),
+(4, 'Avanzi', 1, 12),
+(5, 'Tassoni', 3, 0),
+(6, 'Scrappy''s', 4, 0);
 
-INSERT INTO crm_alch_classes (
-  id,
-  alch_type
-) VALUES
-(1, 'Gin'),
-(2, 'Vodka'),
-(3, 'Red Wine'),
-(4, 'White Wine'),
-(5, 'Rose Wine');
 
 INSERT INTO crm_non_alch_classes (
   id,
@@ -146,7 +138,14 @@ INSERT INTO crm_images (
 (15,1, 'montepulciano-2017.jpg', '00dcc491-f4aa-47f2-b626-02f3c57801aa.jpg', 'c2e0bae2-368b-470d-aabb-1be598b3233d.jpg', 'Jasci Montepulciano'),
 (16,1, 'nerube.jpg', '4e61d755-5653-4c60-8f40-2520c867d80b.jpg', '04af390f-a8ed-43a0-9f95-1b7175541738.jpg', 'Jasci Nerube'),
 (17,1, 'trebbiano-2017.jpg', '67080bcb-8e6d-497d-95cc-a69ddd2a4273.jpg', 'ffe610f9-7b8b-45f0-b492-292033037b7d.jpg', 'Jasci Trebbiano'),
-(18,1, 'rudhir-chardonnay.jpg', '883777ee-2a80-44e2-8275-0bbcd17dbc71.jpg', '69f6f29f-c6eb-48f0-a6c7-e1f8f037a1fd.jpg', 'Jasci Rudhir Chardonnay');
+(18,1, 'rudhir-chardonnay.jpg', '883777ee-2a80-44e2-8275-0bbcd17dbc71.jpg', '69f6f29f-c6eb-48f0-a6c7-e1f8f037a1fd.jpg', 'Jasci Rudhir Chardonnay'),
+(19, 1, 'imageslogo.jpg', 'ac3e0e55-e05a-4633-924f-3b292b052b8f.jpg', '62efc4b4-b2c2-47eb-984c-24c2813d1cd5.jpg', '58 logo'),
+(20, 1, 'APPLE & H BOTTLE IMAGE 70CL.jpg', '671ac333-27f0-4aa4-81a9-fa327f2ecaf8.jpg', 'e31215c8-a381-4aed-b318-9c6ecf9ef226.jpg', '58 apple hibiscus'),
+(21, 1, 'ENGLISH BERRY BOTTLE IMAGE 70CL.jpg', '88d5e3d6-5bd2-4d38-92bd-eee947c0c7d2.jpg', 'e43fd942-e99f-4437-b169-fcb2c2376d92.jpg', '58 english berry'),
+(22, 1, 'LONDON DRY BOTTLE IMAGE 70CL.jpg', '8526bf53-f122-4427-97db-f6574f30701c.jpg', '43c1edac-bf05-41cd-aee0-3b108897e3ed.jpg', '58 london dry');
+
+
+
 
 INSERT INTO crm_supplier_type (
   id,
@@ -376,3 +375,65 @@ VALUES
   (158, '11', 'PVA', 'Basque Country (País Vasco)'),
   (159, '11', 'VAL', 'Valencian Community (Comunidad Valenciana)');
 
+INSERT INTO crm_products (
+  id,
+  supplier_id,
+  product_name,
+  product_type,
+  product_image,
+  volume_litres,
+  case_format
+) VALUES
+(1, 1, 'Cab Franc', 'Alch', 1, .750, 6),
+(2, 1, 'Chardonnay', 'Alch', 7, .750, 6),
+(3, 1, 'Classico', 'Alch', 8, .750, 6),
+(4, 1, 'Pinot Grigio', 'Alch', 10, .750, 6),
+(5, 1, 'Merlot', 'Alch', 11, .750, 6),
+(6, 2, 'Cerasuolo', 'Alch', 13, .750, 6),
+(7, 2, 'Montepulciano', 'Alch', 15, .750, 6),
+(8, 2, 'Nerube', 'Alch', 16, .750, 6),
+(9, 2, 'Trebbiano', 'Alch', 17, .750, 6),
+(10, 2, 'Rudhir Chardonnay', 'Alch', 18, .750, 6),
+(11, 4, 'Bragagna', 'Alch', 2, .750, 6),
+(12, 4, 'Chiaretto', 'Alch', 3, .750, 6),
+(13, 4, 'Franciacorta', 'Alch', 4, .750, 6),
+(14, 4, 'Lugana', 'Alch', 5, .750, 6),
+(15, 4, 'Dorobianco', 'Alch', 6, .750, 6);
+
+
+INSERT INTO crm_alch_products (
+  id,
+  product_id,
+  alcohol_percent,
+  alch_class
+) VALUES
+(1, 1, .13, 3),
+(2, 2, .11, 4),
+(3, 3, .11, 4),
+(4, 4, .11, 4),
+(5, 5, .14, 3),
+(6, 6, .11, 5),
+(7, 7, .14, 3),
+(8, 8, .14, 3),
+(9, 9, .11, 4),
+(10, 10, .11, 4),
+(11, 11, .15, 3),
+(12, 12, .11, 5),
+(13, 13, .11, 6),
+(14, 14, .12, 4),
+(15, 15, .11, 4);
+
+
+INSERT INTO crm_alch_classes (
+  id,
+  alch_type
+) VALUES
+(1, 'Gin'),
+(2, 'Vodka'),
+(3, 'Red Wine'),
+(4, 'White Wine'),
+(5, 'Rose Wine'),
+(6, 'Sparkling Wine');
+
+
+-- INSERT INTO crm_non_alch_products
