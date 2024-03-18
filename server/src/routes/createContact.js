@@ -9,13 +9,20 @@ const path = require('path');
 const imageUpload = require('../helpers/uploadImageAndThumbnail');
 const createEntity = require('../../database/queries/create_entity_record');
 const addAddress = require('../../database/queries/add_address');
-const addContactName = require('../../database/queries/add_contact_name');
+const addContact = require('../../database/queries/add_contact_name');
 const getContactClass = require('../../database/queries/get_all_contact_class');
 const getContactType = require('../../database/queries/get_all_entity_class');
 const getAllPhoneType = require('../../database/queries/get_all_phone_type');
 const getAllEmailType = require('../../database/queries/get_all_email_type');
 const getAllSocialMediaType = require('../../database/queries/get_all_social_media_type');
+const getAllEntityClass = require ('../../database/queries/get_all_entity_class');
 
+const getAllCountry =         require('../../database/queries/get_all_country');
+const getAllProvince =        require('../../database/queries/get_all_province');
+
+const addPhoneNumbers = require('../../database/queries/add_phone');
+const addEmails = require('../../database/queries/add_email');
+const addSocialMedia = require('../../database/queries/add_social_media');
 
 
 const router = express.Router();
@@ -31,13 +38,30 @@ router.get('/', async (req, res) => {
 
   try {
 
+    const allEntityClass = await getAllEntityClass();
     const allContactClass = await getContactClass();
+    const allCountry = await getAllCountry();
+    const allProvince = await getAllProvince();
     const allContactType = await getContactType();
     const allEmailType = await getAllEmailType();
     const allPhoneType = await getAllPhoneType();
     const allSocialMediaType = await getAllSocialMediaType();
 
-    res.render('createcontact', {allContactClass, allContactType, allPhoneType, allEmailType, allSocialMediaType});
+    const creationDetails = {
+      allEntityClass,
+      allContactClass,
+      allContactType,
+      allCountry,
+      allProvince,
+      allEmailType,
+      allPhoneType,
+      allSocialMediaType,
+    }
+
+
+    res.json({creationDetails });
+
+
 
 
   } catch (error) {
@@ -51,62 +75,79 @@ router.get('/', async (req, res) => {
 router.post('/generate', multerFile.single('file'), async (req, res) => {
   try {
 
-    const fileBuffer = req.file ? req.file.buffer : null;
-    const originalFileName = req.file ? req.file.originalname : null;
-    let imageId = null;
-    const {contactClass, contactType, streetOne, streetTwo, city, province, country, postal, imageDescription, honorific, firstName, lastName} = req.body
-    const establishment = true;
+    const establishment = false;
 
-    // if logo included upload
-    if (fileBuffer) {
-      const result = await imageUpload(imageDescription, fileBuffer, originalFileName);
-      imageId = result && result.image ? result.image.id : null;
+    firstName = req.body.contactFirstName;
+    lastName = req.body.contactLastName;
+    honorific = req.body.contactHonorific;
+    entityClass = req.body.entityClassId;
+    entityType = req.body.entityType;
+
+
+    const entityId = await createEntity(entityClass, entityType, establishment);
+
+    console.log("entity id test:", entityId);
+
+    if (req.body.socialMediaRows) {
+      const socialMedia = JSON.parse(req.body.socialMediaRows);
+      
+      if (Array.isArray(socialMedia) && socialMedia.some(obj => obj.socialType !== '' || obj.socialmedia !== '')) {
+        await addSocialMedia(entityId, socialMedia);
+        
+        console.log("Social Media with EntityId", socialMedia);
+      } else {
+        console.log("Social Media Rows Object is empty");
+      }
+    } 
+
+
+    if (req.body.emailRows !== 'undefined' && req.body.emailRows !== '') {
+      const emails = JSON.parse(req.body.emailRows);
+      await addEmails(entityId, emails);
+
+    console.log("emails after adding entityId", emails);
+    } else {
+      console.log("Emails object empty")
     }
 
-    const entityId = await createEntity(entityClass, entityType, establishment)
 
-    // console.log("Contact id test:", entityId)
+    if (req.body.phoneNumberRows !== 'undefined' && req.body.phoneNumberRows !== '') {
+      const phoneNumbers = JSON.parse(req.body.phoneNumberRows);
+
+      await addPhoneNumbers(entityId, phoneNumbers)
+
+    console.log("phone numbers object", phoneNumbers);
+    } else {
+      console.log("phone numbers object empty")
+    }
+
+
 
     const contactAddress = {
       entityId,
-      contactClass,
-      streetOne,
-      streetTwo,
-      city,
-      province,
-      country,
-      postal
+      establishment,
+      entityClass: entityClass,
+      streetOne : req.body.streetOne,
+      streetTwo : req.body.streetTwo,
+      city : req.body.city,
+      province : req.body.provinceId,
+      country : req.body.countryId,
+      postal : req.body.postalCode
     };
 
-    const contactName = {
+    const contact = {
       entityId,
+      contactClass : req.body.entityTypeId,
       honorific,
       firstName,
       lastName
     }
 
-    const addedContactName = await addContactName(contactName);
+    const addedContactName = await addContact(contact);
     
     const addedContactAddress = await addAddress(contactAddress);
 
-    // console.log("here is the id from the new address submiuttion", addedAddress)
-
-    // console.log("here is the added producer if return from query: ", addedProducer)
-
-    // const dataTest = {
-    //   producerName,
-    //   streetOne : producerAddress.streetOne,
-    //   streetTwo : producerAddress.streetTwo,
-    //   cty : producerAddress.city,
-    //   province : producerAddress.province,
-    //   country : producerAddress.country,
-    //   postal : producerAddress.postal,
-    //   fileDescription,
-    //   imageId
-    // }
-
-
-    // console.log("here are my various input fields, this should be the one with just image info: ", dataTest)
+   
 
 
     res.json({ message: 'Contact Creation Rendered successfully.' });

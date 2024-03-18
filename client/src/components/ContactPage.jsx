@@ -2,50 +2,55 @@ import React, { useState, useEffect } from 'react';
 import ImageView from './ImageViewer';
 import '../views/Document.scss'
 
-import ClientCreateModal from './ClientCreateModal';
+import ContactCreateModal from './ContactCreateModal';
 
 
 const ContactList = () => {
 
-  const [allClients, setAllClients] = useState(null);
-  const [openCreateClientModal, setOpenCreateClientModal] = useState(false);
+  const [allContact, setAllContact] = useState(null);
+  const [openCreateContactModal, setOpenCreateContactModal] = useState(false);
+  const [refreshPage, setRefreshPage] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const responce = await fetch('/api/get/allclient');
+        const responce = await fetch('/api/get/allcontact');
         const data = await responce.json();
-        console.log("client data from my backend: ", data)
+        console.log("Contact data from my backend: ", data)
 
-        setAllClients(data.allClients);
+        setAllContact(data.allContact);
       } catch (error) {
-        console.error('Error fetching client data: ', error);
+        console.error('Error fetching Contact data: ', error);
       }
     };
     fetchData();
-  }, []);
+  }, [refreshPage]);
 
   const handleCreateNew = () => {
     console.log("modal button clicking")
-    setOpenCreateClientModal(true);
+    setOpenCreateContactModal(true);
   };
 
   const handleCloseModal = () => {
-    setOpenCreateClientModal(false);
+    setOpenCreateContactModal(false);
+    setRefreshPage(prevState => !prevState);
+
   };
 
   return (
     <div>
-      <button onClick={handleCreateNew}>Create New Client</button>
-      <h1>Client List</h1>
-      {/* Render client list */}
-      {allClients ? (
+      <button onClick={handleCreateNew}>Create New Contact</button>
+      <h1>Contact List</h1>
+      {/* Render contact list */}
+      {allContact ? (
         <div>
-          {allClients.map(client => (
-            <div key={client.id}>
-              <p>Client ID: {client.id}</p>
-              <p>Client Name: {client.client_name}</p>
+          {allContact.map(contact => (
+            <div key={contact.contact_id}>
+              <p>Contact Name: {contact.honorific} {contact.first_name} {contact.last_name}</p>
+              <p> Contact Role: {contact.entity_type} </p>
+
               {/* Add more data display as needed */}
+              <hr/>
             </div>
           ))}
         </div>
@@ -53,7 +58,7 @@ const ContactList = () => {
         <p>Loading...</p>
       )}
       {/* Render the modal */}
-      {openCreateClientModal && <ClientCreateModal onClose={() => setOpenCreateClientModal(false)} />}
+      {openCreateContactModal && <ContactCreateModal onClose={handleCloseModal} />}
     </div>
   );
 };

@@ -9,11 +9,11 @@ const db = require('../connection');
 
 const addContactName = async (contactName) => {
   try {
-    const {entityId, firstName, lastName, honorific} = contactName
+    const {entityId, contactClass, firstName, lastName, honorific} = contactName
 
     const data = await db.query(
-      'INSERT INTO crm_contact_name (entity_id, first_name, last_name, honorific) VALUES ($1, $2, $3, $4) RETURNING id;',
-      [entityId, firstName, lastName, honorific]
+      'INSERT INTO crm_contact (entity_id, contact_class, first_name, last_name, honorific) VALUES ($1, $2, $3, $4, $5) RETURNING id;',
+      [entityId, contactClass, firstName, lastName, honorific]
     );
 
     const newContactName = data.rows[0].id;

@@ -5,7 +5,7 @@ CREATE SEQUENCE crm_users_seq START WITH 50;
 CREATE SEQUENCE crm_pdf_seq START WITH 50;
 CREATE SEQUENCE crm_document_seq START WITH 50;
 CREATE SEQUENCE crm_entities_seq START WITH 50;
-CREATE SEQUENCE crm_contact_name_seq START WITH 50;
+CREATE SEQUENCE crm_contact_seq START WITH 50;
 CREATE SEQUENCE crm_phone_seq START WITH 50;
 CREATE SEQUENCE crm_phone_type_seq START WITH 50;
 CREATE SEQUENCE crm_address_seq START WITH 50;
@@ -93,14 +93,15 @@ CREATE TABLE crm_document (
 CREATE TABLE crm_entities (
   id INTEGER DEFAULT nextval('crm_entities_seq') PRIMARY KEY,
   entity_class VARCHAR(25),
-  entity_type VARCHAR(25),
+  entity_type VARCHAR(50),
   establishment BOOLEAN,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE crm_contact_name (
-  id INTEGER DEFAULT nextval('crm_contact_name_seq') PRIMARY KEY,
+CREATE TABLE crm_contact (
+  id INTEGER DEFAULT nextval('crm_contact_seq') PRIMARY KEY,
   entity_id VARCHAR(25),
+  contact_class VARCHAR(25),
   first_name VARCHAR(25),
   last_name VARCHAR(25),
   honorific VARCHAR(10),

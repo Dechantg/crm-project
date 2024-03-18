@@ -36,6 +36,36 @@ INSERT INTO crm_contact_class (
 (10, 'Distilery Rep', '3'),
 (11, 'Whatever the fuck Alex is', '3');
 
+INSERT INTO crm_entities (
+  id,
+  entity_class,
+  entity_type,
+  establishment
+) VALUES
+(1, 2, 'Bar Manager', false),
+(2, 2, 'General Manager', false),
+(3, 1, 'Sales Agent', false),
+(4, 1, 'Sales Agent', false),
+(5, 3, 'Whatever the fuck Alex is', false),
+(6, 2, 'Wine Director', false);
+
+
+
+INSERT INTO crm_contact (
+  id,
+  entity_id,
+  contact_class,
+  first_name,
+  last_name
+) VALUES 
+(11, 1, 5, 'Chris', 'M'),
+(12, 2, 6, 'Steve', 'E'),
+(13, 3, 4, 'Nat', 'One'),
+(14, 4, 4, 'Nat', 'Two'),
+(15, 5, 11, 'Alex', 'D'),
+(16, 6, 7, 'Franco', 'M');
+
+
 INSERT INTO crm_supplier (
   id,
   supplier_name,
