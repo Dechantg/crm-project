@@ -45,9 +45,10 @@ const ClientList = () => {
         <div>
           {allClients.map(client => (
             <div key={client.id}>
-              <p>Client ID: {client.id}</p>
               <p>Client Name: {client.client_name}</p>
               {/* Add more data display as needed */}
+              <hr/>
+
             </div>
           ))}
         </div>

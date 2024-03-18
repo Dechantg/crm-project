@@ -47,9 +47,10 @@ const SupplierList = () => {
         <div>
           {allSupplier.map(supplier => (
             <div key={supplier.id}>
-              <p>Supplier ID: {supplier.id}</p>
               <p>Supplier Name: {supplier.supplier_name}</p>
               {/* Add more data display as needed */}
+              <hr/>
+
             </div>
           ))}
         </div>

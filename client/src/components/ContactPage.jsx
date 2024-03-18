@@ -46,11 +46,11 @@ const ContactList = () => {
         <div>
           {allContact.map(contact => (
             <div key={contact.contact_id}>
-              <p>Contact ID: {contact.contact_id}</p>
-              <p>Contact Name: {contact.first_name} {contact.last_name}</p>
+              <p>Contact Name: {contact.honorific} {contact.first_name} {contact.last_name}</p>
               <p> Contact Role: {contact.entity_type} </p>
 
               {/* Add more data display as needed */}
+              <hr/>
             </div>
           ))}
         </div>

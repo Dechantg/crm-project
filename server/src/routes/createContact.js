@@ -20,7 +20,9 @@ const getAllEntityClass = require ('../../database/queries/get_all_entity_class'
 const getAllCountry =         require('../../database/queries/get_all_country');
 const getAllProvince =        require('../../database/queries/get_all_province');
 
-
+const addPhoneNumbers = require('../../database/queries/add_phone');
+const addEmails = require('../../database/queries/add_email');
+const addSocialMedia = require('../../database/queries/add_social_media');
 
 
 const router = express.Router();
@@ -73,34 +75,69 @@ router.get('/', async (req, res) => {
 router.post('/generate', multerFile.single('file'), async (req, res) => {
   try {
 
-    const fileBuffer = req.file ? req.file.buffer : null;
-    const originalFileName = req.file ? req.file.originalname : null;
-    let imageId = null;
-    const {contactClass, contactType, streetOne, streetTwo, city, province, country, postal, imageDescription, honorific, firstName, lastName} = req.body
     const establishment = false;
 
-    // if logo included upload
-    if (fileBuffer) {
-      const result = await imageUpload(imageDescription, fileBuffer, originalFileName);
-      imageId = result && result.image ? result.image.id : null;
+    firstName = req.body.contactFirstName;
+    lastName = req.body.contactLastName;
+    honorific = req.body.contactHonorific;
+    entityClass = req.body.entityClassId;
+    entityType = req.body.entityType;
+
+
+    const entityId = await createEntity(entityClass, entityType, establishment);
+
+    console.log("entity id test:", entityId);
+
+    if (req.body.socialMediaRows) {
+      const socialMedia = JSON.parse(req.body.socialMediaRows);
+      
+      if (Array.isArray(socialMedia) && socialMedia.some(obj => obj.socialType !== '' || obj.socialmedia !== '')) {
+        await addSocialMedia(entityId, socialMedia);
+        
+        console.log("Social Media with EntityId", socialMedia);
+      } else {
+        console.log("Social Media Rows Object is empty");
+      }
+    } 
+
+
+    if (req.body.emailRows !== 'undefined' && req.body.emailRows !== '') {
+      const emails = JSON.parse(req.body.emailRows);
+      await addEmails(entityId, emails);
+
+    console.log("emails after adding entityId", emails);
+    } else {
+      console.log("Emails object empty")
     }
 
-    const entityId = await createEntity(entityClass, entityType, establishment)
+
+    if (req.body.phoneNumberRows !== 'undefined' && req.body.phoneNumberRows !== '') {
+      const phoneNumbers = JSON.parse(req.body.phoneNumberRows);
+
+      await addPhoneNumbers(entityId, phoneNumbers)
+
+    console.log("phone numbers object", phoneNumbers);
+    } else {
+      console.log("phone numbers object empty")
+    }
+
 
 
     const contactAddress = {
       entityId,
-      contactClass,
-      streetOne,
-      streetTwo,
-      city,
-      province,
-      country,
-      postal
+      establishment,
+      entityClass: entityClass,
+      streetOne : req.body.streetOne,
+      streetTwo : req.body.streetTwo,
+      city : req.body.city,
+      province : req.body.provinceId,
+      country : req.body.countryId,
+      postal : req.body.postalCode
     };
 
     const contact = {
       entityId,
+      contactClass : req.body.entityTypeId,
       honorific,
       firstName,
       lastName

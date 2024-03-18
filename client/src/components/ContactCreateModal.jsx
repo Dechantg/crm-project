@@ -81,7 +81,7 @@ const handleContactTypeChange = (event) => {
         formData.set('emailRows', emailRowsString);
 
 
-        const response = await fetch('/api/frontend/test', {
+        const response = await fetch('/api/add/contact/generate', {
             method: 'POST',
             body: formData,
         });
@@ -135,7 +135,7 @@ const handleContactTypeChange = (event) => {
             <select id="contactTypeSelect" value={formValues.contact_type} onChange={handleContactTypeChange}>
                 <option value="">Select a contact type...</option>
                {modalCreationDetails.allContactClass
-               .filter(contactType => contactType.entity_class === formValues.entityClassId) // Filter options based on selected entityClassId
+               .filter(contactType => contactType.entity_class === formValues.entityClassId)
               .map(contactType => (
                 <option key={contactType.id} value={`${contactType.id},${contactType.contact_type}`}>
                   {contactType.contact_type}

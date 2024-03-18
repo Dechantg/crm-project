@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
     const allEntity = await getAllEntity(establishment);
     const allEntityClass = await getAllEntityClass();
  
-
+console.log("the data from allFetched", allFetchedContact)
     const entityClassMap = allEntityClass.reduce((acc, entityClass) => {
       acc[entityClass.id] = entityClass.entity_class_name;
       return acc;
@@ -35,7 +35,8 @@ router.get('/', async (req, res) => {
           ...contact,
           ...entity,
           entity_class_name: entityClassMap[entity.entity_class],
-          contact_id: contact.id
+          contact_id: contact.id,
+          honorific: contact.honorific,
       };
   });
 
@@ -51,7 +52,7 @@ router.get('/', async (req, res) => {
 
 
   } catch (error) {
-    console.error('Error retrieving PDF:', error);
+    console.error('Error retrieving Contacts:', error);
     res.status(500).send('Internal Server Error');
   }
 });
