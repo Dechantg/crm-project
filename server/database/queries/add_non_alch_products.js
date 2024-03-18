@@ -16,7 +16,7 @@ const addNonProduct = async (alchNonProduct) => {
 
     const newNonAlchProduct = data.rows[0].id;
     
-    console.log("New Alchoholic Product created with id ", newNonAlchProduct)
+    console.log("New Non Alchoholic Product created with id ", newNonAlchProduct)
     return newNonAlchProduct;
   } catch (error) {
     console.error(`Error creating user: ${error.message}`);

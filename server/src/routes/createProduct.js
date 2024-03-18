@@ -40,13 +40,15 @@ router.get('/', async (req, res) => {
 });
 
 
-router.post('/alch', multerFile.single('file'), async (req, res) => {
+router.post('/generate', multerFile.single('image'), async (req, res) => {
   try {
 
     const fileDescription = req.body.description;
     const fileBuffer = req.file ? req.file.buffer : null;
     const originalFileName = req.file ? req.file.originalname : null;
     let imageId = null;
+
+    const productClassId = req.body.productClassId
 
     console.log("looking for the poroduct type coming from front", req.body)
 
@@ -59,12 +61,12 @@ router.post('/alch', multerFile.single('file'), async (req, res) => {
     }
 
     const newProduct = {
-      producerId : req.body.producer,
+      producerId : req.body.supplierId,
       productName : req.body.productName,
       imageId : imageId,
-      productType : req.body.productType,
-      volumeLitres : req.body.volumeLitresAlch,
-      caseFormat : req.body.caseFormatAlch
+      productType : req.body.productClassId,
+      volumeLitres : req.body.bottleSize,
+      caseFormat : req.body.caseFormat
     }
 
     console.log("here is my new product before query", newProduct);
@@ -73,19 +75,24 @@ router.post('/alch', multerFile.single('file'), async (req, res) => {
 
     console.log("here is my new product after adding", addedProduct)
 
+    if (productClassId === '1') {
     const newAlchProduct = {
-      addedProduct,
+      productId: addedProduct,
       alchoholPercent: req.body.alcoholPercent,
-      alchType: req.body.alchType
+      alchType: req.body.alchClassId
     };
+    await addAlchProduct(newAlchProduct);
+    }
 
-    console.log("here is me new alch product object before submitting", newAlchProduct);
+    if (productClassId === '2') {
+      const newNonAlchProduct = {
+        productId: addedProduct,
+        nonAlchType: req.body.nonAlchClassId,
+      };
+      await addNonAlchProduct(newNonAlchProduct)
 
-    const addedAlchProduct = await addAlchProduct(newAlchProduct);
-
-
-    console.log(" here is the addedAlchProduct after final query", addedAlchProduct)
-      
+    }
+     
 
 
     res.json({ message: 'Product page rendered for alch.'});
