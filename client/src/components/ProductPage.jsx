@@ -56,7 +56,7 @@ const ProductList = () => {
   <div>
     {allProducts.map(product => (
       <div key={product.id}>
-        <p>Product: {product.product_name}</p>
+        <p onClick={() => openDetailsModal(product)} >Product: {product.product_name}</p>
         <p>Supplier: {product.supplier_name}</p>
         {thumbnails && thumbnails.map(image => {
           if (image.name === product.thumbnail) {

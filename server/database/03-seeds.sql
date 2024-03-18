@@ -408,6 +408,13 @@ INSERT INTO crm_products (
 (17, 5, 'Tassoni Cedrata', 'Non-Alch', 25, .180, 4),
 (18, 5, 'Tassoni Mitro', 'Non-Alch', 26, .180, 4);
 
+INSERT INTO crm_product_class (
+  id,
+  product_class_name
+) VALUES
+(1, 'Alcoholic'),
+(2, 'Non-Alcoholic');
+
 INSERT INTO crm_client (
   id,
   client_name,

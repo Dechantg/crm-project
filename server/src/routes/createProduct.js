@@ -10,7 +10,8 @@ const getAllNonAlchClass =           require('../../database/queries/get_all_non
 
 const addProduct =              require('../../database/queries/add_product');
 const addAlchProduct =          require('../../database/queries/add_alch_product');
-const addNonAlchProduct =       require('../../database/queries/add_non_alch_products')
+const addNonAlchProduct =       require('../../database/queries/add_non_alch_products');
+const getAllProductClass = require('../../database/queries/get_all_product_class');
 
 
 const router = express.Router();
@@ -21,15 +22,16 @@ const multerFile = configureMulterFile();
 router.get('/', async (req, res) => {
   try {
 
-  const producers = await getAllProducers();
+  const suppliers = await getAllProducers();
   const allNonAlch = await getAllNonAlchClass();
   const allAlch = await getAllAlchClass();
-  console.log("here is the producers for verification", producers)
-  console.log("here is the alch for verification", allAlch)
-  console.log("here is the non-alch for verification", allNonAlch)
+  const allProductClass = await getAllProductClass();
+  // console.log("here is the producers for verification", suppliers)
+  // console.log("here is the alch for verification", allAlch)
+  // console.log("here is the non-alch for verification", allNonAlch)
 
 
-  res.render('createproduct', { producers, allAlch, allNonAlch });
+  res.json({ suppliers, allAlch, allNonAlch, allProductClass });
 
 } catch (error) {
   console.error('Error retrieving image:', error);
