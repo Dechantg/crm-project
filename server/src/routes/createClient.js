@@ -9,7 +9,6 @@ const createEntity =         require('../../database/queries/create_entity_recor
 const addAddress =            require('../../database/queries/add_address');
 const addClient =             require('../../database/queries/add_client');
 const getClientType =       require('../../database/queries/get_all_client_type');
-const getEntityType =        require('../../database/queries/get_all_entity_class');
 const getAllCountry =         require('../../database/queries/get_all_country');
 const getAllProvince =        require('../../database/queries/get_all_province');
 const getEntityClassId =     require('../../database/queries/get_entity_class_id_by_name')
@@ -19,7 +18,9 @@ const getAllEmailType =       require('../../database/queries/get_all_email_type
 const addPhoneNumbers = require('../../database/queries/add_phone');
 const addEmails = require('../../database/queries/add_email');
 const addSocialMedia = require('../../database/queries/add_social_media');
-
+const addSalesAssignment = require('../../database/queries/add_sales_assignment');
+const addClientContact = require('../../database/queries/add_client_contact');
+const buildContactObject = require('../helpers/contactObjectBuilder');
 
 const router = express.Router();
 
@@ -43,8 +44,9 @@ router.get('/', async (req, res) => {
     const allPhoneType = await getAllPhoneType();
     const allSocialMediaType = await getAllSocialMediaType();
 
-    // var selectedCountryId
-    console.log("entity type id and name details", entityTypeId)
+
+    const allContact = await buildContactObject()
+
 
     const creationDetails = {
       allType,
@@ -53,8 +55,9 @@ router.get('/', async (req, res) => {
       allProvince,
       allEmailType,
       allPhoneType,
-      allSocialMediaType
-    }
+      allSocialMediaType,
+      allContact,
+    };
 
 
 
@@ -72,6 +75,7 @@ router.get('/', async (req, res) => {
 router.post('/generate', multerFile.single('image'), async (req, res) => {
   try {
 
+    userId = '1';
     const fileDescription = req.body.description;
     const fileBuffer = req.file ? req.file.buffer : null;
     const originalFileName = req.file ? req.file.originalname : null;
@@ -85,6 +89,9 @@ console.log("thge req body", req.body)
       const result = await imageUpload(fileDescription, fileBuffer, originalFileName);
       imageId = result && result.image ? result.image.id : null;
     }
+
+    const contactEntityId = req.body.contactEntityId;
+    const agentEntityId = req.body.agentEntityId;
 
     const entityClass = "2";
     const entityType = req.body.entityType
@@ -158,23 +165,24 @@ console.log("thge req body", req.body)
 
     console.log("here is the added producer if return from query: ", addedClient)
 
-    const dataTest = {
-      clientName,
-      streetOne : clientAddress.streetOne,
-      streetTwo : clientAddress.streetTwo,
-      cty : clientAddress.city,
-      province : clientAddress.province,
-      country : clientAddress.country,
-      postal : clientAddress.postal,
-      fileDescription,
-      imageId
-    }
+    const clientContact = {
+      clientId: entityId,
+      contactEntityId,
+      userId,
+    };
+
+    const salesAgentAssignment = {
+      clientEntityId: entityId,
+      salesAgentEntityId: agentEntityId,
+      userId,
+    };
+
+    await addClientContact(clientContact);
+    await addSalesAssignment(salesAgentAssignment);
 
 
-    // console.log("here are my various input fields, this should be the one with just image info: ", dataTest)
 
-
-    res.json({ message: 'Client Created successfully.', dataTest });
+    res.json({ message: 'Client Created successfully.' });
   } catch (error) {
     console.error('Error handling file upload:', error);
     res.status(500).send('Internal Server Error');

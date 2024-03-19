@@ -11,8 +11,11 @@ import EmailForm from './EmailForm.jsx';
 const ClientCreateModal = ({ onClose }) => {
   const [file, setFile] = useState(null);
   const [modalCreationDetails, setModalCreationDetails] = useState(null);
-
+  const [selectedAgent, setSelectedAgent] = useState(null);
+  const [selectedContact, setSelectedContact] = useState('');
   const [formValues, setFormValues] = useState({});
+
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,6 +23,7 @@ const ClientCreateModal = ({ onClose }) => {
         const responce = await fetch('/api/add/client');
         const data = await responce.json();
         console.log("data from my backend: ", data.creationDetails)
+        // setAllContact(data.creationDetails.allType)
 
         setModalCreationDetails(data.creationDetails);
       } catch (error) {
@@ -28,6 +32,16 @@ const ClientCreateModal = ({ onClose }) => {
     };
     fetchData();
   }, []);
+
+  const filteredContacts = modalCreationDetails && modalCreationDetails.allContact
+    ? modalCreationDetails.allContact.filter(contact => contact.entity_class === '2')
+    : [];
+
+    const filteredAgents = modalCreationDetails && modalCreationDetails.allContact
+    ? modalCreationDetails.allContact.filter(contact => contact.entity_class === '1')
+    : [];
+
+console.log("the filtered details after everything set", filteredContacts);
 
   const handleOnChange = (event) => {
     const { name, value } = event.target;
@@ -40,7 +54,7 @@ const ClientCreateModal = ({ onClose }) => {
   const handleClientTypeChange = (event) => {
     const selectedClientType = event.target.value;
     const [id, clientType] = selectedClientType.split(',');
-
+console.log("from inside the client type", selectedClientType)
     setFormValues({
         ...formValues,
         entityTypeId: id,
@@ -52,6 +66,22 @@ const ClientCreateModal = ({ onClose }) => {
     setFile(e.target.files[0]);
   };
 
+  const handleContactChange = (event) => {
+    const selectedContact = event.target.value
+    console.log("from inside the contact change", selectedContact)
+    setFormValues({
+      ...formValues,
+      contactEntityId: selectedContact,
+    });  };
+
+
+
+  const handleAgentChange = (event) => {
+    const selectedAgent = event.target.value
+    setFormValues({
+      ...formValues,
+      agentEntityId: selectedAgent,
+    });  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -81,6 +111,7 @@ const ClientCreateModal = ({ onClose }) => {
         formData.append('image', file);
 
         const response = await fetch('/api/add/client/generate', {
+        // const response = await fetch('/api/frontend/test', {
             method: 'POST',
             body: formData,
         });
@@ -184,6 +215,35 @@ const ClientCreateModal = ({ onClose }) => {
 
             </label>
             <br></br>
+            <br></br>
+
+            <div>
+      <label htmlFor="contactSelect">Assign Client Contact:</label>
+      <select id="contactSelect" value={formValues.entity_id} onChange={handleContactChange}>
+        <option value="">Select a contact...</option>
+        {filteredContacts.map(contact => (
+          <option key={contact.entity_id} value={contact.entity_id}>
+            {contact.honorific && `${contact.honorific} `}
+            {`${contact.first_name} ${contact.last_name} --- ${contact.entity_type}`}
+          </option>
+        ))}
+      </select>
+    </div>
+    <br></br>
+
+    <div>
+      <label htmlFor="agentSelect">Assign Sales Agent:</label>
+      <select id="agentSelect" value={formValues.entity_id} onChange={handleAgentChange}>
+        <option value="">Select an Agent...</option>
+        {filteredAgents.map(contact => (
+          <option key={contact.entity_id} value={contact.entity_id}>
+            {contact.honorific && `${contact.honorific} `}
+            {`${contact.first_name} ${contact.last_name}`}
+          </option>
+        ))}
+      </select>
+    </div>
+    <br></br>
 
             <br></br>
             <button type='submit'>Create Client</button>

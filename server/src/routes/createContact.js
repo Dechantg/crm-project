@@ -4,9 +4,7 @@
 
 const express = require('express');
 const configureMulterFile = require('../helpers/mutlerFile');
-const fs = require('fs').promises;
-const path = require('path');
-const imageUpload = require('../helpers/uploadImageAndThumbnail');
+
 const createEntity = require('../../database/queries/create_entity_record');
 const addAddress = require('../../database/queries/add_address');
 const addContact = require('../../database/queries/add_contact_name');
@@ -24,14 +22,10 @@ const addPhoneNumbers = require('../../database/queries/add_phone');
 const addEmails = require('../../database/queries/add_email');
 const addSocialMedia = require('../../database/queries/add_social_media');
 
+const multerFile = configureMulterFile();
 
 const router = express.Router();
 
-const multerFile = configureMulterFile();
-
-// const imageUploadPath = path.join(__dirname, process.env.IMAGE_PATH + '/images');
-// const imageUploadThumbPath = path.join(__dirname, process.env.IMAGE_PATH + '/images-thumb');
-// const userId = 1
 
 
 router.get('/', async (req, res) => {
@@ -76,6 +70,7 @@ router.post('/generate', multerFile.single('file'), async (req, res) => {
   try {
 
     const establishment = false;
+    console.log("testing the req body from the contact generate path", req.body)
 
     firstName = req.body.contactFirstName;
     lastName = req.body.contactLastName;
@@ -86,7 +81,7 @@ router.post('/generate', multerFile.single('file'), async (req, res) => {
 
     const entityId = await createEntity(entityClass, entityType, establishment);
 
-    console.log("entity id test:", entityId);
+    console.log("entity id test:", firstName);
 
     if (req.body.socialMediaRows) {
       const socialMedia = JSON.parse(req.body.socialMediaRows);
@@ -143,9 +138,9 @@ router.post('/generate', multerFile.single('file'), async (req, res) => {
       lastName
     }
 
-    const addedContactName = await addContact(contact);
+    await addContact(contact);
     
-    const addedContactAddress = await addAddress(contactAddress);
+    await addAddress(contactAddress);
 
    
 

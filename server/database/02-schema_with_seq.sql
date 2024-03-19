@@ -277,8 +277,8 @@ CREATE TABLE crm_entity_class (
 
 CREATE TABLE crm_supplier_contact (
   id INTEGER DEFAULT nextval('crm_supplier_contact_seq') PRIMARY KEY,
-  supplier_id VARCHAR(25),
-  entity_id VARCHAR(25),
+  supplier_entity_id VARCHAR(25),
+  contact_entity_id VARCHAR(25),
   created_by VARCHAR(25),
   active BOOLEAN DEFAULT true,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -303,7 +303,7 @@ CREATE TABLE crm_client (
 CREATE TABLE crm_client_contact (
   id INTEGER DEFAULT nextval('crm_client_contact_seq') PRIMARY KEY,
   client_id VARCHAR(25),
-  entity_id VARCHAR(25),
+  contact_entity_id VARCHAR(25),
   created_by VARCHAR(25),
   active BOOLEAN DEFAULT true,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -311,8 +311,8 @@ CREATE TABLE crm_client_contact (
 
 CREATE TABLE crm_sales_rep_assignment (
   id INTEGER DEFAULT nextval('crm_sales_rep_assignment_seq') PRIMARY KEY,
-  client_id VARCHAR(25),
-  sales_agent_id VARCHAR(25),
+  client_entity_id VARCHAR(25),
+  sales_entity_agent_id VARCHAR(25),
   active BOOLEAN DEFAULT true,
   created_by VARCHAR(25),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP

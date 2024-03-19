@@ -82,6 +82,7 @@ const handleContactTypeChange = (event) => {
 
 
         const response = await fetch('/api/add/contact/generate', {
+        // const response = await fetch('/api/frontend/test', {
             method: 'POST',
             body: formData,
         });

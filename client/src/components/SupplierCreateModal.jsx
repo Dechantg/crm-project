@@ -11,6 +11,7 @@ import EmailForm from './EmailForm.jsx';
 const SupplierCreateModal = ({ onClose }) => {
   const [file, setFile] = useState(null);
   const [modalCreationDetails, setModalCreationDetails] = useState(null);
+  const [selectedContact, setSelectedContact] = useState('');
 
   const [formValues, setFormValues] = useState({});
 
@@ -29,6 +30,10 @@ const SupplierCreateModal = ({ onClose }) => {
     fetchData();
   }, []);
 
+  const filteredContacts = modalCreationDetails && modalCreationDetails.allContact
+  ? modalCreationDetails.allContact.filter(contact => contact.entity_class === '3')
+  : [];
+
   const handleOnChange = (event) => {
     const { name, value } = event.target;
     setFormValues({
@@ -36,6 +41,15 @@ const SupplierCreateModal = ({ onClose }) => {
       [name]: value,
     });
   }
+
+  const handleContactChange = (event) => {
+    const selectedContact = event.target.value
+    console.log("from inside the contact change", selectedContact)
+    setFormValues({
+      ...formValues,
+      contactEntityId: selectedContact,
+    });  };
+
 
   const handleSupplierTypeChange = (event) => {    
     const selectedSupplierType = event.target.value;
@@ -81,6 +95,7 @@ const SupplierCreateModal = ({ onClose }) => {
         formData.append('image', file);
 
         const response = await fetch('/api/add/supplier/generate', {
+        // const response = await fetch('/api/frontend/test', {
             method: 'POST',
             body: formData,
         });
@@ -178,6 +193,20 @@ const SupplierCreateModal = ({ onClose }) => {
                 setFormValues={setFormValues}
             />
         </div>
+
+        <br></br>
+            <div>
+      <label htmlFor="contactSelect">Assign Supplier Contact:</label>
+      <select id="contactSelect" value={formValues.entity_id} onChange={handleContactChange}>
+        <option value="">Select a contact...</option>
+        {filteredContacts.map(contact => (
+          <option key={contact.entity_id} value={contact.entity_id}>
+            {contact.honorific && `${contact.honorific} `}
+            {`${contact.first_name} ${contact.last_name} --- ${contact.entity_type}`}
+          </option>
+        ))}
+      </select>
+    </div>
         <br></br>
         Supplier Logo: 
         <input type="file" accept=".bmp,.png,.gif,.jpeg,.jpg,.tiff" onChange={handleFileChange} />
