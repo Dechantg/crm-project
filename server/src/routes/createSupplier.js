@@ -21,6 +21,8 @@ const getContactClassId =     require('../../database/queries/get_entity_class_i
 const addPhoneNumbers = require('../../database/queries/add_phone');
 const addEmails = require('../../database/queries/add_email');
 const addSocialMedia = require('../../database/queries/add_social_media');
+const buildContactObject = require('../helpers/contactObjectBuilder')
+const addSupplierContact = require('../../database/queries/add_supplier_contact');
 
 
 const router = express.Router();
@@ -35,7 +37,7 @@ const multerFile = configureMulterFile();
 router.get('/', async (req, res) => {
 
   try {
-
+    
     const contactType = "Supplier"
     const allType = await getSupplierType();
     const contactTypeId = await getContactClassId(contactType);
@@ -44,6 +46,8 @@ router.get('/', async (req, res) => {
     const allEmailType = await getAllEmailType();
     const allPhoneType = await getAllPhoneType();
     const allSocialMediaType = await getAllSocialMediaType();
+    const allContact = await buildContactObject()
+
 
     console.log('here are the all supplier type crap', allType);
 
@@ -54,7 +58,8 @@ router.get('/', async (req, res) => {
       allProvince,
       allEmailType,
       allPhoneType,
-      allSocialMediaType
+      allSocialMediaType,
+      allContact,
     }
 
 
@@ -76,7 +81,7 @@ router.post('/generate', multerFile.single('file'), async (req, res) => {
   try {
 
     console.log("from inside the generation path the req.body", req.body)
-
+    userId = '1';
     const fileDescription = req.body.description;
     const fileBuffer = req.file ? req.file.buffer : null;
     const originalFileName = req.file ? req.file.originalname : null;
@@ -153,31 +158,20 @@ router.post('/generate', multerFile.single('file'), async (req, res) => {
       imageId
     }
 
-    const addedSupplier = await addSupplier(supplier);
+    const supplierContact = {
+      supplierEntityId: entityId,
+      contactEntityId: req.body.contactEntityId,
+      userId,
+    };
+
+    await addSupplier(supplier);
     
-    const addedAddress = await addAddress(supplierAddress);
+    await addAddress(supplierAddress);
 
-    console.log("here is the id from the new address submiuttion", addedAddress)
-
-    console.log("here is the added supplier if return from query: ", addedSupplier)
-
-    const dataTest = {
-      supplierName,
-      streetOne : supplierAddress.streetOne,
-      streetTwo : supplierAddress.streetTwo,
-      cty : supplierAddress.city,
-      province : supplierAddress.province,
-      country : supplierAddress.country,
-      postal : supplierAddress.postal,
-      fileDescription,
-      imageId
-    }
+    await addSupplierContact(supplierContact);
 
 
-    // console.log("here are my various input fields, this should be the one with just image info: ", dataTest)
-
-
-    res.json({ message: 'Image uploaded successfully.', dataTest });
+    res.json({ message: 'Image uploaded successfully.' });
   } catch (error) {
     console.error('Error handling file upload:', error);
     res.status(500).send('Internal Server Error');
