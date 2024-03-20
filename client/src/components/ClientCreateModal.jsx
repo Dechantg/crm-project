@@ -150,9 +150,9 @@ console.log("from inside the client type", selectedClientType)
           <form encType="multipart/form-data" method="POST" onSubmit={handleSubmit}>
             <label>
 
-            <label htmlFor="clientTypeSelect">Select Client Type:</label>
+            <label htmlFor="clientTypeSelect">Select Customer Type:</label>
             <select id="clientTypeSelect" value={formValues.client_type} onChange={handleClientTypeChange}>
-                <option value="">Select a client type...</option>
+                <option value="">Select a customer type...</option>
                 {modalCreationDetails.allType.map(clientType => (
                     <option key={clientType.id} value={`${clientType.id},${clientType.client_type}`}>
                         {clientType.client_type}
@@ -161,7 +161,7 @@ console.log("from inside the client type", selectedClientType)
             </select> 
               <br></br>
             
-              Client Name:
+              Business Name:
               <input
                 type="text"
                 name="clientName"
