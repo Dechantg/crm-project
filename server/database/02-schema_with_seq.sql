@@ -36,6 +36,10 @@ CREATE SEQUENCE crm_product_tasting_seq START WITH 50;
 CREATE SEQUENCE crm_country_code_seq START WITH 100;
 CREATE SEQUENCE crm_province_state_seq START WITH 250;
 CREATE SEQUENCE crm_product_class_seq START WITH 50;
+CREATE SEQUENCE crm_entity_class_record_seq START WITH 100;
+CREATE SEQUENCE crm_business_type_seq START WITH 50;
+CREATE SEQUENCE crm_business_seq START WITH 50;
+CREATE SEQUENCE crm_entity_type_seq START WITH 50;
 
 
 CREATE TABLE crm_roles (
@@ -46,8 +50,7 @@ CREATE TABLE crm_roles (
 CREATE TABLE crm_permissions (
   id INTEGER DEFAULT nextval('crm_permissions_seq') PRIMARY KEY,
   route_name VARCHAR(50) NOT NULL,
-  table_name VARCHAR(50) NOT NULL,
-  
+  table_name VARCHAR(50) NOT NULL,  
   can_read BOOLEAN DEFAULT false,
   can_write BOOLEAN DEFAULT false,
   can_delete BOOLEAN DEFAULT false
@@ -94,9 +97,29 @@ CREATE TABLE crm_document (
 
 CREATE TABLE crm_entities (
   id INTEGER DEFAULT nextval('crm_entities_seq') PRIMARY KEY,
-  entity_class VARCHAR(25),
-  entity_type VARCHAR(50),
+  -- entity_class_record VARCHAR(25),
+  -- entity_type VARCHAR(50),
   establishment BOOLEAN,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE crm_entity_type (
+    id INTEGER DEFAULT nextval('crm_entity_type_seq') PRIMARY KEY,
+    entity_type_name VARCHAR(100),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE crm_entity_class_record (
+    id INTEGER DEFAULT nextval('crm_entity_class_record_seq') PRIMARY KEY,
+    entity_id VARCHAR(50),
+    entity_class_id VARCHAR(50),
+    entity_type VARCHAR(25),
+    entity_class_status BOOLEAN DEFAULT false
+);
+
+CREATE TABLE crm_entity_class (
+  id INTEGER DEFAULT nextval('crm_entity_class_seq') PRIMARY KEY,
+  entity_class_name VARCHAR(25),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -118,6 +141,7 @@ CREATE TABLE crm_phone (
   phone_number VARCHAR(15),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
 
 CREATE TABLE crm_phone_type (
   id INTEGER DEFAULT nextval('crm_phone_type_seq') PRIMARY KEY,
@@ -193,11 +217,11 @@ CREATE TABLE crm_client_list (
 
 CREATE TABLE crm_products (
   id INTEGER DEFAULT nextval('crm_products_seq') PRIMARY KEY,
-  supplier_id VARCHAR(50),
+  supplier_entity_id VARCHAR(50),
   product_name VARCHAR(100),
   product_image VARCHAR(25),
   product_type VARCHAR(25),
-  volume_litres DECIMAL(5,3),
+  volume_litres SMALLINT,
   case_format SMALLINT,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -269,11 +293,7 @@ CREATE TABLE crm_contact_class (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE crm_entity_class (
-  id INTEGER DEFAULT nextval('crm_entity_class_seq') PRIMARY KEY,
-  entity_class_name VARCHAR(25),
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+
 
 CREATE TABLE crm_supplier_contact (
   id INTEGER DEFAULT nextval('crm_supplier_contact_seq') PRIMARY KEY,
@@ -284,19 +304,21 @@ CREATE TABLE crm_supplier_contact (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE crm_client_type (
-  id INTEGER DEFAULT nextval('crm_client_type_seq') PRIMARY KEY,
-  client_type VARCHAR(25),
+CREATE TABLE crm_business_type (
+  id INTEGER DEFAULT nextval('crm_business_type_seq') PRIMARY KEY,
+  entity_class VARCHAR(25),
+  business_type VARCHAR(25),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   active BOOLEAN DEFAULT true
 );
 
-CREATE TABLE crm_client (
-  id INTEGER DEFAULT nextval('crm_client_seq') PRIMARY KEY,
+CREATE TABLE crm_business (
+  id INTEGER DEFAULT nextval('crm_business_seq') PRIMARY KEY,
   entity_id VARCHAR(25),
-  client_name VARCHAR(100),
-  client_type VARCHAR(25),
-  client_logo VARCHAR(25),
+  entity_class VARCHAR(25),
+  business_name VARCHAR(100),
+  business_type VARCHAR(25),
+  business_logo VARCHAR(25),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

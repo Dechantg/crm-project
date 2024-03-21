@@ -46,7 +46,7 @@ const ClientList = () => {
 
   return (
     <div>
-      <button onClick={handleCreateNew}>Create New Client</button>
+      <button onClick={handleCreateNew}>Create New Business Record</button>
       <h1>Client List</h1>
       {/* Render client list */}
       {allClients ? (

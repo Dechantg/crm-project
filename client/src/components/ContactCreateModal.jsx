@@ -3,10 +3,10 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import '../views/Modal.scss'
 import '../views/Document.scss'
-import AddressForm from './AddressForm.jsx';
-import SocialMediaForm from './SocialMediaForm.jsx';
-import PhoneNumberForm from './PhoneNumberForm.jsx';
-import EmailForm from './EmailForm.jsx';
+import AddressForm from './forms/AddressForm.jsx';
+import SocialMediaForm from './forms/SocialMediaForm.jsx';
+import PhoneNumberForm from './forms/PhoneNumberForm.jsx';
+import EmailForm from './forms/EmailForm.jsx';
 
 const ContactCreateModal = ({ onClose }) => {
   const [modalCreationDetails, setModalCreationDetails] = useState(null);

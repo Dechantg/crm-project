@@ -12,42 +12,119 @@ INSERT INTO crm_users (
 ('john', 'doe', 'john@example.com', 'test'),
 ('jane', 'smith', 'jane@example.com', 'test');
 
-INSERT INTO crm_entity_class (id,
+INSERT INTO crm_entity_class (
+  id,
   entity_class_name
 ) VALUES
 (1, 'Internal'),
 (2, 'Client'),
 (3, 'Supplier');
 
-INSERT INTO crm_contact_class (
-  id,
-  contact_type,
-  entity_class
-) VALUES
-(1, 'Sales Manager', '1'),
-(2, 'Territory Manager', '1'),
-(3, 'Territory Rep', '1'),
-(4, 'Sales Agent', '1'),
-(5, 'Bar Manager', '2'),
-(6, 'General Manager', '2'),
-(7, 'Wine Director', '2'),
-(8, 'Owner', '2'),
-(9, 'Winery Rep', '3'),
-(10, 'Distilery Rep', '3'),
-(11, 'Whatever the fuck Alex is', '3');
+-- INSERT INTO crm_business_class (
+--   id,
+--   contact_type,
+--   entity_class
+-- ) VALUES
+-- ;
 
 INSERT INTO crm_entities (
   id,
-  entity_class,
-  entity_type,
+  -- entity_class_record,
+  -- entity_type,
   establishment
 ) VALUES
-(1, 2, 'Bar Manager', false),
-(2, 2, 'General Manager', false),
-(3, 1, 'Sales Agent', false),
-(4, 1, 'Sales Agent', false),
-(5, 3, 'Whatever the fuck Alex is', false),
-(6, 2, 'Wine Director', false);
+(1, false),
+(2, false),
+(3, false),
+(4, false),
+(5, false),
+(6, false),
+(7, true),
+(8, true),
+(9, true),
+(10, true),
+(11, true),
+(12, true),
+(13, true),
+(14, true),
+(15, true),
+(16, true),
+(17, true),
+(18, true),
+(19, true),
+(20, true);
+
+INSERT INTO crm_entity_class_record (
+  id,
+  entity_id,
+  entity_class_id,
+  entity_type
+) VALUES
+(1, 1, 2, 19),
+(2, 2, 2, 20),
+(3, 3, 1, 18),
+(4, 4, 1, 18),
+(5, 5, 3, 25),
+(6, 6, 2, 21),
+(7, 7, 3, 10),
+(8, 8, 3, 10),
+(9, 9, 3, 11),
+(10, 10, 3, 10),
+(11, 11, 3, 12),
+(12, 12, 3, 13),
+(13, 13, 2, 1),
+(14, 14, 2, 1),
+(15, 15, 2, 3),
+(16, 16, 2, 4),
+(17, 17, 2, 6),
+(18, 18, 2, 7),
+(19, 19, 2, 8),
+(20, 20, 2, 20);
+
+INSERT INTO crm_entity_type (
+  id,
+  entity_type_name
+  ) VALUES
+(1, 'Resturant'),
+(2, 'Wine Bar'),
+(3, 'Bar'),
+(4, 'Club'),
+(5, 'Coffee Shop'),
+(6, 'Government LRS'),
+(7, 'Private LRS'),
+(8, 'Grocery Retail'),
+(9, 'Boutique Retail'),
+(10, 'Winnery'),
+(11, 'Distillery'),
+(12, 'Water'),
+(13, 'Bitters'),
+(14, 'Distributor'),
+(15, 'Sales Manager'),
+(16, 'Territory Manager'),
+(17, 'Territory Rep'),
+(18, 'Sales Agent'),
+(19, 'Bar Manager'),
+(20, 'General Manager'),
+(21, 'Wine Director'),
+(22, 'Owner'),
+(23, 'Winery Rep'),
+(24, 'Distilery Rep'),
+(25, 'Whatever the fuck Alex is');
+
+INSERT INTO crm_business (
+  id,
+  entity_id,
+  business_name,
+  business_type
+) VALUES 
+(1, 13,'Jagerhof', 1),
+(2, 14, 'Como', 1),
+(3, 15, 'Keefer Bar', 3),
+(4, 16, 'Bar None', 4),
+(5, 17, 'Caulfiend BCLRS', 6),
+(6, 18, 'Legacy Liquor', 7),
+(7, 19, 'Caulfield Safeway', 8),
+(8, 20, 'Modern Bartender', 9);
 
 
 
@@ -66,18 +143,20 @@ INSERT INTO crm_contact (
 (16, 6, 7, 'Franco', 'M');
 
 
-INSERT INTO crm_supplier (
+INSERT INTO crm_business (
   id,
-  supplier_name,
-  supplier_type,
-  supplier_logo
+  entity_id,
+  business_name,
+  business_type,
+  business_logo
 ) VALUES 
-(1, 'Savian', 1, 9),
-(2, 'Jasci', 1, 14),
-(3, '58 Gin', 2, 19),
-(4, 'Avanzi', 1, 12),
-(5, 'Tassoni', 3, 23),
-(6, 'Scrappy''s', 4, 27);
+(9, 7, 'Savian', 10, 9),
+(10, 8, 'Jasci', 10, 14),
+(11, 9, '58 Gin', 11, 19),
+(12, 10, 'Avanzi', 10, 12),
+(13, 11, 'Tassoni', 12, 23),
+(14, 12, 'Scrappy''s', 13, 27);
+
 
 
 INSERT INTO crm_non_alch_classes (
@@ -151,30 +230,6 @@ INSERT INTO crm_images (
 
 
 
-
-INSERT INTO crm_supplier_type (
-  id,
-  supplier_type
-) VALUES
-(1, 'Winnery'),
-(2, 'Distillery'),
-(3, 'Water'),
-(4, 'Bitters'),
-(5, 'Distributor');
-
-INSERT INTO crm_client_type (
-  id,
-  client_type
-) VALUES
-(1, 'Resturant'),
-(2, 'Wine Bar'),
-(3, 'Bar'),
-(4, 'Club'),
-(5, 'Coffee Shop'),
-(6, 'Government LRS'),
-(7, 'Private LRS'),
-(8, 'Grocery Retail'),
-(9, 'Boutique Retail');
 
 INSERT INTO crm_country_code (id, country_two_letter, country_name)
 VALUES
@@ -382,31 +437,31 @@ VALUES
 
 INSERT INTO crm_products (
   id,
-  supplier_id,
+  supplier_entity_id,
   product_name,
   product_type,
   product_image,
   volume_litres,
   case_format
 ) VALUES
-(1, 1, 'Cab Franc', 1, 1, .750, 6),
-(2, 1, 'Chardonnay', 1, 7, .750, 6),
-(3, 1, 'Classico', 1, 8, .750, 6),
-(4, 1, 'Pinot Grigio', 1, 10, .750, 6),
-(5, 1, 'Merlot', 1, 11, .750, 6),
-(6, 2, 'Cerasuolo', 1, 13, .750, 6),
-(7, 2, 'Montepulciano', 1, 15, .750, 6),
-(8, 2, 'Nerube', 1, 16, .750, 6),
-(9, 2, 'Trebbiano', 1, 17, .750, 6),
-(10, 2, 'Rudhir Chardonnay', 1, 18, .750, 6),
-(11, 4, 'Bragagna', 1, 2, .750, 6),
-(12, 4, 'Chiaretto', 1, 3, .750, 6),
-(13, 4, 'Franciacorta', 1, 4, .750, 6),
-(14, 4, 'Lugana', 1, 5, .750, 6),
-(15, 4, 'Dorobianco', 1, 6, .750, 6),
-(16, 5, 'Tassoni Tonica',  2, 24, .180, 4),
-(17, 5, 'Tassoni Cedrata', 2, 25, .180, 4),
-(18, 5, 'Tassoni Mitro', 2, 26, .180, 4);
+(1, 7, 'Cab Franc', 1, 1, .750, 6),
+(2, 7, 'Chardonnay', 1, 7, .750, 6),
+(3, 7, 'Classico', 1, 8, .750, 6),
+(4, 7, 'Pinot Grigio', 1, 10, .750, 6),
+(5, 7, 'Merlot', 1, 11, .750, 6),
+(6, 8, 'Cerasuolo', 1, 13, .750, 6),
+(7, 8, 'Montepulciano', 1, 15, .750, 6),
+(8, 8, 'Nerube', 1, 16, .750, 6),
+(9, 8, 'Trebbiano', 1, 17, .750, 6),
+(10, 8, 'Rudhir Chardonnay', 1, 18, .750, 6),
+(11, 10, 'Bragagna', 1, 2, .750, 6),
+(12, 10, 'Chiaretto', 1, 3, .750, 6),
+(13, 10, 'Franciacorta', 1, 4, .750, 6),
+(14, 10, 'Lugana', 1, 5, .750, 6),
+(15, 10, 'Dorobianco', 1, 6, .750, 6),
+(16, 11, 'Tassoni Tonica',  2, 24, .180, 4),
+(17, 11, 'Tassoni Cedrata', 2, 25, .180, 4),
+(18, 11, 'Tassoni Mitro', 2, 26, .180, 4);
 
 INSERT INTO crm_product_class (
   id,
@@ -414,20 +469,6 @@ INSERT INTO crm_product_class (
 ) VALUES
 (1, 'Alcoholic'),
 (2, 'Non-Alcoholic');
-
-INSERT INTO crm_client (
-  id,
-  client_name,
-  client_type
-) VALUES 
-(1, 'Jagerhof', 1),
-(2, 'Como', 1),
-(3, 'Keefer Bar', 3),
-(4, 'Bar None', 4),
-(5, 'Caulfiend BCLRS', 6),
-(6, 'Legacy Liquor', 7),
-(7, 'Caulfield Safeway', 8),
-(8, 'Modern Bartender', 9);
 
 
 INSERT INTO crm_alch_products (

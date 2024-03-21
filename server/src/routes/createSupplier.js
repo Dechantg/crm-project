@@ -23,6 +23,8 @@ const addEmails = require('../../database/queries/add_email');
 const addSocialMedia = require('../../database/queries/add_social_media');
 const buildContactObject = require('../helpers/contactObjectBuilder')
 const addSupplierContact = require('../../database/queries/add_supplier_contact');
+const getAllEntityClass = require ('../../database/queries/get_all_entity_class');
+
 
 
 const router = express.Router();
@@ -37,7 +39,8 @@ const multerFile = configureMulterFile();
 router.get('/', async (req, res) => {
 
   try {
-    
+
+    const allEntityClass = await getAllEntityClass();
     const contactType = "Supplier"
     const allType = await getSupplierType();
     const contactTypeId = await getContactClassId(contactType);
@@ -60,6 +63,7 @@ router.get('/', async (req, res) => {
       allPhoneType,
       allSocialMediaType,
       allContact,
+      allEntityClass,
     }
 
 

@@ -39,6 +39,10 @@ DROP TABLE IF EXISTS crm_social_media_type CASCADE;
 DROP TABLE IF EXISTS crm_supplier_type CASCADE;
 DROP TABLE IF EXISTS crm_client_type CASCADE;
 DROP TABLE IF EXISTS crm_product_class CASCADE;
+DROP TABLE IF EXISTS crm_business_type CASCADE;
+DROP TABLE IF EXISTS crm_business CASCADE;
+DROP TABLE IF EXISTS crm_entity_type CASCADE;
+DROP TABLE IF EXISTS crm_entity_class_record CASCADE;
 
 
 
@@ -80,6 +84,14 @@ DROP SEQUENCE IF EXISTS crm_product_tasting_seq;
 DROP SEQUENCE IF EXISTS crm_country_code_seq;
 DROP SEQUENCE IF EXISTS crm_province_state_seq;
 DROP SEQUENCE IF EXISTS crm_product_class_seq;
+DROP SEQUENCE IF EXISTS crm_business_type_seq;
+DROP SEQUENCE IF EXISTS crm_business_seq;
+DROP SEQUENCE IF EXISTS crm_entity_type_seq;
+DROP SEQUENCE IF EXISTS crm_entity_class_record_seq;
+DROP SEQUENCE IF EXISTS crm_entities_class_record_seq;
+DROP SEQUENCE IF EXISTS crm_alch_class_seq;
+
+-- DROP SEQUENCE IF EXISTS crm_entity_type;
 
 -- DROP TABLE IF EXISTS ;
 -- DROP SEQUENCE IF EXISTS ;
