@@ -113,18 +113,19 @@ INSERT INTO crm_entity_type (
 
 INSERT INTO crm_business (
   id,
+  entity_class,
   entity_id,
   business_name,
   business_type
 ) VALUES 
-(1, 13,'Jagerhof', 1),
-(2, 14, 'Como', 1),
-(3, 15, 'Keefer Bar', 3),
-(4, 16, 'Bar None', 4),
-(5, 17, 'Caulfiend BCLRS', 6),
-(6, 18, 'Legacy Liquor', 7),
-(7, 19, 'Caulfield Safeway', 8),
-(8, 20, 'Modern Bartender', 9);
+(1, 2, 13,'Jagerhof', 1),
+(2, 2, 14, 'Como', 1),
+(3, 2, 15, 'Keefer Bar', 3),
+(4, 2, 16, 'Bar None', 4),
+(5, 2, 17, 'Caulfiend BCLRS', 6),
+(6, 2, 18, 'Legacy Liquor', 7),
+(7, 2, 19, 'Caulfield Safeway', 8),
+(8, 2, 20, 'Modern Bartender', 9);
 
 
 
@@ -145,17 +146,18 @@ INSERT INTO crm_contact (
 
 INSERT INTO crm_business (
   id,
+  entity_class,
   entity_id,
   business_name,
   business_type,
   business_logo
 ) VALUES 
-(9, 7, 'Savian', 10, 9),
-(10, 8, 'Jasci', 10, 14),
-(11, 9, '58 Gin', 11, 19),
-(12, 10, 'Avanzi', 10, 12),
-(13, 11, 'Tassoni', 12, 23),
-(14, 12, 'Scrappy''s', 13, 27);
+(9, 3, 7, 'Savian', 10, 9),
+(10, 3, 8, 'Jasci', 10, 14),
+(11, 3, 9, '58 Gin', 11, 19),
+(12, 3, 10, 'Avanzi', 10, 12),
+(13, 3, 11, 'Tassoni', 12, 23),
+(14, 3, 12, 'Scrappy''s', 13, 27);
 
 
 

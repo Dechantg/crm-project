@@ -3,9 +3,9 @@
 
 const db = require('../connection');
 
-const clientId = async () => {
+const businessId = async () => {
   try {
-    const data = await db.query(`SELECT * FROM crm_client;`);
+    const data = await db.query(`SELECT * FROM crm_business;`);
     const clients = data.rows;
     return clients;
   } catch (error) {
@@ -14,4 +14,4 @@ const clientId = async () => {
   }
 };
 
-module.exports = clientId;
+module.exports = businessId;

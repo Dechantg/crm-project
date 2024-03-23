@@ -11,6 +11,8 @@
 # production
 /build
 *.log
+*.key
+*.crt
 
 # misc
 .DS_Store

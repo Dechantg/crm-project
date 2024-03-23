@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import ImageView from './ImageViewer';
 import '../views/Document.scss'
 
-import ClientCreateModal from './ClientCreateModal';
+import BusinessCreateModal from './BusinessCreateModal';
 
 
-const ClientList = () => {
+const BusinessList = () => {
 
   const [allClients, setAllClients] = useState(null);
   const [openCreateClientModal, setOpenCreateClientModal] = useState(false);
@@ -68,4 +68,4 @@ const ClientList = () => {
     </div>
   );
 };
-export default ClientList;
+export default BusinessList;
