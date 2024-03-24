@@ -83,33 +83,63 @@ INSERT INTO crm_entity_class_record (
 
 INSERT INTO crm_entity_type (
   id,
-  entity_type_name
+  entity_type_name,
+  establishment
   ) VALUES
-(1, 'Resturant'),
-(2, 'Wine Bar'),
-(3, 'Bar'),
-(4, 'Club'),
-(5, 'Coffee Shop'),
-(6, 'Government LRS'),
-(7, 'Private LRS'),
-(8, 'Grocery Retail'),
-(9, 'Boutique Retail'),
-(10, 'Winnery'),
-(11, 'Distillery'),
-(12, 'Water'),
-(13, 'Bitters'),
-(14, 'Distributor'),
-(15, 'Sales Manager'),
-(16, 'Territory Manager'),
-(17, 'Territory Rep'),
-(18, 'Sales Agent'),
-(19, 'Bar Manager'),
-(20, 'General Manager'),
-(21, 'Wine Director'),
-(22, 'Owner'),
-(23, 'Winery Rep'),
-(24, 'Distilery Rep'),
-(25, 'Whatever the fuck Alex is');
+(1, 'Resturant', true),
+(2, 'Wine Bar', true),
+(3, 'Bar', true),
+(4, 'Club', true),
+(5, 'Coffee Shop', true),
+(6, 'Government LRS', true),
+(7, 'Private LRS', true),
+(8, 'Grocery Retail', true),
+(9, 'Boutique Retail', true),
+(10, 'Winnery',true),
+(11, 'Distillery', true),
+(12, 'Water', true),
+(13, 'Bitters', true),
+(14, 'Distributor', true),
+(15, 'Sales Manager', false),
+(16, 'Territory Manager', false),
+(17, 'Territory Rep', false),
+(18, 'Sales Agent', false),
+(19, 'Bar Manager', false),
+(20, 'General Manager', false),
+(21, 'Wine Director', false),
+(22, 'Owner', false),
+(23, 'Winery Rep', false),
+(24, 'Distilery Rep', false),
+(25, 'Whatever the fuck Alex is', false);
+
+INSERT INTO crm_entity_type_default_image (
+  id
+) VALUES
+(1),
+(2),
+(3),
+(4),
+(5),
+(6),
+(7),
+(8),
+(9),
+(10),
+(11),
+(12),
+(13),
+(14),
+(15),
+(16),
+(17),
+(18),
+(19),
+(20),
+(21),
+(22),
+(23),
+(24),
+(25);
 
 INSERT INTO crm_business (
   id,
@@ -136,12 +166,12 @@ INSERT INTO crm_contact (
   first_name,
   last_name
 ) VALUES 
-(11, 1, 5, 'Chris', 'M'),
-(12, 2, 6, 'Steve', 'E'),
-(13, 3, 4, 'Nat', 'One'),
-(14, 4, 4, 'Nat', 'Two'),
-(15, 5, 11, 'Alex', 'D'),
-(16, 6, 7, 'Franco', 'M');
+(11, 1, 19, 'Chris', 'M'),
+(12, 2, 20, 'Steve', 'E'),
+(13, 3, 18, 'Nat', 'One'),
+(14, 4, 18, 'Nat', 'Two'),
+(15, 5, 25, 'Alex', 'D'),
+(16, 6, 21, 'Franco', 'M');
 
 
 INSERT INTO crm_business (

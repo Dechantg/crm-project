@@ -8,7 +8,7 @@ const imageUpload =           require('../helpers/uploadImageAndThumbnail');
 const createEntity =         require('../../database/queries/create_entity_record');
 const addAddress =            require('../../database/queries/add_address');
 const addClient =             require('../../database/queries/add_client');
-const getClientType =       require('../../database/queries/get_all_business_type');
+const getEntityType =       require('../../database/queries/get_all_entity_type');
 const getAllCountry =         require('../../database/queries/get_all_country');
 const getAllProvince =        require('../../database/queries/get_all_province');
 const getEntityClassId =     require('../../database/queries/get_entity_class_id_by_name')
@@ -36,11 +36,12 @@ const multerFile = configureMulterFile();
 router.get('/', async (req, res) => {
 
   try {
-
+    
+    const establishment = true;
     const allEntityClass = await getAllEntityClass();
-    const enityType = "Client"
-    const allType = await getClientType();
-    const entityTypeId = await getEntityClassId(enityType);
+    const allType = await getEntityType(establishment);
+    
+    // const allContactEntityType = await getEntityType(contact);
     const allCountry = await getAllCountry();
     const allProvince = await getAllProvince();
     const allEmailType = await getAllEmailType();
@@ -53,7 +54,6 @@ router.get('/', async (req, res) => {
 
     const creationDetails = {
       allType,
-      entityTypeId,
       allCountry,
       allProvince,
       allEmailType,
@@ -86,7 +86,7 @@ router.post('/generate', multerFile.single('image'), async (req, res) => {
     let imageId = null;
     const clientName = req.body.name;
     const establishment = true;
-console.log("thge req body", req.body)
+    console.log("thge req body", req.body)
 
     // if logo included upload
     if (fileBuffer) {
@@ -96,8 +96,6 @@ console.log("thge req body", req.body)
 
     const contactEntityId = req.body.contactEntityId;
     const agentEntityId = req.body.agentEntityId;
-
-    const entityClass = "2";
     const entityType = req.body.entityType
     const entityTypeId = req.body.entityTypeId;
 
@@ -130,6 +128,14 @@ console.log("thge req body", req.body)
       console.log("Emails object empty")
     }
 
+
+    if (req.body.entityClassRows !== 'undefined' && req.body.entityClassRows !== '') {
+      const entityClass = JSON.parse(req.body.entityClassRows);
+      // await addEntityClassRecord(entityId, entityClass);
+
+    } else {
+      console.log("Enity Class object empty")
+    }
 
     if (req.body.phoneNumberRows !== 'undefined' && req.body.phoneNumberRows !== '') {
       const phoneNumbers = JSON.parse(req.body.phoneNumberRows);

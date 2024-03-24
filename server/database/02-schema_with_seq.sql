@@ -106,13 +106,14 @@ CREATE TABLE crm_entities (
 
 CREATE TABLE crm_entity_type_default_image (
     id INTEGER DEFAULT nextval('crm_entity_default_image_seq') PRIMARY KEY,
-    entity_type VARCHAR(25),
+    entity_type_id VARCHAR(25),
     image_id VARCHAR(25),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP    
 );
 
 CREATE TABLE crm_entity_type (
     id INTEGER DEFAULT nextval('crm_entity_type_seq') PRIMARY KEY,
+    establishment BOOLEAN,
     entity_type_name VARCHAR(100),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

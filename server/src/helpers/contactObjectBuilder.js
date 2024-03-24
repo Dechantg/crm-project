@@ -1,6 +1,8 @@
 const getAllEntity = require('../../database/queries/get_all_entity')
-const getEntityType =        require('../../database/queries/get_all_entity_class');
-const getContactByEntityId = require('../../database/queries/get_contacts_by_entity_id')
+const getEntityClass =        require('../../database/queries/get_all_entity_class');
+const getEntityType = require('../../database/queries/get_all_entity_type');
+const getContactByEntityId = require('../../database/queries/get_contacts_by_entity_id');
+const getAllEntityClassRecord = require('../../database/queries/get_all_entity_class_record');
 
 
 
@@ -12,14 +14,26 @@ async function buildContactObject () {
 
     const establishment = false;
     const allEntity = await getAllEntity(establishment);
-    const allEntityClass = await getEntityType();
+    const allEntityClass = await getEntityClass();
+    const allEntityType = await getEntityType(establishment);
     const allFetchedContact = await getContactByEntityId(allEntity);
+    const allEntityClassRecord = await getAllEntityClassRecord();
 
 
-    const entityClassMap = allEntityClass.reduce((acc, entityClass) => {
-      acc[entityClass.id] = entityClass.entity_class_name;
+    const entityClassRecordMap = allEntityClassRecord.reduce((acc, entityClass) => {
+      acc[entityClass.id] = entityClass.entity_class_id;
       return acc;
     }, {});
+
+    const entityTypeMap = allEntityType.reduce((acc, entityType) => {
+      acc[entityType.id] = entityType.entity_type_name;
+      return acc;
+    }, {});
+
+    // console.log("all entity class mapped", entityClassMap);
+    console.log("all entity type mapped", entityTypeMap);
+
+
     
     const contactMap = allFetchedContact.reduce((acc, contact) => {
       acc[contact.entity_id] = contact;
@@ -27,15 +41,23 @@ async function buildContactObject () {
     }, {});
     
     const contactDetails = allEntity.map(entity => {
+console.log("entity debugging line", entity)
       const contact = contactMap[entity.id];
+
       return {
           ...contact,
           ...entity,
-          entity_class_name: entityClassMap[entity.entity_class],
+          entity_class_id: entityClassRecordMap[contact.entity_id],
+          contact_class_name: entityTypeMap[contact.contact_class],
           contact_id: contact.id,
           honorific: contact.honorific,
       };
     });
+
+    console.log("check all entuity class return", allEntityClass)
+    console.log("check all contact details class return", contactDetails)
+
+
     
     const allContact = contactDetails.map(contact => {
     const { id, ...filteredContact } = contact;

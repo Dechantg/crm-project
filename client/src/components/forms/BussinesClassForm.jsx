@@ -51,7 +51,7 @@ const EntityClassForm = ({ modalCreationDetails, formValues, setFormValues }) =>
         }
     };
 
-    const handleClientTypeChange = (event) => {
+    const handleBusinessTypeChange = (event) => {
       const selectedClientType = event.target.value;
       const [id, clientType] = selectedClientType.split(',');
   console.log("from inside the client type", selectedClientType)
@@ -91,15 +91,17 @@ const EntityClassForm = ({ modalCreationDetails, formValues, setFormValues }) =>
 
 
             <label htmlFor="businessTypeSelect">Select Business Type:</label>
-            <select id="businessTypeSelect" value={formValues.client_type} onChange={handleClientTypeChange}>
-                <option value="">Select a customer type...</option>
-                {modalCreationDetails.allType.map(clientType => (
-                    <option key={clientType.id} value={`${clientType.id},${clientType.client_type}`}>
-                        {clientType.all_entity}
+            <select id="businessTypeSelect" value={formValues.entity_type_name} onChange={handleBusinessTypeChange}>
+                <option value="">Select a business type...</option>
+                {modalCreationDetails.allType.map(businessType => (
+                    <option key={businessType.id} value={`${businessType.id},${businessType.entity_type_name}`}>
+                        {businessType.entity_type_name}
                     </option>
                 ))}
             </select> 
               <br></br>
+              <br></br>
+
         </div>
     );
 };

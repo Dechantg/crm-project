@@ -4,9 +4,9 @@
 
 const db = require('../connection');
 
-const getAllBusinessType = async () => {
+const getAllEntityType = async (establishment) => {
   try {
-    const data = await db.query(`SELECT * FROM crm_business_type;`);
+    const data = await db.query(`SELECT * FROM crm_entity_type WHERE establishment = $1;`, [establishment]);
     const allBusinessType = data.rows;
     return allBusinessType;
   } catch (error) {
@@ -15,4 +15,4 @@ const getAllBusinessType = async () => {
   }
 };
 
-module.exports = getAllBusinessType;
+module.exports = getAllEntityType;

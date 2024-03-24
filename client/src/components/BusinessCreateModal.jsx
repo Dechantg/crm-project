@@ -24,7 +24,7 @@ const BusinessCreateModal = ({ onClose }) => {
         const responce = await fetch('/api/add/business');
         const data = await responce.json();
         console.log("data from my backend: ", data.creationDetails)
-        // setAllContact(data.creationDetails.allType)
+        // setAllContact(data.creationDetails.allContact)
 
         setModalCreationDetails(data.creationDetails);
       } catch (error) {
@@ -39,7 +39,7 @@ const BusinessCreateModal = ({ onClose }) => {
     : [];
 
     const filteredAgents = modalCreationDetails && modalCreationDetails.allContact
-    ? modalCreationDetails.allContact.filter(contact => contact.entity_class === '1')
+    ? modalCreationDetails.allContact.filter(contact => contact.entity_class_id === '1')
     : [];
 
 console.log("the filtered details after everything set", filteredContacts);
@@ -52,16 +52,7 @@ console.log("the filtered details after everything set", filteredContacts);
     });
   }
 
-//   const handleClientTypeChange = (event) => {
-//     const selectedClientType = event.target.value;
-//     const [id, clientType] = selectedClientType.split(',');
-// console.log("from inside the client type", selectedClientType)
-//     setFormValues({
-//         ...formValues,
-//         entityTypeId: id,
-//         entityType: clientType,
-//     });
-// };
+
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -234,10 +225,10 @@ console.log("the filtered details after everything set", filteredContacts);
       <label htmlFor="contactSelect">Assign Business Contact:</label>
       <select id="contactSelect" value={formValues.entity_id} onChange={handleContactChange}>
         <option value="">Select a contact...</option>
-        {filteredContacts.map(contact => (
+        {modalCreationDetails.allContact.map(contact => (
           <option key={contact.entity_id} value={contact.entity_id}>
             {contact.honorific && `${contact.honorific} `}
-            {`${contact.first_name} ${contact.last_name} --- ${contact.entity_type}`}
+            {`${contact.first_name} ${contact.last_name} --- ${contact.contact_class_name}`}
           </option>
         ))}
       </select>
@@ -251,7 +242,7 @@ console.log("the filtered details after everything set", filteredContacts);
         {filteredAgents.map(contact => (
           <option key={contact.entity_id} value={contact.entity_id}>
             {contact.honorific && `${contact.honorific} `}
-            {`${contact.first_name} ${contact.last_name}`}
+            {`${contact.first_name} ${contact.last_name} --- ${contact.contact_class_name}`}
           </option>
         ))}
       </select>
