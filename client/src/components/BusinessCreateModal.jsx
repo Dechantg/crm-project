@@ -9,7 +9,7 @@ import PhoneNumberForm from './forms/PhoneNumberForm.jsx';
 import EmailForm from './forms/EmailForm.jsx';
 import BusinessClassForm from './forms/BussinesClassForm.jsx'
 
-const ClientCreateModal = ({ onClose }) => {
+const BusinessCreateModal = ({ onClose }) => {
   const [file, setFile] = useState(null);
   const [modalCreationDetails, setModalCreationDetails] = useState(null);
   const [selectedAgent, setSelectedAgent] = useState(null);
@@ -21,14 +21,14 @@ const ClientCreateModal = ({ onClose }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const responce = await fetch('/api/add/client');
+        const responce = await fetch('/api/add/business');
         const data = await responce.json();
         console.log("data from my backend: ", data.creationDetails)
         // setAllContact(data.creationDetails.allType)
 
         setModalCreationDetails(data.creationDetails);
       } catch (error) {
-        console.error('Error fetching client data: ', error);
+        console.error('Error fetching business data: ', error);
       }
     };
     fetchData();
@@ -113,7 +113,7 @@ console.log("the filtered details after everything set", filteredContacts);
         // Append file
         formData.append('image', file);
 
-        // const response = await fetch('/api/add/client/generate', {
+        // const response = await fetch('/api/add/business/generate', {
         const response = await fetch('/api/frontend/test', {
             method: 'POST',
             body: formData,
@@ -138,7 +138,7 @@ console.log("the filtered details after everything set", filteredContacts);
     <Modal
       isOpen={true}
       onRequestClose={onClose}
-      contentLabel="Create Client Modal"
+      contentLabel="Create Business Modal"
       
     >
       <div>
@@ -177,9 +177,9 @@ console.log("the filtered details after everything set", filteredContacts);
               Business Name:
               <input
                 type="text"
-                name="clientName"
-                id='clientName'
-                value={formValues.clientName}
+                name="businessName"
+                id='businessName'
+                value={formValues.businessName}
                 onChange={handleOnChange}
               />
                
@@ -223,7 +223,7 @@ console.log("the filtered details after everything set", filteredContacts);
             />
         </div>
         <br></br>
-        Client Logo: 
+        Business Logo: 
         <input type="file" accept=".bmp,.png,.gif,.jpeg,.jpg,.tiff" onChange={handleFileChange} />
 
             </label>
@@ -231,7 +231,7 @@ console.log("the filtered details after everything set", filteredContacts);
             <br></br>
 
             <div>
-      <label htmlFor="contactSelect">Assign Client Contact:</label>
+      <label htmlFor="contactSelect">Assign Business Contact:</label>
       <select id="contactSelect" value={formValues.entity_id} onChange={handleContactChange}>
         <option value="">Select a contact...</option>
         {filteredContacts.map(contact => (
@@ -259,7 +259,7 @@ console.log("the filtered details after everything set", filteredContacts);
     <br></br>
 
             <br></br>
-            <button type='submit'>Create Client</button>
+            <button type='submit'>Create Business</button>
           </form>
         </div>
       </div>
@@ -267,4 +267,4 @@ console.log("the filtered details after everything set", filteredContacts);
   );
 };
 
-export default ClientCreateModal;
+export default BusinessCreateModal;

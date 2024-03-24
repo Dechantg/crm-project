@@ -40,6 +40,7 @@ CREATE SEQUENCE crm_entity_class_record_seq START WITH 100;
 CREATE SEQUENCE crm_business_type_seq START WITH 50;
 CREATE SEQUENCE crm_business_seq START WITH 50;
 CREATE SEQUENCE crm_entity_type_seq START WITH 50;
+CREATE SEQUENCE crm_entity_default_image_seq START WITH 25;
 
 
 CREATE TABLE crm_roles (
@@ -101,6 +102,13 @@ CREATE TABLE crm_entities (
   -- entity_type VARCHAR(50),
   establishment BOOLEAN,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE crm_entity_type_default_image (
+    id INTEGER DEFAULT nextval('crm_entity_default_image_seq') PRIMARY KEY,
+    entity_type VARCHAR(25),
+    image_id VARCHAR(25),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP    
 );
 
 CREATE TABLE crm_entity_type (
