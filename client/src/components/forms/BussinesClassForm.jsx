@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 const EntityClassForm = ({ modalCreationDetails, formValues, setFormValues }) => {
     const [entityClassRows, setEntityClassRows] = useState([
         {
-            entityClassType: ''
+            entityClass: ''
         }
     ]);
 
@@ -14,10 +14,13 @@ const EntityClassForm = ({ modalCreationDetails, formValues, setFormValues }) =>
         });
     }, [entityClassRows]);
 
+
+
+
     const handleEntityClassChange = (event, index) => {
         const selectedEntityClassId = event.target.value;
         const updatedRows = [...entityClassRows];
-        updatedRows[index].entityClassType = selectedEntityClassId;
+        updatedRows[index].entityClass = selectedEntityClassId;
         setEntityClassRows(updatedRows);
         console.log("entity class change")
 
@@ -28,11 +31,21 @@ const EntityClassForm = ({ modalCreationDetails, formValues, setFormValues }) =>
         });
     };
 
+    const handleBusinessTypeChange = (event, index) => {
+      const selectedBusinessTypeId = event.target.value;
+      const updatedRows = [...entityClassRows];
+      updatedRows[index] = {
+          ...updatedRows[index],
+          entityType: selectedBusinessTypeId
+      };
+      setEntityClassRows(updatedRows);
+  };
+
     const addRow = () => {
         setEntityClassRows([
             ...entityClassRows,
             {
-                entityClassType: ''
+                entityClass: ''
             }
         ]);
     };
@@ -51,54 +64,51 @@ const EntityClassForm = ({ modalCreationDetails, formValues, setFormValues }) =>
         }
     };
 
-    const handleBusinessTypeChange = (event) => {
-      const selectedClientType = event.target.value;
-      const [id, clientType] = selectedClientType.split(',');
-  console.log("from inside the client type", selectedClientType)
-      setFormValues({
-          ...formValues,
-          entityTypeId: id,
-          entityType: clientType,
-      });
-  };
 
     return (
         <div>
-            {entityClassRows.map((row, index) => (
-                <div key={index}>
-                    <label htmlFor={`entityClassTypeSelect-${index}`}>Select Business Class:</label>
-                    <select id={`entityClassTypeSelect-${index}`}
-                            value={row.entityClassType}
-                            onChange={(event) => handleEntityClassChange(event, index)}>
-                        <option value="">Business Class...</option>
-                        {modalCreationDetails.allEntityClass.map(entityClass => (
-                            <option key={entityClass.id} value={entityClass.id}>
-                                {entityClass.entity_class_name}
-                            </option>
-                        ))}
-                    </select>
 
-                    <button type="button" onClick={() => removeRow(index)} disabled={entityClassRows.length === 1 && index === 0}>
-                        Remove
-                    </button>
-                </div>
+{entityClassRows.map((row, index) => (
+    <div key={index}>
+        <label htmlFor={`entityClassSelect-${index}`}>Select Business Class:</label>
+        <select id={`entityClassSelect-${index}`}
+                value={row.entityClass}
+                onChange={(event) => handleEntityClassChange(event, index)}>
+            <option value="">Business Class...</option>
+            {modalCreationDetails.allEntityClass.map(entityClass => (
+                <option key={entityClass.id} value={entityClass.id}>
+                    {entityClass.entity_class_name}
+                </option>
             ))}
-            <button type="button" onClick={addRow}>
-                Add Row
-            </button>
-            <br></br>
-            <br></br>
+        </select>
 
 
-            <label htmlFor="businessTypeSelect">Select Business Type:</label>
-            <select id="businessTypeSelect" value={formValues.entity_type_name} onChange={handleBusinessTypeChange}>
-                <option value="">Select a business type...</option>
-                {modalCreationDetails.allType.map(businessType => (
-                    <option key={businessType.id} value={`${businessType.id},${businessType.entity_type_name}`}>
-                        {businessType.entity_type_name}
-                    </option>
-                ))}
-            </select> 
+        <label htmlFor={`enityType-${index}`}>Select Business Type:</label>
+        <select
+    id={`enityType-${index}`}
+    value={row.businessType}
+    onChange={(event) => handleBusinessTypeChange(event, index)}
+>
+    <option value="">Select a business type...</option>
+    {modalCreationDetails.allType.map(businessType => (
+        <option key={businessType.id} value={businessType.id}>
+            {businessType.entity_type_name}
+        </option>
+    ))}
+</select>
+
+
+        <button type="button" onClick={() => removeRow(index)} disabled={entityClassRows.length === 1 && index === 0}>
+            Remove
+        </button>
+    </div>
+))}
+<button type="button" onClick={addRow}>
+    Add Row
+</button>
+
+
+
               <br></br>
               <br></br>
 

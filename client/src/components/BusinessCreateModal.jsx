@@ -7,7 +7,8 @@ import AddressForm from './forms/AddressForm.jsx';
 import SocialMediaForm from './forms/SocialMediaForm.jsx';
 import PhoneNumberForm from './forms/PhoneNumberForm.jsx';
 import EmailForm from './forms/EmailForm.jsx';
-import BusinessClassForm from './forms/BussinesClassForm.jsx'
+import BusinessClassForm from './forms/BussinesClassForm.jsx';
+import BusinessContactForm from './forms/BusinessContactForm.jsx';
 
 const BusinessCreateModal = ({ onClose }) => {
   const [file, setFile] = useState(null);
@@ -99,6 +100,9 @@ console.log("the filtered details after everything set", filteredContacts);
 
         const emailRowsString = JSON.stringify(formValues.emailRows);
         formData.set('emailRows', emailRowsString);
+
+        const contactRowsString = JSON.stringify(formValues.contactRows);
+        formData.set('contactRows', contactRowsString);
 
 
         // Append file
@@ -220,9 +224,16 @@ console.log("the filtered details after everything set", filteredContacts);
             </label>
             <br></br>
             <br></br>
-
             <div>
-      <label htmlFor="contactSelect">Assign Business Contact:</label>
+          <h3>Contact</h3>
+            <BusinessContactForm
+                modalCreationDetails={modalCreationDetails}
+                formValues={formValues}
+                setFormValues={setFormValues}
+            />
+        </div>
+            <div>
+      {/* <label htmlFor="contactSelect">Assign Business Contact:</label>
       <select id="contactSelect" value={formValues.entity_id} onChange={handleContactChange}>
         <option value="">Select a contact...</option>
         {modalCreationDetails.allContact.map(contact => (
@@ -231,7 +242,7 @@ console.log("the filtered details after everything set", filteredContacts);
             {`${contact.first_name} ${contact.last_name} --- ${contact.contact_class_name}`}
           </option>
         ))}
-      </select>
+      </select> */}
     </div>
     <br></br>
 

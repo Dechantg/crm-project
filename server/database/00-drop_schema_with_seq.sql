@@ -44,6 +44,7 @@ DROP TABLE IF EXISTS crm_business CASCADE;
 DROP TABLE IF EXISTS crm_entity_type CASCADE;
 DROP TABLE IF EXISTS crm_entity_class_record CASCADE;
 DROP TABLE IF EXISTS crm_entity_type_default_image CASCADE;
+DROP TABLE IF EXISTS crm_business_contact_record CASCADE;
 
 
 
@@ -92,6 +93,8 @@ DROP SEQUENCE IF EXISTS crm_entity_class_record_seq;
 DROP SEQUENCE IF EXISTS crm_entities_class_record_seq;
 DROP SEQUENCE IF EXISTS crm_alch_class_seq;
 DROP SEQUENCE IF EXISTS crm_entity_default_image_seq;
+DROP SEQUENCE IF EXISTS crm_business_contact_record_seq;
+
 
 -- DROP SEQUENCE IF EXISTS crm_entity_type;
 

@@ -20,6 +20,10 @@ const addPhoneNumbers = require('../../database/queries/add_phone')
 const addEmails = require('../../database/queries/add_email')
 const addSocialMedia = require('../../database/queries/add_social_media')
 
+const addEntityClassRecord = require('../../database/queries/add_enity_class_record')
+
+const addBusinessContactRecord = require('../../database/queries/add_business_contact_record');
+
 
 const router = express.Router();
 
@@ -46,8 +50,18 @@ router.post('/test', multerFile.single('image'), async (req, res) => {
     const originalFileName = req.file ? req.file.originalname : null;
     let imageId = null;
 
+    const userId = 69;
+    const entityId = 59;
 
 
+    if (req.body.contactRows !== 'undefined' && req.body.contactRows !== '') {
+      const entityContact = JSON.parse(req.body.contactRows);
+      await addBusinessContactRecord(entityId, userId, entityContact);
+
+    console.log("entity class record after adding entityId", entityContact);
+    } else {
+      console.log("Entity Class object empty")
+    }
 
 
 

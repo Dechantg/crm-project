@@ -25,7 +25,7 @@ CREATE SEQUENCE crm_alch_classes_seq START WITH 50;
 CREATE SEQUENCE crm_non_alch_classes_seq START WITH 50;
 CREATE SEQUENCE crm_contact_class_seq START WITH 50;
 CREATE SEQUENCE crm_entity_class_seq START WITH 50;
-CREATE SEQUENCE crm_supplier_contact_seq START WITH 50;
+CREATE SEQUENCE crm_business_contact_seq START WITH 50;
 CREATE SEQUENCE crm_client_type_seq START WITH 50;
 CREATE SEQUENCE crm_client_seq START WITH 50;
 CREATE SEQUENCE crm_client_contact_seq START WITH 50;
@@ -41,6 +41,7 @@ CREATE SEQUENCE crm_business_type_seq START WITH 50;
 CREATE SEQUENCE crm_business_seq START WITH 50;
 CREATE SEQUENCE crm_entity_type_seq START WITH 50;
 CREATE SEQUENCE crm_entity_default_image_seq START WITH 25;
+CREATE SEQUENCE crm_business_contact_record_seq START WITH 25;
 
 
 CREATE TABLE crm_roles (
@@ -304,10 +305,11 @@ CREATE TABLE crm_contact_class (
 
 
 
-CREATE TABLE crm_supplier_contact (
-  id INTEGER DEFAULT nextval('crm_supplier_contact_seq') PRIMARY KEY,
-  supplier_entity_id VARCHAR(25),
+CREATE TABLE crm_business_contact_record (
+  id INTEGER DEFAULT nextval('crm_business_contact_record_seq') PRIMARY KEY,
+  business_entity_id VARCHAR(25),
   contact_entity_id VARCHAR(25),
+  contact_notes TEXT,
   created_by VARCHAR(25),
   active BOOLEAN DEFAULT true,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -331,14 +333,6 @@ CREATE TABLE crm_business (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE crm_client_contact (
-  id INTEGER DEFAULT nextval('crm_client_contact_seq') PRIMARY KEY,
-  client_id VARCHAR(25),
-  contact_entity_id VARCHAR(25),
-  created_by VARCHAR(25),
-  active BOOLEAN DEFAULT true,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
 
 CREATE TABLE crm_sales_rep_assignment (
   id INTEGER DEFAULT nextval('crm_sales_rep_assignment_seq') PRIMARY KEY,

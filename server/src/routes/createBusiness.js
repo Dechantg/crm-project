@@ -23,6 +23,12 @@ const addClientContact = require('../../database/queries/add_client_contact');
 const buildContactObject = require('../helpers/contactObjectBuilder');
 const getAllEntityClass = require ('../../database/queries/get_all_entity_class');
 
+const addEntityClassRecord = require('../../database/queries/add_enity_class_record')
+
+
+const addBusinessContactRecord = require('../../database/queries/add_business_contact_record');
+
+
 
 const router = express.Router();
 
@@ -104,7 +110,21 @@ router.post('/generate', multerFile.single('image'), async (req, res) => {
 
     const entityId = await createEntity(entityClass, entityType, establishment)
 
-    console.log("entity id test:", entityId)
+    console.log("entity id test:", entityId);
+
+
+
+    if (req.body.entityClassRows !== 'undefined' && req.body.entityClassRows !== '') {
+      const entityClass = JSON.parse(req.body.entityClassRows);
+      await addEntityClassRecord(entityId, entityClass);
+
+    console.log("entity class record after adding entityId", entityClass);
+    } else {
+      console.log("Entity Class object empty")
+    }
+
+
+
 
     if (req.body.socialMediaRows) {
       const socialMedia = JSON.parse(req.body.socialMediaRows);
@@ -128,6 +148,14 @@ router.post('/generate', multerFile.single('image'), async (req, res) => {
       console.log("Emails object empty")
     }
 
+    if (req.body.contactRows !== 'undefined' && req.body.contactRows !== '') {
+      const entityContact = JSON.parse(req.body.contactRows);
+      await addBusinessContactRecord(entityId, userId, entityContact);
+
+    console.log("entity class record after adding entityId", entityContact);
+    } else {
+      console.log("Entity Class object empty")
+    }
 
     if (req.body.entityClassRows !== 'undefined' && req.body.entityClassRows !== '') {
       const entityClass = JSON.parse(req.body.entityClassRows);
