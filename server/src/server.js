@@ -30,10 +30,10 @@ const getDocumentByDocument = require('./routes/getDocumentByDocument');
 const uploadLicenceeList = require('./routes/uploadLicenceeList');
 const getLicenceList = require('./routes/getLicenceList');
 const createSupplier = require('./routes/createSupplier')
-const getSupplier = require('./routes/getAllSuppliers');
+const getBusiness = require('./routes/getAllBusiness');
 const createProduct = require('./routes/createProduct');
 const createContact = require('./routes/createContact');
-const createClient = require('./routes/createClient');
+const createClient = require('./routes/createBusiness');
 const resetDatabase = require('./routes/resetDatabase');
 const frontendTestRoute = require('./routes/frontendTestRoute');
 const getAllContact = require('./routes/getAllContacts');
@@ -65,7 +65,7 @@ app.use('/add/contact', createContact);
 app.use('/add/product', createProduct);
 
 
-app.use('/get/allsupplier', getSupplier);
+app.use('/get/allbusiness', getBusiness);
 app.use('/get/allclient', getAllClient);
 app.use('/get/allcontact', getAllContact);
 app.use('/get/allproducts', getAllProducts);

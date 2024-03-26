@@ -3,10 +3,11 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import '../views/Modal.scss'
 import '../views/Document.scss'
-import AddressForm from './AddressForm.jsx';
-import SocialMediaForm from './SocialMediaForm.jsx';
-import PhoneNumberForm from './PhoneNumberForm.jsx';
-import EmailForm from './EmailForm.jsx';
+import AddressForm from './forms/AddressForm.jsx';
+import SocialMediaForm from './forms/SocialMediaForm.jsx';
+import PhoneNumberForm from './forms/PhoneNumberForm.jsx';
+import EmailForm from './forms/EmailForm.jsx';
+import BusinessClassForm from './forms/BussinesClassForm.jsx'
 
 const ClientCreateModal = ({ onClose }) => {
   const [file, setFile] = useState(null);
@@ -51,16 +52,16 @@ console.log("the filtered details after everything set", filteredContacts);
     });
   }
 
-  const handleClientTypeChange = (event) => {
-    const selectedClientType = event.target.value;
-    const [id, clientType] = selectedClientType.split(',');
-console.log("from inside the client type", selectedClientType)
-    setFormValues({
-        ...formValues,
-        entityTypeId: id,
-        entityType: clientType,
-    });
-};
+//   const handleClientTypeChange = (event) => {
+//     const selectedClientType = event.target.value;
+//     const [id, clientType] = selectedClientType.split(',');
+// console.log("from inside the client type", selectedClientType)
+//     setFormValues({
+//         ...formValues,
+//         entityTypeId: id,
+//         entityType: clientType,
+//     });
+// };
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -96,6 +97,8 @@ console.log("from inside the client type", selectedClientType)
         }
 
        
+        const entityClassRowsString = JSON.stringify(formValues.entityClassRows);
+        formData.set('entityClassRows', entityClassRowsString);
 
         const phoneNumberRowsString = JSON.stringify(formValues.phoneNumberRows);
         formData.set('phoneNumberRows', phoneNumberRowsString);
@@ -110,8 +113,8 @@ console.log("from inside the client type", selectedClientType)
         // Append file
         formData.append('image', file);
 
-        const response = await fetch('/api/add/client/generate', {
-        // const response = await fetch('/api/frontend/test', {
+        // const response = await fetch('/api/add/client/generate', {
+        const response = await fetch('/api/frontend/test', {
             method: 'POST',
             body: formData,
         });
@@ -143,14 +146,24 @@ console.log("from inside the client type", selectedClientType)
         <button onClick={onClose}>
             Close
           </button>
-          <h1>New Client</h1>
-       
+          <h1>Add New Business</h1>
+          <br></br>
+        <div>
+          <h3>Business Class</h3>
+            <BusinessClassForm
+                modalCreationDetails={modalCreationDetails}
+                formValues={formValues}
+                setFormValues={setFormValues}
+            />
+        </div>
+
+
         </div>
         <div className="scroll-container">
           <form encType="multipart/form-data" method="POST" onSubmit={handleSubmit}>
             <label>
 
-            <label htmlFor="clientTypeSelect">Select Customer Type:</label>
+            {/* <label htmlFor="clientTypeSelect">Select Customer Type:</label>
             <select id="clientTypeSelect" value={formValues.client_type} onChange={handleClientTypeChange}>
                 <option value="">Select a customer type...</option>
                 {modalCreationDetails.allType.map(clientType => (
@@ -159,7 +172,7 @@ console.log("from inside the client type", selectedClientType)
                     </option>
                 ))}
             </select> 
-              <br></br>
+              <br></br> */}
             
               Business Name:
               <input

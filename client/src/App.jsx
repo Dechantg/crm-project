@@ -8,7 +8,7 @@ import Index from './components/Index';
 import Header from './components/Header';
 import PdfView from './components/PdfView';
 import ClientPage from './components/ClientPage';
-import SupplierPage from './components/SupplierPage';
+import BusinessPage from './components/BusinessPage';
 import ContactPage from './components/ContactPage';
 import ProductPage from './components/ProductPage'
 
@@ -23,8 +23,8 @@ const App = () => {
           <Route path="/document" element={<DocumentImport />} />
           <Route path="/pdf" element={<PDFImport />} />
           <Route path="/getpdf" element={<PdfView />} />
-          <Route path="/client" element={<ClientPage />} />
-          <Route path="/supplier" element={<SupplierPage />} />
+          {/* <Route path="/client" element={<ClientPage />} /> */}
+          <Route path="/business" element={<BusinessPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/product" element={<ProductPage />} />
 

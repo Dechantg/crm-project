@@ -7,8 +7,8 @@ const routes = [
   // { path: '/document', label: 'CSV and Excel Upload' },
   // { path: '/image', label: 'Image Upload' },
   // { path: '/pdf', label: 'PDF Upload' },
-  { path: '/client', label: 'Client List' },
-  { path: '/supplier', label: 'Supplier List' },
+  // { path: '/client', label: 'Client List' },
+  { path: '/business', label: 'Business List' },
   { path: '/contact', label: 'Contact List' },
   { path: '/product', label: 'Product List' },
 

@@ -8,7 +8,7 @@ const imageUpload =           require('../helpers/uploadImageAndThumbnail');
 const createEntity =         require('../../database/queries/create_entity_record');
 const addAddress =            require('../../database/queries/add_address');
 const addClient =             require('../../database/queries/add_client');
-const getClientType =       require('../../database/queries/get_all_client_type');
+const getClientType =       require('../../database/queries/get_all_business_type');
 const getAllCountry =         require('../../database/queries/get_all_country');
 const getAllProvince =        require('../../database/queries/get_all_province');
 const getEntityClassId =     require('../../database/queries/get_entity_class_id_by_name')
@@ -21,6 +21,8 @@ const addSocialMedia = require('../../database/queries/add_social_media');
 const addSalesAssignment = require('../../database/queries/add_sales_assignment');
 const addClientContact = require('../../database/queries/add_client_contact');
 const buildContactObject = require('../helpers/contactObjectBuilder');
+const getAllEntityClass = require ('../../database/queries/get_all_entity_class');
+
 
 const router = express.Router();
 
@@ -34,7 +36,8 @@ const multerFile = configureMulterFile();
 router.get('/', async (req, res) => {
 
   try {
-    
+
+    const allEntityClass = await getAllEntityClass();
     const enityType = "Client"
     const allType = await getClientType();
     const entityTypeId = await getEntityClassId(enityType);
@@ -57,6 +60,7 @@ router.get('/', async (req, res) => {
       allPhoneType,
       allSocialMediaType,
       allContact,
+      allEntityClass,
     };
 
 

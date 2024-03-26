@@ -3,8 +3,8 @@ const express = require('express');
 const path = require('path');
 const router = express.Router();
 const fs = require('fs');
-const getAllClient = require('../../database/queries/get_all_clients')
-const getClientEntityId = require('../../database/queries/get_entity_by_class_and_establishment')
+const getAllBusinessDetails = require('../../database/queries/get_all_business')
+const getAllBusiness = require('../../database/queries/get_entity_establishment')
 
 const imagesThumbDirectory = path.join(__dirname, process.env.IMAGE_PATH + '/images-thumb');
 
@@ -17,18 +17,22 @@ router.get('/', async (req, res) => {
 
     // console.log("is the get all client route being triggered?")
     
-    const allClientEntityId = await getClientEntityId(entityClass, establishment)
+    const allBusiness = await getAllBusiness(establishment)
 
-    console.log("query results for all client enity id", allClientEntityId)
+    console.log("here are all entities with establishment true", )
 
-    const allClients = await getAllClient();
+    console.log("query results for all business enity id", allBusiness)
+
+    const allBusinessDetails = await getAllBusinessDetails(entityClass);
+
+    console.log("query results for all business details", allBusinessDetails)
 
 
     // console.log("what about the fileId being valid?", fileId)
     
     // const filePath = path.join(imagesThumbDirectory, `${fileId}`);
 
-    res.json({allClients}); 
+    res.json({allBusinessDetails}); 
      
     
   } catch (error) {

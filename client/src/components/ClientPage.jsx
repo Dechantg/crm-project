@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import ImageView from './ImageViewer';
 import '../views/Document.scss'
 
-import ClientCreateModal from './ClientCreateModal';
+import BusinessCreateModal from './BusinessCreateModal';
 
 
-const ClientList = () => {
+const BusinessList = () => {
 
   const [allClients, setAllClients] = useState(null);
   const [openCreateClientModal, setOpenCreateClientModal] = useState(false);
@@ -46,7 +46,7 @@ const ClientList = () => {
 
   return (
     <div>
-      <button onClick={handleCreateNew}>Create New Client</button>
+      <button onClick={handleCreateNew}>Create New Business Record</button>
       <h1>Client List</h1>
       {/* Render client list */}
       {allClients ? (
@@ -68,4 +68,4 @@ const ClientList = () => {
     </div>
   );
 };
-export default ClientList;
+export default BusinessList;
