@@ -13,6 +13,7 @@
 *.log
 *.key
 *.crt
+*config.js
 
 # misc
 .DS_Store
