@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import '../views/Modal.scss'
 import '../views/Document.scss'
-import AlcoholiclForm from './AlcoholicForm'
+import AlcoholiclForm from './forms/AlcoholicForm'
 
 const ProductCreateModal = ({ onClose }) => {
   const [file, setFile] = useState(null);
@@ -205,7 +205,7 @@ const handleAlchPercentChange = (event) => {
             Bottle size (volume per litre):
               <input
                 type="number"
-                step="0.001"
+                step="1.0"
                 name="bottleSize"
                 id='bottleSize'
                 value={formValues.bottleSize}
